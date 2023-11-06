@@ -1,0 +1,116 @@
+.white-color{
+    -fx-background-color: #fff; }
+
+.transparent{
+    -fx-background-color: rgba(0,0,0,0);
+}
+
+.search-bar {
+    -fx-border-width: 1;
+    -fx-border-color: #686868;
+}
+
+.selected{
+    -fx-background-color: #F4F4F4;
+    -fx-border-width: 85;
+    -fx-border-color: #F30008
+}
+
+.btnIngresar{
+    -fx-background-color: linear-gradient(to bottom, #0052D1, #14AEEE);
+    -fx-background-radius: 50;
+    -fx-border-radius: 50;
+    -fx-opacity: 1.0;
+}
+
+.cursor_hand{
+    -fx-cursor:hand
+}
+
+.btnIngresar:hover{
+    -fx-background-color: linear-gradient(to bottom, #0052D1, #C73D76);
+    -fx-border-color: transparent;
+
+}
+
+.over:hover{
+    -fx-background-color: #F4F4F4;
+}
+
+.shadowPane{
+    -fx-effect:dropshadow(three-pass-box, rgba(0,0,0,0.5), 6,0,0,0);
+}
+
+.white-bg{
+    -fx-background-color:#fff;
+    -fx-background-radius:8px;
+}
+
+
+.filtroPanel{
+    -fx-border-radius: 8px;
+    -fx-background-radius:8px;
+    -fx-border-color: #4A4A4A;
+    -fx-background-color:#4A4A4A;
+}
+
+.filtroPanel:hover{
+    -fx-background-color:#686868;
+}
+
+.gradientPanel{
+    -fx-background-color: linear-gradient(to bottom right, #0052D1, #f4006a);
+}
+
+.panel_transparent {
+    -fx-background-color: rgba(255, 255, 255, 0.8);
+}
+
+.login_button{
+    -fx-background-color: transparent;
+    -fx-border-color:white;
+    -fx-background-radius: 50;
+    -fx-border-radius: 50;
+    -fx-opacity: 1.0;
+    -fx-text-fill: white;
+}
+.login_button:hover{
+    -fx-background-color: white;
+    -fx-text-fill: linear-gradient(to bottom right, #0052D1, #C73D76);
+
+}
+
+.btnPaneles{
+    -fx-background-color: linear-gradient(to bottom right, #0048ae, #f4006a);
+    -fx-background-radius: 50;
+    -fx-border-radius: 50;
+    -fx-opacity: 1.0;
+    -fx-text-fill:white;
+}
+
+.btnPaneles:hover{
+    -fx-background-color: linear-gradient(to bottom right,#0052D1, #C73D76);
+}
+
+.one_label{
+    -fx-text-fill:#0052D1;
+    -fx-background-color: transparent;
+}
+
+.one_label:hover {
+    -fx-underline: true;
+    -fx-text-fill: linear-gradient(to bottom, #0052D1, #C73D76);
+    -fx-background-color: transparent;
+}
+
+.comboUsuario{
+    -fx-background-color: transparent;
+    -fx-border-color:linear-gradient(to bottom right, #0048ae, #f4006a);
+    -fx-border-radius: 30;
+    -fx-border-width: 1px;
+    -fx-background-radius: 30;
+}
+
+.comboUsuario:hover{
+    -fx-border-width: 2px;
+}

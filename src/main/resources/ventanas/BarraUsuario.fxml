@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="78.0" prefWidth="1306.0" stylesheets="@../aplicacion.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.agenciaViajes.controllers.BarraUsuarioController">
+   <children>
+      <Button fx:id="btnRegistrarse" layoutX="973.0" layoutY="26.0" minHeight="0.0" mnemonicParsing="false" onAction="#mostrarVentanaRegistroIngreso" prefHeight="28.0" prefWidth="104.0" stylesheets="@../aplicacion.css" text="Registrarse" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <styleClass>
+            <String fx:value="cursor_hand" />
+            <String fx:value="btnIngresar" />
+         </styleClass>
+      </Button>
+      <Button fx:id="btnIngresar" layoutX="847.0" layoutY="26.0" minHeight="0.0" mnemonicParsing="false" onAction="#mostrarVentanaRegistroIngreso" prefHeight="28.0" prefWidth="104.0" stylesheets="@../aplicacion.css" text="Ingresar" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <styleClass>
+            <String fx:value="btnIngresar" />
+            <String fx:value="cursor_hand" />
+         </styleClass>
+      </Button>
+      <ImageView fitHeight="86.0" fitWidth="216.0" layoutX="55.0" layoutY="-4.0">
+         <image>
+            <Image url="@../imagenes/LogoTD.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="17.0" fitWidth="30.0" layoutX="15.0" layoutY="31.0">
+         <image>
+            <Image url="@../imagenes/barra.png" />
+         </image>
+      </ImageView>
+      <ComboBox layoutX="1182.0" layoutY="24.0" prefHeight="31.0" prefWidth="110.0" promptText="español - ES" styleClass="transparent" stylesheets="@../aplicacion.css" />
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="1152.0" layoutY="25.0">
+         <image>
+            <Image url="@../imagenes/español.png" />
+         </image>
+      </ImageView>
+      <Separator layoutX="276.0" orientation="VERTICAL" prefHeight="78.0" />
+   </children>
+   <styleClass>
+      <String fx:value="white-bg" />
+      <String fx:value="shadowPane" />
+   </styleClass>
+</Pane>

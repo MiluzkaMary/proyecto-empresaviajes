@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="622.0" prefWidth="1025.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.agenciaViajes.controllers.VentanaFiltrarPaquetesController">
+   <children>
+      <Pane layoutX="10.0" layoutY="64.0" prefHeight="207.0" prefWidth="990.0" stylesheets="@../aplicacion.css">
+         <children>
+            <Text fill="#323232" layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filtrar Paquetes ">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Text>
+            <Text fill="#838181" layoutX="16.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Destino">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Text>
+            <Text fill="#838181" layoutX="355.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ciudad">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Text>
+            <Text fill="#838181" layoutX="695.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Clima">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Text>
+            <Text fill="#838181" layoutX="16.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fechas Disponibles">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Text>
+            <ComboBox layoutX="14.0" layoutY="57.0" minHeight="0.0" prefHeight="29.0" prefWidth="250.0" promptText="Elegir destino" />
+            <ComboBox layoutX="355.0" layoutY="57.0" minHeight="0.0" prefHeight="29.0" prefWidth="250.0" promptText="Elegir ciudad" />
+            <ComboBox layoutX="695.0" layoutY="57.0" minHeight="0.0" prefHeight="29.0" prefWidth="250.0" promptText="Elegir clima" />
+            <DatePicker layoutX="14.0" layoutY="157.0" minHeight="0.0" prefHeight="27.0" prefWidth="220.0" />
+            <DatePicker layoutX="278.0" layoutY="157.0" minHeight="0.0" prefHeight="27.0" prefWidth="220.0" />
+            <Text fill="#838181" layoutX="68.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Entrada">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="16.0" layoutY="126.0">
+               <image>
+                  <Image url="@../imagenes/calendar.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="278.0" layoutY="126.0">
+               <image>
+                  <Image url="@../imagenes/calendar.png" />
+               </image>
+            </ImageView>
+            <Text fill="#838181" layoutX="324.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Salida">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Text>
+            <Text fill="#838181" layoutX="532.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Precio">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Text>
+            <ComboBox layoutX="532.0" layoutY="157.0" minHeight="0.0" prefHeight="29.0" prefWidth="250.0" promptText="Elegir precio" />
+            <Pane layoutX="820.0" layoutY="150.0" prefHeight="35.0" prefWidth="89.0" styleClass="filtroPanel" stylesheets="@../aplicacion.css">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="89.0" stylesheets="@../aplicacion.css" text="Filtrar        " textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="transparent" />
+                        <String fx:value="cursor_hand" />
+                     </styleClass>
+                  </Button>
+                  <ImageView fitHeight="20.0" fitWidth="18.0" layoutX="58.0" layoutY="5.0">
+                     <image>
+                        <Image url="@../imagenes/filtrar.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children>
+         <styleClass>
+            <String fx:value="white-bg" />
+            <String fx:value="shadowPane" />
+         </styleClass>
+      </Pane>
+      <Pane layoutX="10.0" layoutY="20.0" prefHeight="28.0" prefWidth="990.0" stylesheets="@../aplicacion.css">
+         <children>
+            <TextField layoutY="-2.0" minHeight="-Infinity" prefHeight="29.0" prefWidth="878.0" promptText="Buscar por nombre del paquete" styleClass="transparent" stylesheets="@../aplicacion.css" />
+            <Separator layoutX="900.0" layoutY="-0.0" orientation="VERTICAL" prefHeight="27.0" prefWidth="3.0" />
+            <Button layoutX="903.0" layoutY="-2.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="99.0" stylesheets="@../aplicacion.css" text=" Buscar" textFill="#838181">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="transparent" />
+                  <String fx:value="cursor_hand" />
+               </styleClass>
+            </Button>
+            <ImageView fitHeight="15.0" fitWidth="15.0" layoutX="911.0" layoutY="5.0">
+               <image>
+                  <Image url="@../imagenes/lupa.png" />
+               </image>
+            </ImageView>
+         </children>
+         <styleClass>
+            <String fx:value="white-bg" />
+            <String fx:value="shadowPane" />
+         </styleClass>
+      </Pane>
+      <Pane layoutX="10.0" layoutY="285.0" prefHeight="308.0" prefWidth="307.0" style="-fx-background-color: black;" />
+      <Pane layoutX="352.0" layoutY="285.0" prefHeight="308.0" prefWidth="307.0" style="-fx-background-color: black;" />
+      <Pane layoutX="693.0" layoutY="285.0" prefHeight="308.0" prefWidth="307.0" style="-fx-background-color: black;" />
+   </children>
+</Pane>

@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.agenciaViajes.controllers.VentanaRegistroIngresoController">
+   <children>
+      <ImageView fitHeight="700.0" fitWidth="1300.0">
+         <image>
+            <Image url="@../imagenes/fondo1.jpg" />
+         </image>
+      </ImageView>
+      <Pane fx:id="paneCrearCuenta" layoutX="313.0" layoutY="95.0" opacity="0.99" prefHeight="510.0" prefWidth="340.0" style="-fx-background-radius: 25;" styleClass="panel_transparent" stylesheets="@../aplicacion.css">
+         <children>
+            <TextField fx:id="txtNombre" layoutX="80.0" layoutY="84.0" minHeight="25.0" prefHeight="26.0" prefWidth="220.0" promptText="Nombre del usuario" style="-fx-background-radius: 50; -fx-border-radius: 50; -fx-border-width: 2; -fx-border-color: linear-gradient(to bottom right, #0052D1, #C73D76);" />
+            <TextField fx:id="txtCorreo" layoutX="80.0" layoutY="263.0" minHeight="25.0" prefHeight="26.0" prefWidth="220.0" promptText="Correo" style="-fx-background-radius: 50; -fx-border-radius: 50; -fx-border-width: 2; -fx-border-color: linear-gradient(to bottom right, #0052D1, #C73D76);" />
+            <TextField fx:id="txtShowPassword" layoutX="80.0" layoutY="380.0" minHeight="23.0" onKeyReleased="#ShowPasswordOnAction2" prefHeight="26.0" prefWidth="220.0" promptText="Password" style="-fx-background-radius: 50; -fx-border-radius: 50; -fx-border-width: 2; -fx-border-color: linear-gradient(to bottom right, #0052D1, #C73D76);" />
+            <PasswordField fx:id="txtHidePassword" layoutX="80.0" layoutY="380.0" minHeight="23.0" onKeyReleased="#HidePasswordKeyReleased2" prefHeight="26.0" prefWidth="220.0" promptText="Contraseña" style="-fx-border-color: linear-gradient(to bottom right, #0052D1, #C73D76); -fx-border-radius: 50; -fx-border-width: 2; -fx-background-radius: 50; -fx-border-radius: 50;" />
+            <Label layoutX="113.0" layoutY="21.0" text="Registrate" textFill="#08232f">
+               <font>
+                  <Font name="Arial Black" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="80.0" layoutY="59.0" text="NOMBRE">
+               <font>
+                  <Font name="Dubai Medium" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="80.0" layoutY="238.0" text="CORREO ELECTRONICO">
+               <font>
+                  <Font name="Dubai Medium" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="80.0" layoutY="355.0" text="CONTRASEÑA">
+               <font>
+                  <Font name="Dubai Medium" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtCedula" layoutX="80.0" layoutY="143.0" minHeight="25.0" prefHeight="26.0" prefWidth="220.0" promptText="Cedula" style="-fx-background-radius: 50; -fx-border-radius: 50; -fx-border-width: 2; -fx-border-color: linear-gradient(to bottom right, #0052D1, #C73D76);" />
+            <Label layoutX="80.0" layoutY="118.0" text="IDENTIFICACIÓN">
+               <font>
+                  <Font name="Dubai Medium" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="80.0" layoutY="177.0" text="TELEFONO">
+               <font>
+                  <Font name="Dubai Medium" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtTelefono" layoutX="80.0" layoutY="202.0" minHeight="25.0" prefHeight="26.0" prefWidth="220.0" promptText="Telefono" style="-fx-background-radius: 50; -fx-border-radius: 50; -fx-border-width: 2; -fx-border-color: linear-gradient(to bottom right, #0052D1, #C73D76);" />
+            <Label layoutX="80.0" layoutY="295.0" text="DIRECCIÓN RESIDENCIAL">
+               <font>
+                  <Font name="Dubai Medium" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtDireccion" layoutX="80.0" layoutY="320.0" minHeight="25.0" prefHeight="26.0" prefWidth="220.0" promptText="Direccion de Residencia" style="-fx-background-radius: 50; -fx-border-radius: 50; -fx-border-width: 2; -fx-border-color: linear-gradient(to bottom right, #0052D1, #C73D76);" />
+            <Button fx:id="btnRegistrar" layoutX="40.0" layoutY="430.0" mnemonicParsing="false" onAction="#registrarCliente" prefHeight="39.0" prefWidth="260.0" stylesheets="@../aplicacion.css" text="Registrar" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="cursor_hand" />
+                  <String fx:value="btnPaneles" />
+               </styleClass>
+            </Button>
+            <ImageView fitHeight="33.0" fitWidth="33.0" layoutX="38.0" layoutY="78.0">
+               <image>
+                  <Image url="@../imagenes/user.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="33.0" fitWidth="33.0" layoutX="38.0" layoutY="260.0">
+               <image>
+                  <Image url="@../imagenes/email.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="openEye1" fitHeight="33.0" fitWidth="33.0" layoutX="38.0" layoutY="368.0" onMouseClicked="#Open_Eye_OnClickAction2" pickOnBounds="true" preserveRatio="true">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <image>
+                  <Image url="@../imagenes/openEye.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="closeEye1" fitHeight="33.0" fitWidth="33.0" layoutX="38.0" layoutY="371.0" onMouseClicked="#Close_Eye_ClickOnAction2" pickOnBounds="true" preserveRatio="true">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <image>
+                  <Image url="@../imagenes/closeEye.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="33.0" fitWidth="33.0" layoutX="38.0" layoutY="195.0">
+               <image>
+                  <Image url="@../imagenes/phone.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="30.0" fitWidth="33.0" layoutX="38.0" layoutY="312.0">
+               <image>
+                  <Image url="@../imagenes/location.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="33.0" fitWidth="33.0" layoutX="38.0" layoutY="138.0">
+               <image>
+                  <Image url="@../imagenes/cedula.png" />
+               </image>
+            </ImageView>
+         </children>
+         <effect>
+            <ColorAdjust />
+         </effect>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Pane>
+      <Pane fx:id="paneIngresar" layoutX="683.0" layoutY="95.0" opacity="0.99" prefHeight="510.0" prefWidth="340.0" style="-fx-background-radius: 25;" styleClass="panel_transparent" stylesheets="@../aplicacion.css">
+         <children>
+            <Button layoutX="40.0" layoutY="401.0" mnemonicParsing="false" onAction="#ingresarUsuario" prefHeight="39.0" prefWidth="260.0" stylesheets="@../aplicacion.css" text="Ingresar" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="cursor_hand" />
+                  <String fx:value="btnPaneles" />
+               </styleClass>
+            </Button>
+            <TextField fx:id="txtNombre2" layoutX="80.0" layoutY="176.0" minHeight="28.0" prefHeight="26.0" prefWidth="220.0" promptText="Nombre del usuario" style="-fx-background-radius: 50; -fx-border-radius: 50; -fx-border-width: 2; -fx-border-color: linear-gradient(to bottom right, #0052D1, #C73D76);;" />
+            <TextField fx:id="txtCorreo2" layoutX="80.0" layoutY="237.0" minHeight="25.0" prefHeight="26.0" prefWidth="220.0" promptText="Correo" style="-fx-background-radius: 50; -fx-border-radius: 50; -fx-border-width: 2; -fx-border-color: linear-gradient(to bottom right, #0052D1, #C73D76);;" />
+            <TextField fx:id="txtShowPassword2" layoutX="81.0" layoutY="297.0" minHeight="23.0" onKeyReleased="#ShowPasswordOnAction2" prefHeight="26.0" prefWidth="220.0" promptText="Password" style="-fx-background-radius: 50; -fx-border-radius: 50; -fx-border-width: 2; -fx-border-color: linear-gradient(to bottom right, #0052D1, #C73D76);" />
+            <PasswordField fx:id="txtHidePassword2" layoutX="80.0" layoutY="297.0" minHeight="15.0" onKeyReleased="#HidePasswordKeyReleased2" prefHeight="26.0" prefWidth="220.0" promptText="Contraseña" style="-fx-border-color: linear-gradient(to bottom right, #0052D1, #C73D76);; -fx-border-radius: 50; -fx-border-width: 2; -fx-background-radius: 50; -fx-border-radius: 50;" />
+            <Label layoutX="125.0" layoutY="58.0" text="Ingresar" textFill="#08232f">
+               <font>
+                  <Font name="Arial Black" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="95.0" layoutY="452.0" prefHeight="23.0" prefWidth="169.0" style="-fx-background-color: transparent;" stylesheets="@../aplicacion.css" text="¿Olvidaste tu contraseña?">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="cursor_hand" />
+                  <String fx:value="one_label" />
+               </styleClass>
+            </Label>
+            <Label layoutX="87.0" layoutY="151.0" text="NOMBRE">
+               <font>
+                  <Font name="Dubai Medium" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="83.0" layoutY="212.0" text="CORREO ELECTRONICO">
+               <font>
+                  <Font name="Dubai Medium" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="80.0" layoutY="272.0" text="CONTRASEÑA">
+               <font>
+                  <Font name="Dubai Medium" size="14.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="33.0" fitWidth="33.0" layoutX="38.0" layoutY="172.0">
+               <image>
+                  <Image url="@../imagenes/user.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="33.0" fitWidth="33.0" layoutX="38.0" layoutY="231.0">
+               <image>
+                  <Image url="@../imagenes/email.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="closeEye2" fitHeight="33.0" fitWidth="33.0" layoutX="38.0" layoutY="289.0" onMouseClicked="#Close_Eye_ClickOnAction2" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/closeEye.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <ImageView fx:id="openEye2" fitHeight="33.0" fitWidth="33.0" layoutX="38.0" layoutY="286.0" onMouseClicked="#Open_Eye_OnClickAction2" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/openEye.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+         </children>
+         <effect>
+            <ColorAdjust />
+         </effect>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Pane>
+      <AnchorPane fx:id="paneSolid" layoutX="313.0" layoutY="92.0" prefHeight="516.0" prefWidth="340.0" style="-fx-background-radius: 25;" styleClass="gradientPanel" stylesheets="@../aplicacion.css">
+         <children>
+            <Label fx:id="txtNoRegistrado" layoutX="54.0" layoutY="388.0" prefHeight="37.0" prefWidth="234.0" text="¿No estas registrado?" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Arial Black" size="19.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnYaTengoCuenta" layoutX="46.0" layoutY="430.0" mnemonicParsing="false" onAction="#switchFormbtnIngresarPanel" prefHeight="23.0" prefWidth="250.0" stylesheets="@../aplicacion.css" text="Ya tengo una cuenta" textFill="WHITE" visible="false">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="cursor_hand" />
+                  <String fx:value="login_button" />
+               </styleClass>
+            </Button>
+            <Button fx:id="btnRegistrarmePanel" layoutX="46.0" layoutY="432.0" mnemonicParsing="false" onAction="#switchFormbtnRegistrarmePanel" prefHeight="23.0" prefWidth="250.0" stylesheets="@../aplicacion.css" text="Registrarme" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="login_button" />
+                  <String fx:value="cursor_hand" />
+               </styleClass>
+            </Button>
+            <ImageView fitHeight="225.0" fitWidth="225.0" layoutX="64.0" layoutY="43.0">
+               <image>
+                  <Image url="@../imagenes/travelWhite.png" />
+               </image>
+            </ImageView>
+            <Text fill="WHITE" layoutX="111.0" layoutY="319.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Travel Dreams">
+               <font>
+                  <Font name="Calibri Bold" size="20.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="84.0" layoutY="338.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Haz tus sueños realidad">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </Text>
+            <Label fx:id="txtYaRegistrado" layoutX="53.0" layoutY="388.0" prefHeight="37.0" prefWidth="234.0" text="¿Ya estas registrado?" textAlignment="CENTER" textFill="WHITE" visible="false">
+               <font>
+                  <Font name="Arial Black" size="19.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

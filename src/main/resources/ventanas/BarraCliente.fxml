@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="78.0" prefWidth="1306.0" stylesheets="@../aplicacion.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.agenciaViajes.controllers.BarraClienteController">
+   <children>
+      <ImageView fitHeight="86.0" fitWidth="216.0" layoutX="55.0" layoutY="-4.0">
+         <image>
+            <Image url="@../imagenes/LogoTD.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="17.0" fitWidth="30.0" layoutX="15.0" layoutY="31.0">
+         <image>
+            <Image url="@../imagenes/barra.png" />
+         </image>
+      </ImageView>
+      <ComboBox layoutX="1182.0" layoutY="24.0" prefHeight="31.0" prefWidth="110.0" promptText="español - ES" styleClass="transparent" stylesheets="@../aplicacion.css" />
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="1152.0" layoutY="25.0">
+         <image>
+            <Image url="@../imagenes/español.png" />
+         </image>
+      </ImageView>
+      <Separator layoutX="276.0" orientation="VERTICAL" prefHeight="78.0" />
+      <ImageView fx:id="userPic" fitHeight="50.0" fitWidth="50.0" layoutX="1052.0" layoutY="14.0">
+         <image>
+            <Image url="@../imagenes/user.png" />
+         </image>
+      </ImageView>
+      <Separator layoutX="1126.0" orientation="VERTICAL" prefHeight="78.0" prefWidth="6.0" />
+      <Text fx:id="txtBienvenida" layoutX="946.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bienvenido,  ">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Text>
+   </children>
+   <styleClass>
+      <String fx:value="white-bg" />
+      <String fx:value="shadowPane" />
+   </styleClass>
+</Pane>
