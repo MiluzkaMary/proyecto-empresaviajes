@@ -18,7 +18,7 @@ public class Valoracion implements Serializable {
     @Serial
     private static final long serialVersionUID = 334688L;
 
-    private int puntacion;
+    private int puntuacion;
     private Cliente cliente;
     private String comentario;
 

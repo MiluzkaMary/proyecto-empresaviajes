@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane minWidth="307.0" prefHeight="482.0" prefWidth="998.0" style="-fx-background-color: white;" styleClass="shadow" stylesheets="@../aplicacion.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.agenciaViajes.controllers.ItemDestinoController">
+   <children>
+      <Text fx:id="txtValoracion" fill="#5a5050" layoutX="544.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4.4" wrappingWidth="47.0224609375">
+         <font>
+            <Font name="Arial Bold" size="24.0" />
+         </font>
+      </Text>
+      <Text fx:id="txtTituloDestino" fill="#433c3c" layoutX="320.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tour de Chichén Itzá, Cenote y Valladolid con todo incluido" wrappingWidth="636.06787109375">
+         <font>
+            <Font name="Calibri Bold" size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="txtCiudadNombre" fill="#5a5050" layoutX="386.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cancún" wrappingWidth="453.6572265625">
+         <font>
+            <Font name="Calibri" size="17.0" />
+         </font>
+      </Text>
+      <HBox layoutX="323.0" layoutY="69.0" prefHeight="36.0" prefWidth="210.0">
+         <children>
+            <ImageView fx:id="starOne" fitHeight="33.0" fitWidth="33.0">
+               <image>
+                  <Image url="@../imagenes/star.png" />
+               </image>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </ImageView>
+            <ImageView fx:id="starTwo" fitHeight="33.0" fitWidth="33.0" layoutX="10.0" layoutY="10.0">
+               <image>
+                  <Image url="@../imagenes/star.png" />
+               </image>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </ImageView>
+            <ImageView fx:id="starThree" fitHeight="33.0" fitWidth="33.0" layoutX="45.0" layoutY="10.0">
+               <image>
+                  <Image url="@../imagenes/star.png" />
+               </image>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </ImageView>
+            <ImageView fx:id="starFour" fitHeight="33.0" fitWidth="33.0" layoutX="90.0" layoutY="10.0">
+               <image>
+                  <Image url="@../imagenes/star.png" />
+               </image>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </ImageView>
+            <ImageView fx:id="starFive" fitHeight="33.0" fitWidth="33.0" layoutX="130.0" layoutY="10.0">
+               <image>
+                  <Image url="@../imagenes/star.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+      <ImageView fx:id="mainPicture" fitHeight="307.0" fitWidth="307.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" />
+      <Text fill="#433c3c" layoutX="324.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ciudad: ">
+         <font>
+            <Font name="Calibri Bold" size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="txtNumValoraciones" fill="#5a5050" layoutX="610.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(56) calificaciones">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+      <Text fill="#433c3c" layoutX="324.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Clima:">
+         <font>
+            <Font name="Calibri Bold" size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="txtClima" fill="#5a5050" layoutX="381.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Semi-tropical" wrappingWidth="481.6572265625">
+         <font>
+            <Font name="Calibri" size="17.0" />
+         </font>
+      </Text>
+      <Text fill="#433c3c" layoutX="324.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descripción:">
+         <font>
+            <Font name="Calibri Bold" size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="txtDescripcion" fill="#5a5050" layoutX="324.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="                         Sumérgete en las aguas turquesas del Caribe Mexicano y relájate en las hermosas playas de arena blanca mientras disfrutas del cálido sol. Admira la rica cultura maya en las ruinas arqueológicas de Tulum y Chichen Itzá, y siente la emoción en la vida nocturna de clase mundial que esta ciudad ofrece. " wrappingWidth="658.06787109375">
+         <font>
+            <Font name="Calibri" size="17.0" />
+         </font>
+      </Text>
+      <Button fx:id="btnDespuesFoto" layoutX="276.0" layoutY="140.0" mnemonicParsing="false" onAction="#pasarFoto" style="-fx-border-color: #686868;" text="&gt;">
+         <styleClass>
+            <String fx:value="transparent" />
+            <String fx:value="over" />
+         </styleClass>
+      </Button>
+      <Button fx:id="btnAntesFoto" layoutY="140.0" mnemonicParsing="false" onAction="#retrocederFoto" style="-fx-border-color: #686868;" text="&lt;">
+         <styleClass>
+            <String fx:value="transparent" />
+            <String fx:value="over" />
+         </styleClass>
+      </Button>
+      <Pane layoutX="20.0" layoutY="327.0" prefHeight="128.0" prefWidth="959.0">
+         <styleClass>
+            <String fx:value="shadowPane" />
+            <String fx:value="white-bg" />
+         </styleClass>
+         <children>
+            <ImageView fx:id="userPic" fitHeight="37.0" fitWidth="37.0" layoutX="47.0" layoutY="11.0">
+               <image>
+                  <Image url="@../imagenes/user.png" />
+               </image>
+            </ImageView>
+            <Text fx:id="txtNombreCliente" fill="#3c3434" layoutX="98.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sylvia Willaims " wrappingWidth="317.669921875">
+               <font>
+                  <Font name="Calibri Bold" size="17.0" />
+               </font>
+            </Text>
+            <Text fx:id="txtComentarioCliente" layoutX="47.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Desde el momento en que decidí confiar en ustedes para planificar esta aventura, todo ha sido absolutamente perfecto. Desde las recomendaciones de destinos, la organización de itinerarios, hasta la elección de alojamientos y vuelos, cada detalle fue cuidadosamente pensado y ejecutado a la perfección. Gracias a ustedes, pude experimentar momentos inolvidables, desde explorar exóticos lugares hasta sumergirme en nuevas culturas. " wrappingWidth="850.6708984375">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Text>
+            <HBox layoutX="680.0" layoutY="11.0" prefHeight="36.0" prefWidth="162.0">
+               <children>
+                  <ImageView fx:id="estrella1Cliente" fitHeight="26.0" fitWidth="26.0">
+                     <image>
+                        <Image url="@../imagenes/star.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <ImageView fx:id="estrella2Cliente" fitHeight="26.0" fitWidth="26.0" layoutX="10.0" layoutY="10.0">
+                     <image>
+                        <Image url="@../imagenes/star.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <ImageView fx:id="estrella3Cliente" fitHeight="26.0" fitWidth="26.0" layoutX="45.0" layoutY="10.0">
+                     <image>
+                        <Image url="@../imagenes/star.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <ImageView fx:id="estrella4Cliente" fitHeight="26.0" fitWidth="26.0" layoutX="90.0" layoutY="10.0">
+                     <image>
+                        <Image url="@../imagenes/star.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <ImageView fx:id="estrella5Cliente" fitHeight="26.0" fitWidth="26.0" layoutX="130.0" layoutY="10.0">
+                     <image>
+                        <Image url="@../imagenes/star.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+            <Text fx:id="txtPuntajeCliente" fill="#5a5050" layoutX="851.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5.0" wrappingWidth="47.0224609375">
+               <font>
+                  <Font name="Arial Bold" size="19.0" />
+               </font>
+            </Text>
+            <Text fill="#5a5050" layoutX="557.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Calificación:" wrappingWidth="116.0224609375">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Text>
+            <Button fx:id="btnDespuesCalificacion" layoutX="926.0" layoutY="48.0" mnemonicParsing="false" onAction="#pasarComentario" style="-fx-border-color: #685858;" text="&gt;" textFill="#685858">
+               <styleClass>
+                  <String fx:value="transparent" />
+                  <String fx:value="over" />
+               </styleClass>
+            </Button>
+            <Button fx:id="btnAntesCalificacion" layoutY="48.0" mnemonicParsing="false" onAction="#retrocederComentario" style="-fx-border-color: #686868;" text="&lt;">
+               <styleClass>
+                  <String fx:value="transparent" />
+                  <String fx:value="over" />
+               </styleClass>
+            </Button>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

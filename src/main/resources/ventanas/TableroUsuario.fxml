@@ -17,7 +17,7 @@
                   <Image url="@../imagenes/bot.png" />
                </image>
             </ImageView>
-            <Button layoutX="8.0" layoutY="3.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="254.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Chat Bot">
+            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Chat Bot">
                <font>
                   <Font size="16.0" />
                </font>
@@ -29,7 +29,7 @@
          </styleClass></Pane>
       <Pane layoutY="463.0" prefHeight="68.0" prefWidth="272.0">
          <children>
-            <Button layoutX="1.0" layoutY="9.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="260.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="              Reportar un error">
+            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="              Reportar un error">
                <font>
                   <Font size="16.0" />
                </font>
@@ -46,7 +46,7 @@
          </styleClass></Pane>
       <Pane layoutY="350.0" prefHeight="68.0" prefWidth="272.0">
          <children>
-            <Button layoutX="13.0" layoutY="1.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="239.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="           Sobre Nosotros">
+            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="           Sobre Nosotros">
                <font>
                   <Font size="16.0" />
                </font>
@@ -63,7 +63,7 @@
          </styleClass></Pane>
       <Pane layoutY="282.0" prefHeight="68.0" prefWidth="272.0">
          <children>
-            <Button layoutX="11.0" layoutY="3.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="239.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Seguros">
+            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Seguros">
                <font>
                   <Font size="16.0" />
                </font>
@@ -85,7 +85,7 @@
                   <Image url="@../imagenes/pets.png" />
                </image>
             </ImageView>
-            <Button layoutX="17.0" layoutY="3.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="239.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="        Sobre Mascotas">
+            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="        Sobre Mascotas">
                <font>
                   <Font size="16.0" />
                </font>
@@ -102,7 +102,7 @@
                   <Image url="@../imagenes/guia.png" />
                </image>
             </ImageView>
-            <Button layoutX="3.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="260.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="        Nuestros Guias">
+            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="        Nuestros Guias">
                <font>
                   <Font size="16.0" />
                </font>
@@ -114,7 +114,7 @@
          </styleClass></Pane>
       <Pane layoutY="76.0" prefHeight="68.0" prefWidth="272.0">
          <children>
-            <Button layoutX="8.0" layoutY="6.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="239.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Paquetes">
+            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Paquetes">
                <font>
                   <Font size="16.0" />
                </font>
@@ -131,7 +131,7 @@
          </styleClass></Pane>
       <Pane layoutY="8.0" prefHeight="68.0" prefWidth="272.0" stylesheets="@../aplicacion.css">
          <children>
-            <Button layoutX="4.0" layoutY="8.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="239.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Destinos">
+            <Button mnemonicParsing="false" onAction="#mostrarDestinos" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Destinos">
                <font>
                   <Font size="16.0" />
                </font>

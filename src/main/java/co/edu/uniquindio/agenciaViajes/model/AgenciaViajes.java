@@ -2,6 +2,7 @@ package co.edu.uniquindio.agenciaViajes.model;
 
 import co.edu.uniquindio.agenciaViajes.exceptions.*;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.java.Log;
 
 import java.io.IOException;
@@ -11,10 +12,11 @@ import java.util.logging.SimpleFormatter;
 
 @Getter
 @Log
+@Setter
 
 public class AgenciaViajes {
 
-    private final ArrayList<Cliente> listaClientes;
+    private ArrayList<Cliente> listaClientes; //necesario que sea private final???
     private final ArrayList<Administrador> listaAdministradores;
     private final ArrayList<GuiaTuristico> listaGuias;
     private ArrayList<Destino> listaDestinos;
