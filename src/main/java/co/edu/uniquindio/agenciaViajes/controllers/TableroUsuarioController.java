@@ -19,4 +19,8 @@ public class TableroUsuarioController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
+
+    public void mostrarDestinos(){
+        aplicacion.mostrarVentanaDestinos();
+    }
 }

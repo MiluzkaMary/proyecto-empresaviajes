@@ -38,6 +38,10 @@ public class Aplicacion extends Application {
 
     }
 
+    public void mostrarVentanaDestinos(){
+        ventanaInicioController.mostrarPanelDerechoDestinos();
+    }
+
     public void mostrarVentanaPrincipal(Cliente cliente, Administrador admin){
         try{
             FXMLLoader loader = new FXMLLoader(Aplicacion.class.getResource("/ventanas/VentanaInicio.fxml"));
@@ -49,13 +53,14 @@ public class Aplicacion extends Application {
             VentanaInicioController controlador = loader.getController();
             ventanaInicioController = loader.getController(); //obteniendo valor editable del controlador
             controlador.setAplicacion(this);
+            controlador.quemarDatosPrueba();
 
 
 
             //activa los paneles para un usuario que no es cliente ni admin
             if (cliente == null && admin == null) {
                 controlador.mostrarPanelIzquierdo();
-                controlador.mostrarPanelDerecho();
+                controlador.mostrarPanelDerechoPaquetes();
                 controlador.mostrarBarraSuperior();
             }
 
@@ -63,7 +68,7 @@ public class Aplicacion extends Application {
             if (cliente!=null && admin == null) {
                 controlador.setCliente(cliente);
                 controlador.mostrarPanelIzquierdoCliente();
-                controlador.mostrarPanelDerecho();
+                controlador.mostrarPanelDerechoPaquetes();
                 controlador.mostrarBarraSuperiorCliente();
             }
 

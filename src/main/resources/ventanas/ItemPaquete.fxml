@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane minWidth="307.0" prefHeight="507.0" prefWidth="207.0" stylesheets="@../aplicacion.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.agenciaViajes.controllers.ItemPaqueteController">
+   <children>
+      <Text fx:id="txtValoracion" fill="#5a5050" layoutX="221.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4.4" wrappingWidth="47.0224609375">
+         <font>
+            <Font name="Arial Bold" size="24.0" />
+         </font>
+      </Text>
+      <Text fx:id="txtTitulo" fill="#433c3c" layoutX="14.0" layoutY="338.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tour de Chichén Itzá, Cenote y Valladolid con todo incluido" wrappingWidth="275.06787109375">
+         <font>
+            <Font name="Calibri Bold" size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="txtDias" fill="#5a5050" layoutX="14.0" layoutY="390.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3 días" wrappingWidth="105.6572265625">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <HBox layoutX="14.0" layoutY="400.0" prefHeight="36.0" prefWidth="210.0">
+         <children>
+            <ImageView fx:id="starOne" fitHeight="33.0" fitWidth="33.0">
+               <image>
+                  <Image url="@../imagenes/star.png" />
+               </image>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </ImageView>
+            <ImageView fx:id="starTwo" fitHeight="33.0" fitWidth="33.0" layoutX="10.0" layoutY="10.0">
+               <image>
+                  <Image url="@../imagenes/star.png" />
+               </image>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </ImageView>
+            <ImageView fx:id="starThree" fitHeight="33.0" fitWidth="33.0" layoutX="45.0" layoutY="10.0">
+               <image>
+                  <Image url="@../imagenes/star.png" />
+               </image>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </ImageView>
+            <ImageView fx:id="starFour" fitHeight="33.0" fitWidth="33.0" layoutX="90.0" layoutY="10.0">
+               <image>
+                  <Image url="@../imagenes/star.png" />
+               </image>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </ImageView>
+            <ImageView fx:id="starFive" fitHeight="33.0" fitWidth="33.0" layoutX="130.0" layoutY="10.0">
+               <image>
+                  <Image url="@../imagenes/star.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+      <ImageView fx:id="mainPicture" fitHeight="307.0" fitWidth="307.0" pickOnBounds="true" preserveRatio="true" />
+      <Text fx:id="txtPrecio" fill="#433c3c" layoutX="14.0" layoutY="465.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Desde 267.700COL$ por persona">
+         <font>
+            <Font name="Calibri Bold" size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="txtNumValoraciones" fill="#5a5050" layoutX="268.0" layoutY="426.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(56)">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+   </children>
+   <styleClass>
+      <String fx:value="paquete_item" />
+      <String fx:value="shadow" />
+   </styleClass>
+</AnchorPane>

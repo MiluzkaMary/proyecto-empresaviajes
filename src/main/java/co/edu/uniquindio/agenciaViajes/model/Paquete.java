@@ -28,5 +28,25 @@ public class Paquete implements Serializable {
     private int cupoMaximo;
     private LocalDate fecha;
 
+    public double obtenerPromedioValoraciones(){
+        double suma=0;
+        int contador=0;
+        for (Destino destino: destinos){
+            suma+=destino.obtenerPromedioValoracion();
+            contador++;
+        }
+        suma/=contador;
+        suma = Math.round(suma * 10.0) / 10.0;
+        return suma;
+    }
+
+    public int obtenerNumValoraciones(){
+        int suma=0;
+        for (Destino destino : destinos){
+            suma+=destino.getValoraciones().size();
+        }
+        return suma;
+    }
+
 
 }
