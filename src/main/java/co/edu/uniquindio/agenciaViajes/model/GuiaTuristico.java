@@ -18,10 +18,27 @@ public class GuiaTuristico implements Serializable {
     private String nombre;
     private String telefono;
     private String foto;
-    private String edad;
+    private int edad;
     private ArrayList<Valoracion> valoraciones;
     private ArrayList<String> listaIdiomas;
-    private ArrayList<LocalDate> listaDiasReservados;
     private int aniosExperiencia;
+
+    public double obtenerPromedioValoracion(){
+        if (valoraciones.isEmpty()) {
+            return 0.0;
+        }
+        double sumaPuntuaciones = 0.0;
+        for (Valoracion valoracion : valoraciones) {
+            sumaPuntuaciones += valoracion.getPuntuacion();
+        }
+
+        double promedio = sumaPuntuaciones / valoraciones.size();
+        return Math.round(promedio * 10.0) / 10.0; //para tomar unicamente 1 cifra despues del decimal
+
+    }
+
+    public int obtenerNumValoraciones(){
+        return valoraciones.size();
+    }
 
 }

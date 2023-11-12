@@ -48,5 +48,13 @@ public class Paquete implements Serializable {
         return suma;
     }
 
+    public ArrayList<String> obtenerNombresDestinos(){
+        ArrayList<String> nombresDestinos = new ArrayList<>();
+        for (Destino destino : destinos) {
+            nombresDestinos.add(destino.getNombre());
+        }
+        return nombresDestinos;
+    }
+
 
 }

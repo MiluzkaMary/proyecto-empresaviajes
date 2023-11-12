@@ -37,7 +37,7 @@ public class BarraUsuarioController implements Initializable {
     @FXML
     public void mostrarVentanaRegistroIngreso () throws AtributoVacioException, DatoNoNumericoException, CorreoInvalidoException, InformacionRepetidaException {
         agenciaViajes.registrarCliente("476299", //aqui queme el admin pero solo como prueba
-                "Miluzka Mary Saire",
+                "Mary",
                 "317",
                 "foto",
                 "miluska@gmail.com",

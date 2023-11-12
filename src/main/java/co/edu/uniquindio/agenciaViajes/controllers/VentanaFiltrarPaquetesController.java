@@ -12,6 +12,7 @@ import javafx.scene.layout.*;
 import javafx.fxml.Initializable;
 import lombok.Data;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -47,7 +48,11 @@ public class VentanaFiltrarPaquetesController implements Initializable {
                 AnchorPane anchorPane = loader.load();
 
                 ItemPaqueteController controlador = loader.getController();
+                controlador.setAplicacion(this.aplicacion);
+                controlador.setExisteCliente(aplicacion.getCliente() != null); //con esto se verificara si se puede reservar o no
                 controlador.cargarDatos(listaPaquetes.get(i));
+
+
 
                 if (column == 3) {
                     column =0;

@@ -84,9 +84,26 @@ public class VentanaInicioController  implements Initializable {
             Node node = loader.load();
             panelDerecho.getChildren().add(node);
             VentanaFiltrarPaquetesController controlador = loader.getController();
+            controlador.setAplicacion(this.aplicacion);
             controlador.establecerListaPaquetes();
             controlador.iniciarGridPane();
+
+        }catch (Exception e){
+            log.severe(e.getMessage());
+        }
+    }
+
+    public void mostrarPanelDerechoReservas(Paquete paquete){
+        try {
+            panelDerecho.getChildren().clear();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaReserva.fxml"));
+            Node node = loader.load();
+            panelDerecho.getChildren().add(node);
+            VentanaReservaController controlador = loader.getController();
             controlador.setAplicacion(this.aplicacion);
+            controlador.setCliente(cliente);
+            controlador.setPaquete(paquete);
+            controlador.iniciarDatos();
         }catch (Exception e){
             log.severe(e.getMessage());
         }
@@ -100,6 +117,21 @@ public class VentanaInicioController  implements Initializable {
             panelDerecho.getChildren().add(node);
             VentanaFiltrarDestinosController controlador = loader.getController();
             controlador.establecerListaDestinos();
+            controlador.iniciarGridPane();
+            controlador.setAplicacion(this.aplicacion);
+        }catch (Exception e){
+            log.severe(e.getMessage());
+        }
+    }
+
+    public void mostrarPanelDerechoGuias(){
+        try {
+            panelDerecho.getChildren().clear();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaFiltrarGuias.fxml"));
+            Node node = loader.load();
+            panelDerecho.getChildren().add(node);
+            VentanaFiltrarGuiasController controlador = loader.getController();
+            controlador.establecerListaGuias();
             controlador.iniciarGridPane();
             controlador.setAplicacion(this.aplicacion);
         }catch (Exception e){
@@ -135,22 +167,40 @@ public class VentanaInicioController  implements Initializable {
         }
     }
 
-    public void quemarDatosPrueba(){
+    public void quemarDatosPrueba() {
 
         ArrayList<Destino> listaDestinosQuemados = new ArrayList<>();
         ArrayList<Cliente> listaClientesQuemados = new ArrayList<>();
         ArrayList<Paquete> listaPaquetesQuemados = new ArrayList<>();
+        ArrayList<GuiaTuristico> listaGuiasQuemados = new ArrayList<>();
+        ArrayList<String> listaIdiomas1 = new ArrayList<>();
+        ArrayList<String> listaIdiomas2 = new ArrayList<>();
+        ArrayList<String> listaIdiomas3 = new ArrayList<>();
+        ArrayList<Destino> listaDestinos1 = new ArrayList<>();
+        ArrayList<Destino> listaDestinos2 = new ArrayList<>();
+        listaIdiomas1.add("Español");
+        listaIdiomas1.add("Ingles");
+        listaIdiomas1.add("Frances");
+        listaIdiomas2.add("Ingles");
+        listaIdiomas2.add("Frances");
+        listaIdiomas2.add("Portugues");
+        listaIdiomas2.add("Italiano");
+        listaIdiomas3.add("Español");
+        listaIdiomas3.add("Portugues");
+        listaIdiomas3.add("Ruso");
 
         ArrayList<Valoracion> listaValoracionesQuemadas;
         Paquete paquete;
         Destino destino;
         Cliente cliente;
         Valoracion valoracion;
+        GuiaTuristico guia;
+
 
         //[1ER PAQUETE] hay un paquete por el momento, con 3 destinos, estos ultimos con 5 clientes cada uno
 
         // (1ER DESTINO) para la primera lista de valoraciones del primer destino
-        listaValoracionesQuemadas=new ArrayList<Valoracion>();
+        listaValoracionesQuemadas = new ArrayList<Valoracion>();
 
         //1ER CLIENTE
         cliente = Cliente.builder()
@@ -271,19 +321,19 @@ public class VentanaInicioController  implements Initializable {
 
         // Crear el destino con las valoraciones
         destino = Destino.builder()
-                        .nombre("Las ruinas de Tulúm")
-                        .ciudad("Cancún")
-                        .descripcion("Las ruinas de Tulum en Cancún te transportarán en el tiempo a una " +
+                .nombre("Las ruinas de Tulúm")
+                .ciudad("Cancún")
+                .descripcion("Las ruinas de Tulum en Cancún te transportarán en el tiempo a una " +
                         "época de esplendor maya. Explora este sitio arqueológico espectacular " +
                         "mientras descubres la rica historia de la civilización maya. Disfruta de " +
                         "vistas impresionantes del mar Caribe mientras exploras estas antiguas estructuras. " +
                         "Un destino fascinante que combina historia y belleza natural.")
-                        .clima(TipoClima.TROPICAL)
-                        .fotos(Arrays.asList("/imagenes/tulum1.png", "/imagenes/tulum2.png", "/imagenes/tulum3.png"))
-                        .valoraciones(listaValoracionesQuemadas)
-                        .build();
+                .clima(TipoClima.TROPICAL)
+                .fotos(Arrays.asList("/imagenes/tulum1.png", "/imagenes/tulum2.png", "/imagenes/tulum3.png"))
+                .valoraciones(listaValoracionesQuemadas)
+                .build();
 
-
+        listaDestinos1.add(destino);
         listaDestinosQuemados.add(destino);
 
         // (2DO DESTINO)
@@ -394,7 +444,7 @@ public class VentanaInicioController  implements Initializable {
                 .cliente(cliente)
                 .comentario("¡Todo fue increible! Disfrutamos de las recomendaciones de destinos y " +
                         "de la organización del viaje en general. Los alojamientos y excursiones cumplieron con nuestras expectativas. " +
-                        "Recomendamos su agencia a nuestros amigos y familiares. Uno de los plus que nos gustó fue"+
+                        "Recomendamos su agencia a nuestros amigos y familiares. Uno de los plus que nos gustó fue" +
                         " que pudimos llevar con nosotros a nuestro pequeño pug")
                 .build();
         listaValoracionesQuemadas.add(valoracion);
@@ -413,6 +463,7 @@ public class VentanaInicioController  implements Initializable {
                 .valoraciones(listaValoracionesQuemadas)
                 .build();
 
+        listaDestinos1.add(destino);
         listaDestinosQuemados.add(destino);
 
         // (3ER DESTINO)
@@ -523,7 +574,7 @@ public class VentanaInicioController  implements Initializable {
                 .puntuacion(5)
                 .cliente(cliente)
                 .comentario("Nuestra experiencia de viaje fue inolvidable. A pesar de que hubo problemas en la organización " +
-                        " de fechas que se tenian planeadas, fueron bastantes rapidos en solucionar el problema."+
+                        " de fechas que se tenian planeadas, fueron bastantes rapidos en solucionar el problema." +
                         " Tuvimos unas vacaciones muy relajantes, practicamente salvaron a mi familia del divorcio.")
                 .build();
         listaValoracionesQuemadas.add(valoracion);
@@ -540,14 +591,15 @@ public class VentanaInicioController  implements Initializable {
                 .valoraciones(listaValoracionesQuemadas)
                 .build();
 
+        listaDestinos1.add(destino);
         listaDestinosQuemados.add(destino);
 
         //[Creacion PAQUETE 1]
         //fecha para el paquete
         LocalDate fecha = LocalDate.of(2023, 12, 25);
-        paquete= Paquete.builder()
+        paquete = Paquete.builder()
                 .nombre("Expedición cultural y reconexión con la naturaleza")
-                .destinos(listaDestinosQuemados)
+                .destinos(listaDestinos1)
                 .diasDuracion(7)
                 .descripcion("Sumérgete en una aventura inolvidable con nuestro paquete 'Expedición Natural y" +
                         " Cultural'. Explora la belleza tropical de Hawái, descubre las maravillas históricas" +
@@ -560,19 +612,438 @@ public class VentanaInicioController  implements Initializable {
                 .build();
         listaPaquetesQuemados.add(paquete);
 
+        //DATOS DEL NUEVO PAQUETE
+        listaValoracionesQuemadas = new ArrayList<Valoracion>();
+        // 1ER CLIENTE
+        cliente = Cliente.builder()
+                .cedula("111222333")
+                .nombre("Juan Pérez")
+                .telefono("3156789012")
+                .foto("/imagenes/userMale1.jpeg")
+                .correo("juanperez@gmail.com")
+                .direccion("Av. Principal 123")
+                .contrasenia("juanito123")
+                .paquetesFavoritos(new ArrayList<>())
+                .build();
+        listaClientesQuemados.add(cliente);
 
+        valoracion = Valoracion.builder()
+                .puntuacion(4)
+                .cliente(cliente)
+                .comentario("¡Una experiencia maravillosa! La atención al cliente fue " +
+                        "excepcional y las recomendaciones para el itinerario fueron " +
+                        "muy útiles. Disfruté cada momento del viaje.")
+                .build();
+        listaValoracionesQuemadas.add(valoracion);
+
+        // 2DO CLIENTE
+        cliente = Cliente.builder()
+                .cedula("44453455666")
+                .nombre("María González")
+                .telefono("3009876543")
+                .foto("/imagenes/userFem1.jpeg")
+                .correo("mariagonzalez@gmail.com")
+                .direccion("Calle 7 Sur #45")
+                .contrasenia("maria123")
+                .paquetesFavoritos(new ArrayList<>())
+                .build();
+        listaClientesQuemados.add(cliente);
+
+        valoracion = Valoracion.builder()
+                .puntuacion(5)
+                .cliente(cliente)
+                .comentario("¡Una experiencia fantástica! Todos los servicios fueron " +
+                        "más allá de mis expectativas. La organización del viaje, " +
+                        "los alojamientos y las excursiones fueron excelentes.")
+                .build();
+        listaValoracionesQuemadas.add(valoracion);
+
+        // 3ER CLIENTE
+        cliente = Cliente.builder()
+                .cedula("88821999000")
+                .nombre("Carlos López")
+                .telefono("3187654321")
+                .foto("/imagenes/userMale3.jpeg")
+                .correo("carloslopez@gmail.com")
+                .direccion("Calle 15 #20-30")
+                .contrasenia("carlos123")
+                .paquetesFavoritos(new ArrayList<>())
+                .build();
+        listaClientesQuemados.add(cliente);
+
+        valoracion = Valoracion.builder()
+                .puntuacion(3)
+                .cliente(cliente)
+                .comentario("Mi experiencia fue aceptable, aunque hubo algunos contratiempos " +
+                        "durante el viaje. Sin embargo, en general, disfruté de la " +
+                        "experiencia.")
+                .build();
+        listaValoracionesQuemadas.add(valoracion);
+
+        // 4TO CLIENTE
+        cliente = Cliente.builder()
+                .cedula("123213456789")
+                .nombre("Laura Ramírez")
+                .telefono("3056781234")
+                .foto("/imagenes/userFem4.jpeg")
+                .correo("lauraramirez@gmail.com")
+                .direccion("Av. Libertador #10-15")
+                .contrasenia("laura123")
+                .paquetesFavoritos(new ArrayList<>())
+                .build();
+        listaClientesQuemados.add(cliente);
+
+        valoracion = Valoracion.builder()
+                .puntuacion(4)
+                .cliente(cliente)
+                .comentario("Mi experiencia fue bastante buena. Hubo algunos detalles menores, " +
+                        "pero en general, disfruté del viaje.")
+                .build();
+        listaValoracionesQuemadas.add(valoracion);
+
+        // 5TO CLIENTE
+        cliente = Cliente.builder()
+                .cedula("11122333333")
+                .nombre("Gabriela Fernández")
+                .telefono("3012345678")
+                .foto("/imagenes/userFem5.jpeg")
+                .correo("gabrielafernandez@gmail.com")
+                .direccion("Calle 20 #30-40")
+                .contrasenia("gabriela123")
+                .paquetesFavoritos(new ArrayList<>())
+                .build();
+        listaClientesQuemados.add(cliente);
+
+        valoracion = Valoracion.builder()
+                .puntuacion(5)
+                .cliente(cliente)
+                .comentario("¡Mi viaje fue excepcional! Disfruté de cada momento, sin duda una experiencia que repetiría.")
+                .build();
+        listaValoracionesQuemadas.add(valoracion);
+
+        // NUEVO DESTINO
+        destino = Destino.builder()
+                .nombre("Montañas Rocosas")
+                .ciudad("Colorado")
+                .descripcion("Descubre la majestuosidad de las Montañas Rocosas en Colorado. Un paraíso " +
+                        "para los amantes de la naturaleza y los deportes al aire libre.")
+                .clima(TipoClima.TEMPLADO) // Podrías tener un enum con diferentes tipos de clima
+                .fotos(Arrays.asList("/imagenes/montana1.jpg", "/imagenes/montana2.jpg", "/imagenes/montana3.jpg"))
+                .valoraciones(listaValoracionesQuemadas)
+                .build();
+
+        // Agregar el nuevo destino a la lista de destinos quemados
+        listaDestinosQuemados.add(destino);
+        listaDestinos2.add(destino);
+
+        // (2DO DESTINO)
+        listaValoracionesQuemadas = new ArrayList<>(); // Limpiar lista de valoraciones
+
+        // 1ER CLIENTE DEL 2DO DESTINO
+        cliente = Cliente.builder()
+                .cedula("7778832896799")
+                .nombre("Luis Martínez")
+                .telefono("3101122334")
+                .foto("/imagenes/userMale2.jpeg")
+                .correo("luismartinez@gmail.com")
+                .direccion("Carrera 25 #67")
+                .contrasenia("luisillo123")
+                .paquetesFavoritos(new ArrayList<>())
+                .build();
+        listaClientesQuemados.add(cliente);
+
+        valoracion = Valoracion.builder()
+                .puntuacion(4)
+                .cliente(cliente)
+                .comentario("¡Una experiencia increíble! Recomendaría este destino a cualquier viajero. " +
+                        "Todo estuvo perfectamente planificado y los alojamientos fueron excepcionales.")
+                .build();
+        listaValoracionesQuemadas.add(valoracion);
+        // 2DO CLIENTE
+        Cliente cliente1 = Cliente.builder()
+                .cedula("111222333")
+                .nombre("Luisa García")
+                .telefono("3156789012")
+                .foto("/imagenes/userFem1.jpeg")
+                .correo("luisagarcia@gmail.com")
+                .direccion("Calle 7 Sur #45")
+                .contrasenia("luisa123")
+                .paquetesFavoritos(new ArrayList<>())
+                .build();
+        listaClientesQuemados.add(cliente1);
+        valoracion = Valoracion.builder()
+                .puntuacion(4)
+                .cliente(cliente1)
+                .comentario("¡Excelente servicio y atención al cliente! El viaje superó mis expectativas.")
+                .build();
+        listaValoracionesQuemadas.add(valoracion);
+
+
+        // 2ER CLIENTE
+        Cliente cliente2 = Cliente.builder()
+                .cedula("444555666")
+                .nombre("Pedro Martínez")
+                .telefono("3009876543")
+                .foto("/imagenes/userMale1.jpeg")
+                .correo("pedromartinez@gmail.com")
+                .direccion("Carrera 25 #67")
+                .contrasenia("pedro123")
+                .paquetesFavoritos(new ArrayList<>())
+                .build();
+        listaClientesQuemados.add(cliente2);
+
+        valoracion = Valoracion.builder()
+                .puntuacion(3)
+                .cliente(cliente2)
+                .comentario("Buen servicio, aunque hubo pequeños problemas con las reservas.")
+                .build();
+        listaValoracionesQuemadas.add(valoracion);
+
+        // 4TO CLIENTE
+        Cliente cliente3 = Cliente.builder()
+                .cedula("777888999")
+                .nombre("Laura Ramírez")
+                .telefono("3101122334")
+                .foto("/imagenes/userFem2.jpeg")
+                .correo("lauraramirez@gmail.com")
+                .direccion("Av. Principal 123")
+                .contrasenia("laura123")
+                .paquetesFavoritos(new ArrayList<>())
+                .build();
+        listaClientesQuemados.add(cliente3);
+
+        valoracion = Valoracion.builder()
+                .puntuacion(5)
+                .cliente(cliente3)
+                .comentario("¡Una experiencia increíble! Todo salió perfecto, sin ningún contratiempo.")
+                .build();
+        listaValoracionesQuemadas.add(valoracion);
+
+        // 5TO CLIENTE
+        Cliente cliente4 = Cliente.builder()
+                .cedula("123456789")
+                .nombre("Jorge Rodríguez")
+                .telefono("3056781234")
+                .foto("/imagenes/userMale2.jpeg")
+                .correo("jorgerodriguez@gmail.com")
+                .direccion("Calle 15 #20-30")
+                .contrasenia("jorge123")
+                .paquetesFavoritos(new ArrayList<>())
+                .build();
+        listaClientesQuemados.add(cliente4);
+
+        valoracion = Valoracion.builder()
+                .puntuacion(1)
+                .cliente(cliente4)
+                .comentario("Tremenda porquería de vacaciones, 0 recomendado.")
+                .build();
+        listaValoracionesQuemadas.add(valoracion);
+
+        destino = Destino.builder()
+                .nombre("Playa Paraíso")
+                .ciudad("Riviera Maya")
+                .descripcion("Descubre la belleza de Playa Paraíso en la Riviera Maya. Aguas cristalinas y " +
+                        "arena blanca te esperan en este paraíso tropical.")
+                .clima(TipoClima.TROPICAL)
+                .fotos(Arrays.asList("/imagenes/playaparaiso1.jpg", "/imagenes/playaparaiso2.jpg", "/imagenes/playaparaiso3.jpg"))
+                .valoraciones(listaValoracionesQuemadas)
+                .build();
+
+        // Agregar el nuevo destino a la lista de destinos existente
+        listaDestinosQuemados.add(destino);
+        listaDestinos2.add(destino);
+
+        // (3ER DESTINO)
+        listaValoracionesQuemadas = new ArrayList<>();
+
+        // 1ER CLIENTE DEL 3ER DESTINO
+        Cliente cliente1TercerDestino = Cliente.builder()
+                .cedula("1239832452347654")
+                .nombre("Ana Rodríguez")
+                .telefono("3505432198")
+                .foto("/imagenes/userFem3.jpeg")
+                .correo("anarodriguez@gmail.com")
+                .direccion("Calle 10 #30-15")
+                .contrasenia("ana123")
+                .paquetesFavoritos(new ArrayList<>())
+                .build();
+        listaClientesQuemados.add(cliente1TercerDestino);
+
+        Valoracion valoracionCliente1TercerDestino = Valoracion.builder()
+                .puntuacion(5)
+                .cliente(cliente1TercerDestino)
+                .comentario("¡Una experiencia asombrosa! Todo estuvo a la altura de mis expectativas. La agencia proporcionó un servicio excepcional.")
+                .build();
+        listaValoracionesQuemadas.add(valoracionCliente1TercerDestino);
+
+// 2DO CLIENTE DEL 3ER DESTINO
+        Cliente cliente2TercerDestino = Cliente.builder()
+                .cedula("5678912345678901")
+                .nombre("Javier Gómez")
+                .telefono("3554321987")
+                .foto("/imagenes/userMale1.jpeg")
+                .correo("javiergomez@gmail.com")
+                .direccion("Av. Libertadores #45")
+                .contrasenia("javier123")
+                .paquetesFavoritos(new ArrayList<>())
+                .build();
+        listaClientesQuemados.add(cliente2TercerDestino);
+
+        Valoracion valoracionCliente2TercerDestino = Valoracion.builder()
+                .puntuacion(4)
+                .cliente(cliente2TercerDestino)
+                .comentario("Una experiencia muy satisfactoria. La agencia brindó un buen servicio en general.")
+                .build();
+        listaValoracionesQuemadas.add(valoracionCliente2TercerDestino);
+
+// 3ER CLIENTE DEL 3ER DESTINO
+        Cliente cliente3TercerDestino = Cliente.builder()
+                .cedula("7890123456789012")
+                .nombre("María Pérez")
+                .telefono("3605432198")
+                .foto("/imagenes/userFem2.jpeg")
+                .correo("mariaperez@gmail.com")
+                .direccion("Calle 20 #15-30")
+                .contrasenia("maria123")
+                .paquetesFavoritos(new ArrayList<>())
+                .build();
+        listaClientesQuemados.add(cliente3TercerDestino);
+
+        Valoracion valoracionCliente3TercerDestino = Valoracion.builder()
+                .puntuacion(3)
+                .cliente(cliente3TercerDestino)
+                .comentario("Una experiencia promedio. Hubo algunos inconvenientes durante el viaje.")
+                .build();
+        listaValoracionesQuemadas.add(valoracionCliente3TercerDestino);
+
+// 4TO CLIENTE DEL 3ER DESTINO
+        Cliente cliente4TercerDestino = Cliente.builder()
+                .cedula("3456789012345678")
+                .nombre("Carlos Martínez")
+                .telefono("3754321987")
+                .foto("/imagenes/userMale2.jpeg")
+                .correo("carlosmartinez@gmail.com")
+                .direccion("Av. Bolívar #50")
+                .contrasenia("carlos123")
+                .paquetesFavoritos(new ArrayList<>())
+                .build();
+        listaClientesQuemados.add(cliente4TercerDestino);
+
+        Valoracion valoracionCliente4TercerDestino = Valoracion.builder()
+                .puntuacion(2)
+                .cliente(cliente4TercerDestino)
+                .comentario("No fue una experiencia satisfactoria. Varios problemas afectaron mi viaje.")
+                .build();
+        listaValoracionesQuemadas.add(valoracionCliente4TercerDestino);
+
+        // 5TO CLIENTE DEL 3ER DESTINO
+        Cliente cliente5TercerDestino = Cliente.builder()
+                .cedula("9876543210987654")
+                .nombre("Sofía López")
+                .telefono("3854321987")
+                .foto("/imagenes/userFem3.jpeg")
+                .correo("sofialopez@gmail.com")
+                .direccion("Carrera 30 #40-50")
+                .contrasenia("sofia123")
+                .paquetesFavoritos(new ArrayList<>())
+                .build();
+        listaClientesQuemados.add(cliente5TercerDestino);
+
+        Valoracion valoracionCliente5TercerDestino = Valoracion.builder()
+                .puntuacion(4)
+                .cliente(cliente5TercerDestino)
+                .comentario("Una experiencia bastante buena. La agencia hizo un trabajo satisfactorio en general.")
+                .build();
+        listaValoracionesQuemadas.add(valoracionCliente5TercerDestino);
+
+        destino = Destino.builder()
+                .nombre("Selva Amazónica")
+                .ciudad("Amazonas")
+                .descripcion("Descubre la exuberante Selva Amazónica en la región del Amazonas. " +
+                        "Sumérgete en la diversidad de la flora y fauna de este ecosistema único.")
+                .clima(TipoClima.TROPICAL)
+                .fotos(Arrays.asList("/imagenes/amazon1.png", "/imagenes/amazon2.png", "/imagenes/amazon3.jpeg"))
+                .valoraciones(listaValoracionesQuemadas)
+                .build();
+
+        // Agregar el nuevo destino a la lista de destinos existente
+        listaDestinosQuemados.add(destino);
+        listaDestinos2.add(destino);
+
+        // Creación del paquete con los destinos existentes y los nuevos destinos
+        LocalDate fechaPaquete = LocalDate.of(2024, 3, 15);
+        Paquete paquete2 = Paquete.builder()
+                .nombre("Experiencia Natural y Aventura Cultural")
+                .destinos(listaDestinos2)
+                .diasDuracion(10)
+                .descripcion("Embárcate en una inolvidable expedición por la majestuosa Selva Amazónica, " +
+                        "las Montañas Rocosas de Colorado y la paradisíaca Playa Paraíso. " +
+                        "Este viaje combina la belleza natural y la aventura cultural en un único " +
+                        "recorrido que te asombrará.")
+                .precio(3500000.0)
+                .cupoMaximo(25)
+                .fecha(fechaPaquete)
+                .build();
+
+        listaPaquetesQuemados.add(paquete2);
+
+        //-------------- GUIAS QUEMADOS ----------------//
+
+        //Guia 1
+        guia = GuiaTuristico.builder()
+                .cedula("1113443234")
+                .aniosExperiencia(3)
+                .nombre("Esteban Valverde")
+                .foto("imagenes/userMale7.jpeg")
+                .telefono("3122345467")
+                .edad(26)
+                .listaIdiomas(listaIdiomas1)
+                .valoraciones(listaValoracionesQuemadas)
+                .build();
+        listaGuiasQuemados.add(guia);
+
+        //Guia 2
+        guia = GuiaTuristico.builder()
+                .cedula("1113543234")
+                .aniosExperiencia(2)
+                .nombre("Sahara Brooks")
+                .foto("imagenes/userFem7.jpeg")
+                .telefono("3190345467")
+                .edad(24)
+                .listaIdiomas(listaIdiomas3)
+                .valoraciones(listaValoracionesQuemadas)
+                .build();
+        listaGuiasQuemados.add(guia);
+
+        //Guia 3
+        guia = GuiaTuristico.builder()
+                .cedula("1002334438")
+                .aniosExperiencia(6)
+                .nombre("Juan Mesa")
+                .foto("imagenes/userMale11.jpeg")
+                .telefono("3012348797")
+                .edad(29)
+                .listaIdiomas(listaIdiomas2)
+                .valoraciones(listaValoracionesQuemadas)
+                .build();
+        listaGuiasQuemados.add(guia);
+
+        //Guia 4
+        guia = GuiaTuristico.builder()
+                .cedula("1847292810")
+                .aniosExperiencia(1)
+                .nombre("Juliana Giraldo")
+                .foto("imagenes/userFem11.jpeg")
+                .telefono("3128945647")
+                .edad(21)
+                .listaIdiomas(listaIdiomas1)
+                .valoraciones(listaValoracionesQuemadas)
+                .build();
+        listaGuiasQuemados.add(guia);
+
+        agenciaViajes.setListaGuias(listaGuiasQuemados);
         agenciaViajes.setListaDestinos(listaDestinosQuemados);
         agenciaViajes.setListaPaquetes(listaPaquetesQuemados);
         agenciaViajes.setListaClientes(listaClientesQuemados);
-
-
-
-
-
-
-
     }
-
-
-
 }

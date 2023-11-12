@@ -1,12 +1,16 @@
 package co.edu.uniquindio.agenciaViajes.model;
 
+import co.edu.uniquindio.agenciaViajes.enums.EstadoReserva;
 import co.edu.uniquindio.agenciaViajes.exceptions.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.java.Log;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.SimpleFormatter;
 
@@ -18,7 +22,7 @@ public class AgenciaViajes {
 
     private ArrayList<Cliente> listaClientes; //necesario que sea private final???
     private final ArrayList<Administrador> listaAdministradores;
-    private final ArrayList<GuiaTuristico> listaGuias;
+    private ArrayList<GuiaTuristico> listaGuias;
     private ArrayList<Destino> listaDestinos;
     private ArrayList<Paquete> listaPaquetes;
     private ArrayList<Reserva> listaReservas;
@@ -207,6 +211,51 @@ public class AgenciaViajes {
         return cliente;
     }
 
+    public GuiaTuristico buscarGuiaConCedula(String cedula){
+        GuiaTuristico elegido=null;
+        for(GuiaTuristico guia: listaGuias){
+            if (guia.getCedula().equals(cedula)){
+                elegido=guia;
+            }
+        }
+        return elegido;
+    }
+
+
+    public Reserva registrarReserva(LocalDateTime fechaHora, LocalDate fechaInicial, LocalDate fechaFinal, Cliente cliente, int numPersonas,
+                                    String cedulaGuia, EstadoReserva estadoReserva, Paquete paquete) throws AtributoVacioException {
+
+        GuiaTuristico guiaElegido;
+        String numerosCedula;
+        if(cedulaGuia == null || cedulaGuia.isBlank()){
+            throw new AtributoVacioException("Escoger un guia es obligatorio");
+        }else{
+            numerosCedula = cedulaGuia.substring(cedulaGuia.indexOf("-") + 1).trim();
+            guiaElegido= buscarGuiaConCedula(numerosCedula);
+        }
+
+        if(guiaElegido == null){
+            throw new AtributoVacioException("El guía elegido no existe");
+        }
+
+        Reserva reservaFinal = Reserva.builder()
+                .fechaSolicitud(fechaHora)
+                .fechaInicio(fechaInicial)
+                .fechaFin(fechaFinal)
+                .cliente(cliente)
+                .numPersonas(numPersonas)
+                .guia(guiaElegido)
+                .estado(estadoReserva)
+                .paquete(paquete)
+                .build();
+
+        listaReservas.add(reservaFinal);
+        //escribirCliente(cliente);
+
+        log.info("Se ha registrado una nueva reserva a las horas: "+fechaHora);
+        return reservaFinal;
+    }
+
     /**
      * Metodo que verifica si el email string cumple con el formato de usuario@dominio.ext
      * @param email
@@ -216,5 +265,52 @@ public class AgenciaViajes {
         email = email.trim();
         String regex = "^[A-Za-z0-9+_.-]+@([A-Za-z0-9]+\\.)+[A-Za-z]{2,4}$";
         return email.matches(regex);
+    }
+
+    public int buscarUnidadesDisponibles(Paquete paquete){
+        int unidadesDisponibles = paquete.getCupoMaximo();
+        for (Reserva reserva : listaReservas) {
+            if (reserva.getPaquete().equals(paquete) && reserva.getEstado() == EstadoReserva.PENDIENTE) {
+                unidadesDisponibles -= reserva.getNumPersonas();
+            }
+        }
+        return unidadesDisponibles;
+    }
+
+    public ArrayList<GuiaTuristico> obtenerGuiasTrabajandoEn(LocalDate fechaInicial, LocalDate fechaFinal) {
+        ArrayList<GuiaTuristico> listaTrabajando = new ArrayList<>();
+
+        for (Reserva reserva : listaReservas) {
+            LocalDate fechaTrabajoInicio = reserva.getFechaInicio();
+            LocalDate fechaTrabajoFin = reserva.getFechaFin();
+
+            // Verificar si la reserva está dentro del rango especificado
+            if ((fechaTrabajoInicio.isAfter(fechaInicial) || fechaTrabajoInicio.isEqual(fechaInicial)) &&
+                    (fechaTrabajoFin.isBefore(fechaFinal) || fechaTrabajoFin.isEqual(fechaFinal))) {
+
+                // Agregar el guía asociado a la reserva a la lista de guías trabajando
+                GuiaTuristico guia = reserva.getGuia();
+                listaTrabajando.add(guia);
+            } else if ((fechaTrabajoInicio.isEqual(fechaInicial) || fechaTrabajoFin.isEqual(fechaFinal)) &&
+                    !listaTrabajando.contains(reserva.getGuia())) {
+                // Agregar el guía si trabaja el mismo día que fechaInicial o fechaFinal
+                listaTrabajando.add(reserva.getGuia());
+            }
+        }
+
+        return listaTrabajando;
+    }
+
+    public ArrayList<GuiaTuristico> obtenerGuiasDisponiblesEnFecha(LocalDate fechaInicial, LocalDate fechaFinal){
+        ArrayList<GuiaTuristico> guiasDisponibles = new ArrayList<>();
+
+        ArrayList<GuiaTuristico> guiasNoDisponibles= obtenerGuiasTrabajandoEn(fechaInicial, fechaFinal);
+         for (GuiaTuristico guia: listaGuias){
+             if (!guiasNoDisponibles.contains(guia)){
+                 guiasDisponibles.add(guia);
+             }
+         }
+
+        return guiasDisponibles;
     }
 }

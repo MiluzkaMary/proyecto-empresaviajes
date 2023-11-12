@@ -5,6 +5,7 @@ import co.edu.uniquindio.agenciaViajes.controllers.VentanaRegistroIngresoControl
 import co.edu.uniquindio.agenciaViajes.model.Administrador;
 import co.edu.uniquindio.agenciaViajes.model.AgenciaViajes;
 import co.edu.uniquindio.agenciaViajes.model.Cliente;
+import co.edu.uniquindio.agenciaViajes.model.Paquete;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,13 +13,18 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lombok.Data;
 
 import java.io.IOException;
+@Data
 
 public class Aplicacion extends Application {
 
     private Stage stage;
     private AnchorPane rootLayout;
+
+    private Cliente cliente=null;
+    private Administrador admin=null;
 
     public VentanaInicioController ventanaInicioController;
     public VentanaRegistroIngresoController ventanaRegistroIngresoController;
@@ -32,14 +38,24 @@ public class Aplicacion extends Application {
         this.stage=stage;
         this.stage.setTitle("Travel Dreams");
         this.stage.setResizable(false); //para prohibir al usuario maximizar la ventana
-        Cliente cliente=null;
-        Administrador admin=null;
         mostrarVentanaPrincipal(cliente, admin);
 
     }
 
     public void mostrarVentanaDestinos(){
         ventanaInicioController.mostrarPanelDerechoDestinos();
+    }
+
+    public void mostrarVentanaGuias(){
+        ventanaInicioController.mostrarPanelDerechoGuias();
+    }
+
+    public void motrarVentanaPaquetes(){
+        ventanaInicioController.mostrarPanelDerechoPaquetes();
+    }
+
+    public void mostrarVentanaReserva(Paquete paquete){
+        ventanaInicioController.mostrarPanelDerechoReservas(paquete);
     }
 
     public void mostrarVentanaPrincipal(Cliente cliente, Administrador admin){

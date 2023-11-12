@@ -23,4 +23,10 @@ public class TableroUsuarioController implements Initializable {
     public void mostrarDestinos(){
         aplicacion.mostrarVentanaDestinos();
     }
+    public void mostrarGuias(){
+        aplicacion.mostrarVentanaGuias();
+    }
+    public void mostrarPaquetes(){
+        aplicacion.motrarVentanaPaquetes();
+    }
 }

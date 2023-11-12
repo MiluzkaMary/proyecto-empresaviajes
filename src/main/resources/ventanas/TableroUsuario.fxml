@@ -102,7 +102,7 @@
                   <Image url="@../imagenes/guia.png" />
                </image>
             </ImageView>
-            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="        Nuestros Guias">
+            <Button mnemonicParsing="false" onAction="#mostrarGuias" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="        Nuestros Guias">
                <font>
                   <Font size="16.0" />
                </font>
@@ -114,7 +114,7 @@
          </styleClass></Pane>
       <Pane layoutY="76.0" prefHeight="68.0" prefWidth="272.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Paquetes">
+            <Button mnemonicParsing="false" onAction="#mostrarPaquetes" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Paquetes">
                <font>
                   <Font size="16.0" />
                </font>

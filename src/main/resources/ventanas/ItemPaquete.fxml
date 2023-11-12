@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane minWidth="307.0" prefHeight="507.0" prefWidth="207.0" stylesheets="@../aplicacion.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.agenciaViajes.controllers.ItemPaqueteController">
+<AnchorPane minWidth="307.0" prefHeight="775.0" prefWidth="207.0" stylesheets="@../aplicacion.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.agenciaViajes.controllers.ItemPaqueteController">
    <children>
       <Text fx:id="txtValoracion" fill="#5a5050" layoutX="221.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4.4" wrappingWidth="47.0224609375">
          <font>
@@ -21,7 +21,7 @@
             <Font name="Calibri Bold" size="18.0" />
          </font>
       </Text>
-      <Text fx:id="txtDias" fill="#5a5050" layoutX="14.0" layoutY="390.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3 días" wrappingWidth="105.6572265625">
+      <Text fx:id="txtDias" fill="#5a5050" layoutX="14.0" layoutY="390.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Duracion: 3 días" wrappingWidth="242.75390625">
          <font>
             <Font size="14.0" />
          </font>
@@ -68,16 +68,39 @@
          </children>
       </HBox>
       <ImageView fx:id="mainPicture" fitHeight="307.0" fitWidth="307.0" pickOnBounds="true" preserveRatio="true" />
-      <Text fx:id="txtPrecio" fill="#433c3c" layoutX="14.0" layoutY="465.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Desde 267.700COL$ por persona">
+      <Text fx:id="txtPrecio" fill="#433c3c" layoutX="14.0" layoutY="459.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Desde 267.700COL$ por persona">
          <font>
             <Font name="Calibri Bold" size="18.0" />
          </font>
       </Text>
       <Text fx:id="txtNumValoraciones" fill="#5a5050" layoutX="268.0" layoutY="426.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(56)">
          <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Text fx:id="txtDescripcion" fill="#5a5050" layoutX="14.0" layoutY="485.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descripción: Sumérgete en una aventura inolvidable con nuestro paquete Expedición Natural y Cultural. Explora la belleza tropical de Hawái, descubre las maravillas históricas de Cancún y maravíllate con la majestuosidad de Yellowstone Park. Este viaje único combina playas doradas, ruinas mayas y paisajes naturales asombrosos. ¡Una experiencia que te llevará a través del tiempo y la naturaleza en un solo viaje!" wrappingWidth="275.06787109375">
+         <font>
             <Font size="14.0" />
          </font>
       </Text>
+      <Text fx:id="lblDestino" fill="#5a5050" layoutX="14.0" layoutY="680.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Destinos:" wrappingWidth="65.6572265625">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Text>
+      <Text fx:id="txtDestinos" fill="#5a5050" layoutX="18.0" layoutY="680.0" strokeType="OUTSIDE" strokeWidth="0.0" text="                Playa blanca" wrappingWidth="266.06787109375">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Button fx:id="btnReservar" layoutX="68.0" layoutY="718.0" mnemonicParsing="false" onAction="#mostrarPanelReserva" prefHeight="33.0" prefWidth="171.0" styleClass="reservaButton" stylesheets="@../aplicacion.css" text="Reservar" visible="false">
+         <font>
+            <Font name="Calibri Bold" size="16.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
    <styleClass>
       <String fx:value="paquete_item" />

@@ -18,4 +18,16 @@ public class TableroClienteController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
+
+    public void mostrarDestinos(){
+        aplicacion.mostrarVentanaDestinos();
+    }
+
+    public void mostrarGuias(){
+        aplicacion.mostrarVentanaGuias();
+    }
+
+    public void mostrarPaquetes(){
+        aplicacion.motrarVentanaPaquetes();
+    }
 }

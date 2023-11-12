@@ -8,27 +8,28 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="622.0" prefWidth="1025.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.agenciaViajes.controllers.VentanaFiltrarDestinosController">
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="622.0" prefWidth="1025.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.agenciaViajes.controllers.VentanaFiltrarGuiasController">
    <children>
       <Pane layoutX="10.0" layoutY="64.0" prefHeight="115.0" prefWidth="990.0" stylesheets="@../aplicacion.css">
          <children>
-            <Text fill="#323232" layoutX="14.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filtrar Destinos ">
+            <Text fill="#323232" layoutX="14.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filtrar Guías Turístico">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Text fill="#838181" layoutX="14.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ciudad">
+            <Text fill="#838181" layoutX="14.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Idioma">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Text>
-            <Text fill="#838181" layoutX="306.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Clima">
+            <Text fill="#838181" layoutX="306.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Años de Experiencia">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Text>
-            <ComboBox fx:id="comboCiudad" layoutX="14.0" layoutY="61.0" minHeight="0.0" prefHeight="29.0" prefWidth="250.0" promptText="Elegir ciudad" />
-            <ComboBox fx:id="comboClima" layoutX="305.0" layoutY="61.0" minHeight="0.0" prefHeight="29.0" prefWidth="250.0" promptText="Elegir clima" />
+            <ComboBox fx:id="combo" layoutX="14.0" layoutY="61.0" minHeight="0.0" prefHeight="29.0" prefWidth="250.0" promptText="Elegir Idioma" />
+            <ComboBox fx:id="comboAniosExperiencia" layoutX="305.0" layoutY="61.0" minHeight="0.0" prefHeight="29.0" prefWidth="250.0" promptText="Elegir años de Experiencia" />
             <Pane layoutX="878.0" layoutY="55.0" prefHeight="35.0" prefWidth="89.0" styleClass="filtroPanel" stylesheets="@../aplicacion.css">
                <children>
                   <Button fx:id="btnFiltrar" mnemonicParsing="false" prefHeight="35.0" prefWidth="89.0" stylesheets="@../aplicacion.css" text="Filtrar        " textFill="WHITE">
@@ -61,7 +62,7 @@
       </Pane>
       <Pane layoutX="10.0" layoutY="20.0" prefHeight="28.0" prefWidth="990.0" stylesheets="@../aplicacion.css">
          <children>
-            <TextField fx:id="txtBuscador" layoutY="-2.0" minHeight="-Infinity" prefHeight="29.0" prefWidth="878.0" promptText="Buscar por nombre del destino" styleClass="transparent" stylesheets="@../aplicacion.css" />
+            <TextField fx:id="txtBuscador" layoutY="-2.0" minHeight="-Infinity" prefHeight="29.0" prefWidth="878.0" promptText="Buscar por nombre del guía" styleClass="transparent" stylesheets="@../aplicacion.css" />
             <Separator layoutX="900.0" layoutY="-0.0" orientation="VERTICAL" prefHeight="27.0" prefWidth="3.0" />
             <Button fx:id="btnBuscador" layoutX="903.0" layoutY="-2.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="99.0" stylesheets="@../aplicacion.css" text=" Buscar" textFill="#838181">
                <font>
@@ -83,9 +84,9 @@
             <String fx:value="shadowPane" />
          </styleClass>
       </Pane>
-      <ScrollPane fx:id="scrollDestinos" layoutX="10.0" layoutY="200.0" prefHeight="403.0" prefWidth="990.0" styleClass="transparent" stylesheets="@../aplicacion.css">
+      <ScrollPane fx:id="scrollGuias" layoutX="10.0" layoutY="200.0" prefHeight="403.0" prefWidth="990.0" styleClass="transparent" stylesheets="@../aplicacion.css">
          <content>
-            <GridPane fx:id="gridDestino" layoutY="-20.0" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="0.0">
+            <GridPane fx:id="gridGuias" layoutY="-20.0" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="0.0">
                <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>

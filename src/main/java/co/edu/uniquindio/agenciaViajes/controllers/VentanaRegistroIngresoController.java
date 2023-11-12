@@ -152,6 +152,7 @@ public class VentanaRegistroIngresoController implements Initializable {
     public void iniciarSesionCliente(Cliente cliente) {
         ventana.close();
         Administrador admin=null;
+        aplicacion.setCliente(cliente);
         aplicacion.mostrarVentanaPrincipal(cliente, admin);
     }
 

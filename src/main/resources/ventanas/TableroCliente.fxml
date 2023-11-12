@@ -107,7 +107,7 @@
                   <Image url="@../imagenes/guia.png" />
                </image>
             </ImageView>
-            <Button layoutX="3.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="260.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="        Nuestros Guias">
+            <Button layoutX="3.0" mnemonicParsing="false" onAction="#mostrarGuias" prefHeight="68.0" prefWidth="260.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="        Nuestros Guias">
                <font>
                   <Font size="16.0" />
                </font>
@@ -120,7 +120,7 @@
       </Pane>
       <Pane layoutY="208.0" prefHeight="68.0" prefWidth="272.0">
          <children>
-            <Button layoutX="8.0" layoutY="6.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="239.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Paquetes">
+            <Button layoutX="8.0" layoutY="6.0" mnemonicParsing="false" onAction="#mostrarPaquetes" prefHeight="68.0" prefWidth="239.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Paquetes">
                <font>
                   <Font size="16.0" />
                </font>
@@ -138,7 +138,7 @@
       </Pane>
       <Pane layoutX="-1.0" layoutY="140.0" prefHeight="68.0" prefWidth="272.0" stylesheets="@../aplicacion.css">
          <children>
-            <Button layoutX="4.0" layoutY="8.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="239.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Destinos">
+            <Button layoutX="4.0" layoutY="8.0" mnemonicParsing="false" onAction="#mostrarDestinos" prefHeight="56.0" prefWidth="239.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Destinos">
                <font>
                   <Font size="16.0" />
                </font>

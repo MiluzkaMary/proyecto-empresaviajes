@@ -2,9 +2,11 @@ package co.edu.uniquindio.agenciaViajes.controllers;
 
 import co.edu.uniquindio.agenciaViajes.app.Aplicacion;
 import co.edu.uniquindio.agenciaViajes.model.AgenciaViajes;
+import co.edu.uniquindio.agenciaViajes.model.Cliente;
 import co.edu.uniquindio.agenciaViajes.model.Paquete;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
@@ -19,6 +21,7 @@ public class ItemPaqueteController implements Initializable {
     public Aplicacion aplicacion;
     public AgenciaViajes agenciaViajes = AgenciaViajes.getInstance();
     private Paquete paquete;
+    private boolean existeCliente;
 
     @FXML
     private ImageView starTwo;
@@ -53,6 +56,18 @@ public class ItemPaqueteController implements Initializable {
     @FXML
     private ImageView starOne;
 
+    @FXML
+    private Text txtDescripcion;
+
+    @FXML
+    private Button btnReservar;
+
+    @FXML
+    private Text txtDestinos;
+
+    @FXML
+    private Text lblDestino;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -62,11 +77,13 @@ public class ItemPaqueteController implements Initializable {
     public void cargarDatos(Paquete paquete){
         this.paquete=paquete;
         txtTitulo.setText(paquete.getNombre());
-        txtDias.setText(String.valueOf(paquete.getDiasDuracion())+" días");
+        txtDias.setText(String.valueOf("Duración: "+paquete.getDiasDuracion())+" días");
         txtValoracion.setText(String.valueOf(paquete.obtenerPromedioValoraciones()));
-        txtNumValoraciones.setText(String.valueOf(paquete.obtenerNumValoraciones()));
+        txtNumValoraciones.setText(String.valueOf("("+paquete.obtenerNumValoraciones()+")"));
         String valorPrecioCadena = String.format("%,.0f", paquete.getPrecio());
         txtPrecio.setText("Desde "+ valorPrecioCadena+"COL$ por persona");
+        txtDescripcion.setText(paquete.getDescripcion());
+        txtDestinos.setText("                "+String.join(", ", paquete.obtenerNombresDestinos()));
         String foto=paquete.getDestinos().get(0).getFotos().get(0);
         //se toma la primera foto del primer destino que tiene el paquete
         try {
@@ -79,10 +96,21 @@ public class ItemPaqueteController implements Initializable {
             }
         }
 
+        if (existeCliente){
+            btnReservar.setVisible(true);
+        }else{
+            lblDestino.setY(lblDestino.getY()+10);
+            txtDestinos.setY(txtDestinos.getY()+10);
+        }
+
         /**
          * InputStream inputStream = getClass().getResourceAsStream("/imagenes/chichenitza.png");
          *         Image image = new Image(inputStream);
          *         mainPicture.setImage(image);
          */
+    }
+
+    public void mostrarPanelReserva(){
+        aplicacion.mostrarVentanaReserva(this.paquete);
     }
 }

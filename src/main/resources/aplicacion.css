@@ -123,3 +123,42 @@
 .shadow {
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 5);
 }
+
+.reservaButton{
+    -fx-background-color: orange;
+    -fx-border-color: #ff9100;
+    -fx-background-radius: 50;
+    -fx-border-radius: 50;
+    -fx-opacity: 1.0;
+    -fx-text-fill: white;
+}
+.reservaButton:hover{
+    -fx-background-color: #ff9100;
+
+}
+
+.eliminarBtn{
+    -fx-background-color: #ea2828;
+    -fx-border-color: #ea2828;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-opacity: 1.0;
+    -fx-text-fill: white;
+}
+.eliminarBtn:hover{
+    -fx-background-color: #e50d0d;
+
+}
+
+.confirmarBtn{
+    -fx-background-color: #0889bd;
+    -fx-border-color: #0889bd;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-opacity: 1.0;
+    -fx-text-fill: white;
+}
+.confirmarBtn:hover{
+    -fx-background-color: #11A7E5FF;
+
+}
