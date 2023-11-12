@@ -27,8 +27,12 @@ import java.util.ResourceBundle;
 public class VentanaRegistroIngresoController implements Initializable {
 
     public AgenciaViajes agenciaViajes = AgenciaViajes.getInstance();
+
     private Aplicacion aplicacion;
     private Stage ventana;
+
+    @FXML
+    private Button btnOlvidarContrasenia;
 
     @FXML
     private Pane paneCrearCuenta;
@@ -317,6 +321,8 @@ public class VentanaRegistroIngresoController implements Initializable {
         txtHidePassword.setVisible(true);
 
     }
+
+
 
 
 }

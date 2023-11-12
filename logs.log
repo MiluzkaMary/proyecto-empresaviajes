@@ -494,3 +494,43 @@ nov. 11, 2023 10:18:22 P. M. co.edu.uniquindio.agenciaViajes.model.AgenciaViaje
 INFO: Se ha registrado un nuevo cliente con la cédula: 476299
 nov. 11, 2023 10:18:52 P. M. co.edu.uniquindio.agenciaViajes.model.AgenciaViajes registrarReserva
 INFO: Se ha registrado una nueva reserva a las horas: 2023-11-11T22:18:52.622452800
+nov. 12, 2023 12:54:57 A. M. co.edu.uniquindio.agenciaViajes.model.AgenciaViajes <init>
+INFO: Se crea una nueva instancia de AgenciaViajes
+nov. 12, 2023 12:58:26 A. M. co.edu.uniquindio.agenciaViajes.model.AgenciaViajes registrarCliente
+INFO: Se ha registrado un nuevo cliente con la cédula: 476299
+nov. 12, 2023 1:07:05 A. M. co.edu.uniquindio.agenciaViajes.model.AgenciaViajes <init>
+INFO: Se crea una nueva instancia de AgenciaViajes
+nov. 12, 2023 1:07:37 A. M. co.edu.uniquindio.agenciaViajes.model.AgenciaViajes registrarCliente
+INFO: Se ha registrado un nuevo cliente con la cédula: 476299
+nov. 12, 2023 1:10:02 A. M. co.edu.uniquindio.agenciaViajes.model.AgenciaViajes registrarReserva
+INFO: Se ha registrado una nueva reserva a las horas: 2023-11-12T01:10:02.916696
+nov. 12, 2023 1:47:54 A. M. co.edu.uniquindio.agenciaViajes.model.AgenciaViajes <init>
+INFO: Se crea una nueva instancia de AgenciaViajes
+nov. 12, 2023 1:48:10 A. M. co.edu.uniquindio.agenciaViajes.model.AgenciaViajes registrarCliente
+INFO: Se ha registrado un nuevo cliente con la cédula: 476299
+nov. 12, 2023 1:50:42 A. M. co.edu.uniquindio.agenciaViajes.model.AgenciaViajes <init>
+INFO: Se crea una nueva instancia de AgenciaViajes
+nov. 12, 2023 1:50:53 A. M. co.edu.uniquindio.agenciaViajes.model.AgenciaViajes registrarCliente
+INFO: Se ha registrado un nuevo cliente con la cédula: 476299
+nov. 12, 2023 1:51:58 A. M. co.edu.uniquindio.agenciaViajes.model.AgenciaViajes registrarReserva
+INFO: Se ha registrado una nueva reserva a las horas: 2023-11-12T01:51:58.141487400
+nov. 12, 2023 1:55:04 A. M. co.edu.uniquindio.agenciaViajes.model.AgenciaViajes <init>
+INFO: Se crea una nueva instancia de AgenciaViajes
+nov. 12, 2023 1:55:42 A. M. co.edu.uniquindio.agenciaViajes.model.AgenciaViajes registrarCliente
+INFO: Se ha registrado un nuevo cliente con la cédula: 476299
+nov. 12, 2023 1:56:07 A. M. co.edu.uniquindio.agenciaViajes.model.AgenciaViajes registrarReserva
+INFO: Se ha registrado una nueva reserva a las horas: 2023-11-12T01:56:07.212566500
+nov. 12, 2023 2:01:23 A. M. co.edu.uniquindio.agenciaViajes.model.AgenciaViajes <init>
+INFO: Se crea una nueva instancia de AgenciaViajes
+nov. 12, 2023 2:01:29 A. M. co.edu.uniquindio.agenciaViajes.model.AgenciaViajes registrarCliente
+INFO: Se ha registrado un nuevo cliente con la cédula: 476299
+nov. 12, 2023 2:01:59 A. M. co.edu.uniquindio.agenciaViajes.model.AgenciaViajes registrarReserva
+INFO: Se ha registrado una nueva reserva a las horas: 2023-11-12T02:01:59.814401500
+nov. 12, 2023 2:03:12 A. M. co.edu.uniquindio.agenciaViajes.model.AgenciaViajes registrarReserva
+INFO: Se ha registrado una nueva reserva a las horas: 2023-11-12T02:03:12.259424100
+nov. 12, 2023 2:16:02 A. M. co.edu.uniquindio.agenciaViajes.model.AgenciaViajes <init>
+INFO: Se crea una nueva instancia de AgenciaViajes
+nov. 12, 2023 2:16:12 A. M. co.edu.uniquindio.agenciaViajes.model.AgenciaViajes registrarCliente
+INFO: Se ha registrado un nuevo cliente con la cédula: 476299
+nov. 12, 2023 2:16:31 A. M. co.edu.uniquindio.agenciaViajes.model.AgenciaViajes registrarReserva
+INFO: Se ha registrado una nueva reserva a las horas: 2023-11-12T02:16:31.223890200

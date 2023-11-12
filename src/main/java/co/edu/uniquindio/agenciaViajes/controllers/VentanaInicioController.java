@@ -987,6 +987,16 @@ public class VentanaInicioController  implements Initializable {
 
         listaPaquetesQuemados.add(paquete2);
 
+        //Datos Holdan
+        cliente = Cliente.builder().cedula("111222")
+                .nombre("gg")
+                .correo("holdann.lopezs@gmail.com")
+                .telefono("312313112")
+                .contrasenia("123")
+                .direccion("dsfds")
+                .foto("imagenes/user.png")
+                .paquetesFavoritos(new ArrayList<>()).build();
+        listaClientesQuemados.add(cliente);
         //-------------- GUIAS QUEMADOS ----------------//
 
         //Guia 1
