@@ -8,7 +8,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane prefHeight="800.0" prefWidth="270.0" styleClass="white-color" stylesheets="@../aplicacion.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.agenciaViajes.controllers.TableroClienteController">
+
+<Pane prefHeight="800.0" prefWidth="270.0" styleClass="white-color" stylesheets="@../aplicacion.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.agenciaViajes.controllers.TableroAdminController">
    <children>
       <Pane layoutY="674.0" prefHeight="68.0" prefWidth="272.0">
          <children>
@@ -30,7 +31,7 @@
       </Pane>
       <Pane layoutY="605.0" prefHeight="68.0" prefWidth="272.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="              Reportar un error">
+            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="        Reportar un error">
                <font>
                   <Font size="16.0" />
                </font>
@@ -48,7 +49,7 @@
       </Pane>
       <Pane layoutY="485.0" prefHeight="68.0" prefWidth="272.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="           Sobre Nosotros">
+            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="     Sobre Nosotros">
                <font>
                   <Font size="16.0" />
                </font>
@@ -89,7 +90,7 @@
                   <Image url="@../imagenes/pets.png" />
                </image>
             </ImageView>
-            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="        Sobre Mascotas">
+            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="   Sobre Mascotas">
                <font>
                   <Font size="16.0" />
                </font>
@@ -100,18 +101,18 @@
             <String fx:value="cursor_hand" />
          </styleClass>
       </Pane>
-      <Pane layoutY="278.0" prefHeight="68.0" prefWidth="272.0">
+      <Pane layoutY="277.0" prefHeight="68.0" prefWidth="272.0">
          <children>
-            <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="21.0" layoutY="17.0">
-               <image>
-                  <Image url="@../imagenes/guia.png" />
-               </image>
-            </ImageView>
-            <Button mnemonicParsing="false" onAction="#mostrarGuias" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="        Nuestros Guias">
+            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Estadísticas">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
+            <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="20.0" layoutY="17.0">
+               <image>
+                  <Image url="@../imagenes/estadisticas.png" />
+               </image>
+            </ImageView>
          </children>
          <styleClass>
             <String fx:value="over" />
@@ -120,7 +121,7 @@
       </Pane>
       <Pane layoutY="208.0" prefHeight="68.0" prefWidth="272.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#mostrarPaquetes" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Paquetes">
+            <Button mnemonicParsing="false" onAction="#gestionPaquetes" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="      Gestionar Paquetes">
                <font>
                   <Font size="16.0" />
                </font>
@@ -138,7 +139,7 @@
       </Pane>
       <Pane layoutY="139.0" prefHeight="68.0" prefWidth="272.0" stylesheets="@../aplicacion.css">
          <children>
-            <Button mnemonicParsing="false" onAction="#mostrarDestinos" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Destinos">
+            <Button mnemonicParsing="false" onAction="#gestionDestinos" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="      Gestionar Destinos">
                <font>
                   <Font size="16.0" />
                </font>
@@ -154,8 +155,8 @@
             <String fx:value="cursor_hand" />
          </styleClass>
       </Pane>
-      <Separator layoutY="277.0" prefHeight="3.0" prefWidth="272.0" />
-      <Separator layoutY="554.0" prefHeight="9.0" prefWidth="272.0" />
+      <Separator layoutY="346.0" prefHeight="3.0" prefWidth="272.0" />
+      <Separator layoutY="550.0" prefHeight="9.0" prefWidth="272.0" />
       <Text fill="#838181" layoutX="21.0" layoutY="594.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HELP" wrappingWidth="93.2578125">
          <font>
             <Font name="System Bold" size="18.0" />
@@ -163,14 +164,14 @@
       </Text>
       <Pane layoutY="70.0" prefHeight="68.0" prefWidth="272.0" stylesheets="@../aplicacion.css">
          <children>
-            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Reservas">
+            <Button mnemonicParsing="false" onAction="#gestionGuias" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Gestionar Guías">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="19.0" layoutY="19.0">
+            <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="20.0" layoutY="17.0">
                <image>
-                  <Image url="@../imagenes/reservas.png" />
+                  <Image url="@../imagenes/guia.png" />
                </image>
             </ImageView>
          </children>
@@ -182,7 +183,7 @@
       <Separator layoutY="69.0" prefHeight="3.0" prefWidth="272.0" />
       <Pane prefHeight="68.0" prefWidth="272.0" stylesheets="@../aplicacion.css">
          <children>
-            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="      Ajustes de Perfil">
+            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text=" Ajustes de Perfil">
                <font>
                   <Font size="16.0" />
                </font>

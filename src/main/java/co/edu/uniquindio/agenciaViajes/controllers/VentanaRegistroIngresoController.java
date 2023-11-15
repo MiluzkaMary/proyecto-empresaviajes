@@ -156,7 +156,6 @@ public class VentanaRegistroIngresoController implements Initializable {
     public void iniciarSesionCliente(Cliente cliente) {
         ventana.close();
         Administrador admin=null;
-        aplicacion.setCliente(cliente);
         aplicacion.mostrarVentanaPrincipal(cliente, admin);
     }
 
@@ -320,6 +319,10 @@ public class VentanaRegistroIngresoController implements Initializable {
         closeEye1.setVisible(true);
         txtHidePassword.setVisible(true);
 
+    }
+
+    public void recuperarContrasenia(){
+        aplicacion.ventanaRecuperarContrasenia(this.aplicacion);
     }
 
 

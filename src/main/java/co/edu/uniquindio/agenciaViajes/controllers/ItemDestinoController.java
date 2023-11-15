@@ -2,8 +2,10 @@ package co.edu.uniquindio.agenciaViajes.controllers;
 
 import co.edu.uniquindio.agenciaViajes.app.Aplicacion;
 import co.edu.uniquindio.agenciaViajes.model.*;
+import co.edu.uniquindio.agenciaViajes.util.ArchivoUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -93,7 +95,14 @@ public class ItemDestinoController implements Initializable {
     @FXML
     private ImageView starThree;
 
+    @FXML
+    private Button btnGestionar;
 
+    //listener
+    private boolean esGestion=false;
+    private MyListenerDestino myListenerDestino;
+
+    public Administrador administrador;
     public Aplicacion aplicacion;
     public AgenciaViajes agenciaViajes = AgenciaViajes.getInstance();
     private Destino destino;
@@ -104,6 +113,16 @@ public class ItemDestinoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
+
+    /**
+     * Método invocado cuando se hace clic en el elemento.
+     * Notifica al listener de clic con el destino asociado.
+     */
+    @FXML
+    private void click() {
+        myListenerDestino.onClickListener(destino);
 
     }
 
@@ -141,6 +160,10 @@ public class ItemDestinoController implements Initializable {
         }
         Circle clip = new Circle(userPic.getFitWidth() / 2, userPic.getFitHeight() / 2, userPic.getFitWidth() / 2);
         userPic.setClip(clip);
+
+        if (esGestion){
+            btnGestionar.setVisible(true);
+        }
     }
 
     public void pasarFoto(){
@@ -155,6 +178,8 @@ public class ItemDestinoController implements Initializable {
                     mainPicture.setImage(image);
                 }
             }
+        }else{
+            ArchivoUtils.mostrarMensaje("Error", "Máximo valor alcanzado", "Alcanzaste la ultima foto en la lista de este destino", Alert.AlertType.ERROR);
         }
     }
 
@@ -170,6 +195,8 @@ public class ItemDestinoController implements Initializable {
                     mainPicture.setImage(image);
                 }
             }
+        }else{
+            ArchivoUtils.mostrarMensaje("Error", "Mínimo valor alcanzado", "Alcanzaste la primera foto en la lista de este destino", Alert.AlertType.ERROR);
         }
     }
 
@@ -193,8 +220,8 @@ public class ItemDestinoController implements Initializable {
             }
             Circle clip = new Circle(userPic.getFitWidth() / 2, userPic.getFitHeight() / 2, userPic.getFitWidth() / 2);
             userPic.setClip(clip);
-
-
+        }else{
+            ArchivoUtils.mostrarMensaje("Error", "Máximo valor alcanzado", "Alcanzaste el ultimo comentario calificado para este destino", Alert.AlertType.ERROR);
         }
 
     }
@@ -220,6 +247,9 @@ public class ItemDestinoController implements Initializable {
             Circle clip = new Circle(userPic.getFitWidth() / 2, userPic.getFitHeight() / 2, userPic.getFitWidth() / 2);
             userPic.setClip(clip);
 
+
+        }else{
+            ArchivoUtils.mostrarMensaje("Error", "Mínimo valor alcanzado", "Alcanzaste el primer comentario calificado para este destino", Alert.AlertType.ERROR);
 
         }
 

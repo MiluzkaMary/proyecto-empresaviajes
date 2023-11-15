@@ -196,6 +196,14 @@
             <String fx:value="over" />
          </styleClass>
       </Button>
+      <Button fx:id="btnGestionar" layoutX="763.0" layoutY="74.0" mnemonicParsing="false" onAction="#click" prefHeight="33.0" prefWidth="171.0" styleClass="reservaButton" stylesheets="@../aplicacion.css" text="Seleccionar" visible="false">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="Calibri Bold" size="16.0" />
+         </font>
+      </Button>
    </children>
    <styleClass>
       <String fx:value="white-bg" />

@@ -98,6 +98,8 @@ public class VentanaFiltrarDestinosController implements Initializable {
         }
     }
 
+
+
     public void establecerListaDestinos(){
         listaDestinos=agenciaViajes.getListaDestinos();
     }

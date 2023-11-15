@@ -1,6 +1,7 @@
 package co.edu.uniquindio.agenciaViajes.controllers;
 
 import co.edu.uniquindio.agenciaViajes.app.Aplicacion;
+import co.edu.uniquindio.agenciaViajes.model.Administrador;
 import co.edu.uniquindio.agenciaViajes.model.AgenciaViajes;
 import co.edu.uniquindio.agenciaViajes.model.Cliente;
 import co.edu.uniquindio.agenciaViajes.model.Paquete;
@@ -21,7 +22,13 @@ public class ItemPaqueteController implements Initializable {
     public Aplicacion aplicacion;
     public AgenciaViajes agenciaViajes = AgenciaViajes.getInstance();
     private Paquete paquete;
-    private boolean existeCliente;
+    private Cliente cliente;
+    private Administrador administrador;
+    private boolean esGestion=false;
+    private MyListenerPaquete myListenerPaquete;
+
+    @FXML
+    private Button btnGestionar;
 
     @FXML
     private ImageView starTwo;
@@ -60,7 +67,7 @@ public class ItemPaqueteController implements Initializable {
     private Text txtDescripcion;
 
     @FXML
-    private Button btnReservar;
+    private Button btnDetalles;
 
     @FXML
     private Text txtDestinos;
@@ -74,6 +81,16 @@ public class ItemPaqueteController implements Initializable {
 
     }
 
+    /**
+     * Método invocado cuando se hace clic en el elemento.
+     * Notifica al listener de clic con el vehículo asociado.
+     */
+    @FXML
+    private void click() {
+        myListenerPaquete.onClickListener(paquete);
+
+    }
+
     public void cargarDatos(Paquete paquete){
         this.paquete=paquete;
         txtTitulo.setText(paquete.getNombre());
@@ -84,8 +101,9 @@ public class ItemPaqueteController implements Initializable {
         txtPrecio.setText("Desde "+ valorPrecioCadena+"COL$ por persona");
         txtDescripcion.setText(paquete.getDescripcion());
         txtDestinos.setText("                "+String.join(", ", paquete.obtenerNombresDestinos()));
-        String foto=paquete.getDestinos().get(0).getFotos().get(0);
-        //se toma la primera foto del primer destino que tiene el paquete
+        String foto=paquete.getDestinos().get(1).getFotos().get(1);
+        //se toma la primera foto del primer destino que tiene el paquete (edit: ahora sera random la foto entre
+        //los destinos q tenga el paquete
         try {
             Image image = new Image(getClass().getResourceAsStream(foto));
             mainPicture.setImage(image);
@@ -96,12 +114,11 @@ public class ItemPaqueteController implements Initializable {
             }
         }
 
-        if (existeCliente){
-            btnReservar.setVisible(true);
-        }else{
-            lblDestino.setY(lblDestino.getY()+10);
-            txtDestinos.setY(txtDestinos.getY()+10);
+        if (esGestion){
+            btnDetalles.setVisible(false);
+            btnGestionar.setVisible(true);
         }
+
 
         /**
          * InputStream inputStream = getClass().getResourceAsStream("/imagenes/chichenitza.png");
@@ -110,7 +127,8 @@ public class ItemPaqueteController implements Initializable {
          */
     }
 
-    public void mostrarPanelReserva(){
-        aplicacion.mostrarVentanaReserva(this.paquete);
+
+    public void mostrarDetallesPaquete(){
+        aplicacion.mostrarDetallePaquete(this.paquete, this.cliente);
     }
 }

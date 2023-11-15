@@ -39,10 +39,16 @@ public class BarraUsuarioController implements Initializable {
         agenciaViajes.registrarCliente("476299", //aqui queme el admin pero solo como prueba
                 "Mary",
                 "317",
-                "foto",
+                "/imagenes/pruebaUser.jpg",
                 "miluska@gmail.com",
                 "armenia",
                 "12345");
+        agenciaViajes.registrarAdministradorPrueba("5656",
+                "Miluzka",
+                "316",
+                "/imagenes/pruebaUser.jpg",
+                "mary@gmail.com",
+                "54321");
         aplicacion.mostrarVentanaRegistroIngreso(aplicacion);
 
     }

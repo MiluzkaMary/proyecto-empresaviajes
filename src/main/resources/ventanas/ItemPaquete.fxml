@@ -93,13 +93,21 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <Button fx:id="btnReservar" layoutX="68.0" layoutY="718.0" mnemonicParsing="false" onAction="#mostrarPanelReserva" prefHeight="33.0" prefWidth="171.0" styleClass="reservaButton" stylesheets="@../aplicacion.css" text="Reservar" visible="false">
+      <Button fx:id="btnDetalles" layoutX="68.0" layoutY="718.0" mnemonicParsing="false" onAction="#mostrarDetallesPaquete" prefHeight="33.0" prefWidth="171.0" styleClass="reservaButton" stylesheets="@../aplicacion.css" text="Ver Detalles">
          <font>
             <Font name="Calibri Bold" size="16.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
+      </Button>
+      <Button fx:id="btnGestionar" layoutX="68.0" layoutY="718.0" mnemonicParsing="false" onAction="#click" prefHeight="33.0" prefWidth="171.0" styleClass="reservaButton" stylesheets="@../aplicacion.css" text="Seleccionar" visible="false">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="Calibri Bold" size="16.0" />
+         </font>
       </Button>
    </children>
    <styleClass>

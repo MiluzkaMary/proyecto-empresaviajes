@@ -11,7 +11,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 @Data
 
-public class TableroClienteController implements Initializable {
+public class TableroAdminController implements Initializable {
 
     public AgenciaViajes agenciaViajes = AgenciaViajes.getInstance();
     public Aplicacion aplicacion;
@@ -23,15 +23,15 @@ public class TableroClienteController implements Initializable {
 
     }
 
-    public void mostrarDestinos(){
-        aplicacion.mostrarVentanaDestinos();
-    } //cambiar ruta
+    public void gestionDestinos(){
+        aplicacion.mostrarVentanaGestionDestinos(this.cliente, this.administrador);
+    }
 
-    public void mostrarGuias(){
-        aplicacion.mostrarVentanaGuias();
-    } //cambiar ruta
+    public void gestionGuias(){
+        aplicacion.mostrarVentanaGestionGuias(this.cliente, this.administrador);
+    }
 
-    public void mostrarPaquetes(){
-        aplicacion.motrarVentanaPaquetes(this.cliente, this.administrador);
+    public void gestionPaquetes(){
+        aplicacion.motrarVentanaGestionPaquetes(this.cliente, this.administrador);
     }
 }

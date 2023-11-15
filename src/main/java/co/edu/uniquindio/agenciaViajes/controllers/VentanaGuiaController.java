@@ -9,10 +9,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import lombok.Data;
 
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+@Data
 
 public class VentanaGuiaController implements Initializable {
 
@@ -88,6 +90,17 @@ public class VentanaGuiaController implements Initializable {
     @FXML
     private ImageView estrella2Cliente;
 
+    @FXML
+    private Button btnGestionar;
+
+    @FXML
+    private Text txtCedula;
+
+    //para listeners
+    private boolean esGestion=false;
+    private MyListenerGuia myListenerGuia;
+    public Administrador administrador;
+
     public Aplicacion aplicacion;
     public AgenciaViajes agenciaViajes = AgenciaViajes.getInstance();
     private GuiaTuristico guia;
@@ -99,10 +112,20 @@ public class VentanaGuiaController implements Initializable {
 
     }
 
+    /**
+     * Método invocado cuando se hace clic en el elemento.
+     * Notifica al listener de clic con el guia asociado.
+     */
+    @FXML
+    private void click() {
+        myListenerGuia.onClickListener(guia);
+
+    }
+
     public void cargarDatos(GuiaTuristico guiaTuristico){
         this.guia=guiaTuristico;
         this.comentarios=guia.getValoraciones();
-
+        txtCedula.setText(String.valueOf(guia.getCedula()));
         txtNombreGuia.setText(guiaTuristico.getNombre());
         txtEdad.setText(guiaTuristico.getEdad()+" años");
         txtAniosExperiencia.setText(guiaTuristico.getAniosExperiencia()+" años");
@@ -135,6 +158,10 @@ public class VentanaGuiaController implements Initializable {
         }
         Circle clip = new Circle(userPic.getFitWidth() / 2, userPic.getFitHeight() / 2, userPic.getFitWidth() / 2);
         userPic.setClip(clip);
+
+        if (esGestion){
+            btnGestionar.setVisible(true);
+        }
     }
 
     public void pasarComentario(){

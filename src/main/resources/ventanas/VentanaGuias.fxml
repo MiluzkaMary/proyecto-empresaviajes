@@ -9,7 +9,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="448.0" prefWidth="959.0" stylesheets="@../aplicacion.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.agenciaViajes.controllers.VentanaGuiaController">
    <children>
       <Pane layoutY="320.0" prefHeight="128.0" prefWidth="958.0">
@@ -196,6 +195,24 @@
          </font>
       </Text>
       <Text fx:id="txtIdiomas" fill="#5a5050" layoutX="347.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="                     Cancún" wrappingWidth="580.6572265625">
+         <font>
+            <Font name="Calibri" size="17.0" />
+         </font>
+      </Text>
+      <Button fx:id="btnGestionar" layoutX="733.0" layoutY="98.0" mnemonicParsing="false" onAction="#click" prefHeight="33.0" prefWidth="171.0" styleClass="reservaButton" stylesheets="@../aplicacion.css" text="Seleccionar" visible="false">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="Calibri Bold" size="16.0" />
+         </font>
+      </Button>
+      <Text fill="#433c3c" layoutX="350.0" layoutY="293.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cédula:">
+         <font>
+            <Font name="Calibri Bold" size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="txtCedula" fill="#5a5050" layoutX="421.0" layoutY="293.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cancún" wrappingWidth="453.6572265625">
          <font>
             <Font name="Calibri" size="17.0" />
          </font>

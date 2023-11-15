@@ -41,6 +41,8 @@ public class VentanaInicioController  implements Initializable {
 
     public Cliente cliente;
 
+    public Administrador administrador;
+
     public AgenciaViajes agenciaViajes = AgenciaViajes.getInstance();
 
 
@@ -58,6 +60,8 @@ public class VentanaInicioController  implements Initializable {
             Node node = loader.load();
             panelIzquierdo.getChildren().add(node);
             TableroUsuarioController controlador = loader.getController();
+            controlador.setCliente(this.cliente);
+            controlador.setAdministrador(this.administrador);
             controlador.setAplicacion(this.aplicacion);
         }catch (Exception e){
             log.severe(e.getMessage());
@@ -72,12 +76,29 @@ public class VentanaInicioController  implements Initializable {
             panelIzquierdo.getChildren().add(node);
             TableroClienteController controlador = loader.getController();
             controlador.setAplicacion(this.aplicacion);
+            controlador.setCliente(this.cliente);
+            controlador.setAdministrador(this.administrador);
         }catch (Exception e){
             log.severe(e.getMessage());
         }
     }
 
-    public void mostrarPanelDerechoPaquetes(){
+    public void mostrarPanelIzquierdoAdmin(){
+        try {
+            panelIzquierdo.getChildren().clear();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/TableroAdmin.fxml"));
+            Node node = loader.load();
+            panelIzquierdo.getChildren().add(node);
+            TableroAdminController controlador = loader.getController();
+            controlador.setAplicacion(this.aplicacion);
+            controlador.setCliente(this.cliente);
+            controlador.setAdministrador(this.administrador);
+        }catch (Exception e){
+            log.severe(e.getMessage());
+        }
+    }
+
+    public void mostrarPanelDerechoPaquetes(Cliente cliente, Administrador admin){
         try {
             panelDerecho.getChildren().clear();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaFiltrarPaquetes.fxml"));
@@ -85,6 +106,8 @@ public class VentanaInicioController  implements Initializable {
             panelDerecho.getChildren().add(node);
             VentanaFiltrarPaquetesController controlador = loader.getController();
             controlador.setAplicacion(this.aplicacion);
+            controlador.setCliente(cliente);
+            controlador.setAdministrador(admin);
             controlador.establecerListaPaquetes();
             controlador.iniciarGridPane();
 
@@ -93,7 +116,7 @@ public class VentanaInicioController  implements Initializable {
         }
     }
 
-    public void mostrarPanelDerechoReservas(Paquete paquete){
+    public void mostrarPanelDerechoReservas(Paquete paquete, Cliente cliente){
         try {
             panelDerecho.getChildren().clear();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaReserva.fxml"));
@@ -104,6 +127,24 @@ public class VentanaInicioController  implements Initializable {
             controlador.setCliente(cliente);
             controlador.setPaquete(paquete);
             controlador.iniciarDatos();
+        }catch (Exception e){
+            log.severe(e.getMessage());
+        }
+    }
+
+
+    public void mostrarPanelDerechoDetallesPaquete(Paquete paquete, Cliente cliente){
+        try {
+            panelDerecho.getChildren().clear();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaDetallesPaquete.fxml"));
+            Node node = loader.load();
+            panelDerecho.getChildren().add(node);
+            VentanaDetallesPaqueteController controlador = loader.getController();
+            controlador.setAplicacion(this.aplicacion);
+            controlador.setCliente(cliente);
+            controlador.setPaquete(paquete);
+            controlador.iniciarGridPaneDetallesPaquete();
+            controlador.iniciarDatosDetallesPaquete();
         }catch (Exception e){
             log.severe(e.getMessage());
         }
@@ -139,6 +180,73 @@ public class VentanaInicioController  implements Initializable {
         }
     }
 
+    public void mostrarPanelDerechoGestionarPaquetes(Cliente cliente, Administrador admin){
+        try {
+            panelDerecho.getChildren().clear();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaGestionar.fxml"));
+            Node node = loader.load();
+            panelDerecho.getChildren().add(node);
+            VentanaGestionarController controlador = loader.getController();
+            controlador.setAplicacion(this.aplicacion);
+            controlador.setCliente(cliente);
+            controlador.setAdministrador(admin);
+            controlador.inicarGestionPaquetes();
+        }catch (Exception e){
+            log.severe(e.getMessage());
+        }
+    }
+
+    public void mostrarPanelDerechoGestionarDestinos(Cliente cliente, Administrador admin){
+        try {
+            panelDerecho.getChildren().clear();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaGestionar.fxml"));
+            Node node = loader.load();
+            panelDerecho.getChildren().add(node);
+            VentanaGestionarController controlador = loader.getController();
+            controlador.setAplicacion(this.aplicacion);
+            controlador.setCliente(cliente);
+            controlador.setAdministrador(admin);
+            controlador.iniciarGestionDestinos();
+        }catch (Exception e){
+            log.severe(e.getMessage());
+        }
+    }
+
+    public void mostrarPanelDerechoGestionGuias(Cliente cliente, Administrador admin){
+        try {
+            panelDerecho.getChildren().clear();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaGestionar.fxml"));
+            Node node = loader.load();
+            panelDerecho.getChildren().add(node);
+            VentanaGestionarController controlador = loader.getController();
+            controlador.setAplicacion(this.aplicacion);
+            controlador.setCliente(cliente);
+            controlador.setAdministrador(admin);
+            controlador.iniciarGestionGuias();
+        }catch (Exception e){
+            log.severe(e.getMessage());
+        }
+    }
+
+    public void mostrarPanelDerechoCrearEditarPaquete(Paquete paquete, Administrador administrador){
+        try {
+            panelDerecho.getChildren().clear();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaDetallesPaquete.fxml"));
+            Node node = loader.load();
+            panelDerecho.getChildren().add(node);
+            VentanaDetallesPaqueteController controlador = loader.getController();
+            controlador.setAplicacion(this.aplicacion);
+            controlador.setAdministrador(administrador);
+            //para saber si se esta creando o editando
+            controlador.setPaquete(paquete);
+            controlador.iniciarDatosCrearEditar();
+
+        }catch (Exception e){
+            log.severe(e.getMessage());
+        }
+    }
+
+
     public void mostrarBarraSuperior(){
         try {
             barraSuperior.getChildren().clear();
@@ -161,6 +269,21 @@ public class VentanaInicioController  implements Initializable {
             BarraClienteController controlador = loader.getController();
             controlador.setAplicacion(this.aplicacion);
             controlador.setCliente(this.cliente);
+            controlador.cargarInfo();
+        }catch (Exception e){
+            log.severe(e.getMessage());
+        }
+    }
+
+    public void mostrarBarraSuperiorAdmin(){
+        try {
+            barraSuperior.getChildren().clear();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/BarraCliente.fxml"));
+            Node node = loader.load();
+            barraSuperior.getChildren().add(node);
+            BarraClienteController controlador = loader.getController();
+            controlador.setAplicacion(this.aplicacion);
+            controlador.setAdministrador(this.administrador);
             controlador.cargarInfo();
         }catch (Exception e){
             log.severe(e.getMessage());

@@ -1,6 +1,7 @@
 package co.edu.uniquindio.agenciaViajes.app;
 
 import co.edu.uniquindio.agenciaViajes.controllers.VentanaInicioController;
+import co.edu.uniquindio.agenciaViajes.controllers.VentanaRecuperarContraseniaController;
 import co.edu.uniquindio.agenciaViajes.controllers.VentanaRegistroIngresoController;
 import co.edu.uniquindio.agenciaViajes.model.Administrador;
 import co.edu.uniquindio.agenciaViajes.model.AgenciaViajes;
@@ -23,9 +24,6 @@ public class Aplicacion extends Application {
     private Stage stage;
     private AnchorPane rootLayout;
 
-    private Cliente cliente=null;
-    private Administrador admin=null;
-
     public VentanaInicioController ventanaInicioController;
     public VentanaRegistroIngresoController ventanaRegistroIngresoController;
     //para modificar el controlador ventanaInicio desde otros controladores de otras ventanas
@@ -34,6 +32,9 @@ public class Aplicacion extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+
+        Cliente cliente=null;
+        Administrador admin=null;
 
         this.stage=stage;
         this.stage.setTitle("Travel Dreams");
@@ -50,12 +51,32 @@ public class Aplicacion extends Application {
         ventanaInicioController.mostrarPanelDerechoGuias();
     }
 
-    public void motrarVentanaPaquetes(){
-        ventanaInicioController.mostrarPanelDerechoPaquetes();
+    public void motrarVentanaPaquetes(Cliente cliente, Administrador administrador){
+        ventanaInicioController.mostrarPanelDerechoPaquetes(cliente, administrador);
     }
 
-    public void mostrarVentanaReserva(Paquete paquete){
-        ventanaInicioController.mostrarPanelDerechoReservas(paquete);
+    public void mostrarVentanaReserva(Paquete paquete, Cliente cliente){
+        ventanaInicioController.mostrarPanelDerechoReservas(paquete, cliente);
+    }
+
+    public void mostrarDetallePaquete(Paquete paquete, Cliente cliente){
+        ventanaInicioController.mostrarPanelDerechoDetallesPaquete(paquete, cliente);
+    }
+
+    public void motrarVentanaGestionPaquetes(Cliente cliente, Administrador administrador){
+        ventanaInicioController.mostrarPanelDerechoGestionarPaquetes(cliente, administrador);
+    }
+
+    public void mostrarVentanaGestionDestinos(Cliente cliente, Administrador administrador){
+        ventanaInicioController.mostrarPanelDerechoGestionarDestinos(cliente, administrador);
+    }
+
+    public void mostrarVentanaGestionGuias(Cliente cliente, Administrador administrador){
+        ventanaInicioController.mostrarPanelDerechoGestionGuias(cliente, administrador);
+    }
+
+    public void mostrarVentanaCrearPaquete(Paquete paquete, Administrador administrador){
+        ventanaInicioController.mostrarPanelDerechoCrearEditarPaquete(paquete, administrador);
     }
 
     public void mostrarVentanaPrincipal(Cliente cliente, Administrador admin){
@@ -76,7 +97,7 @@ public class Aplicacion extends Application {
             //activa los paneles para un usuario que no es cliente ni admin
             if (cliente == null && admin == null) {
                 controlador.mostrarPanelIzquierdo();
-                controlador.mostrarPanelDerechoPaquetes();
+                controlador.mostrarPanelDerechoPaquetes(cliente, admin);
                 controlador.mostrarBarraSuperior();
             }
 
@@ -84,12 +105,16 @@ public class Aplicacion extends Application {
             if (cliente!=null && admin == null) {
                 controlador.setCliente(cliente);
                 controlador.mostrarPanelIzquierdoCliente();
-                controlador.mostrarPanelDerechoPaquetes();
+                controlador.mostrarPanelDerechoPaquetes(cliente, admin);
                 controlador.mostrarBarraSuperiorCliente();
             }
 
             //activa los paneles para un administrador
             if (cliente==null && admin != null) {
+                controlador.setAdministrador(admin);
+                controlador.mostrarPanelIzquierdoAdmin();
+                controlador.mostrarPanelDerechoGestionarPaquetes(cliente, admin);
+                controlador.mostrarBarraSuperiorAdmin();
 
             }
 
@@ -115,6 +140,30 @@ public class Aplicacion extends Application {
             ventana.setScene(scene);
             VentanaRegistroIngresoController controlador = loader.getController();
             ventanaRegistroIngresoController = loader.getController(); //obteniendo valor del controlador editable
+            controlador.setVentana(stage);
+            controlador.setAplicacion(aplicacion);
+            ventana.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * Inicia la Ventana de Recuperar contrasenia
+     */
+    public void ventanaRecuperarContrasenia(Aplicacion aplicacion) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Aplicacion.class.getResource("/ventanas/VentanaRecuperarContrasenia.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+            Stage ventana = new Stage();
+            ventana.setTitle("Travel Dreams | Recuperar Contraseña");
+            ventana.initModality(Modality.WINDOW_MODAL);
+            ventana.initOwner(stage);
+            Scene scene = new Scene(page);
+            ventana.setScene(scene);
+            VentanaRecuperarContraseniaController controlador = loader.getController();
             controlador.setVentana(stage);
             controlador.setAplicacion(aplicacion);
             ventana.showAndWait();

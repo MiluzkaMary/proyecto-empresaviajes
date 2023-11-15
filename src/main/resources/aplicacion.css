@@ -34,7 +34,7 @@
 }
 
 .over:hover{
-    -fx-background-color: #F4F4F4;
+    -fx-background-color: #d3d1d1;
 }
 
 .shadowPane{
@@ -136,6 +136,7 @@
     -fx-background-color: #ff9100;
 
 }
+
 
 .eliminarBtn{
     -fx-background-color: #ea2828;

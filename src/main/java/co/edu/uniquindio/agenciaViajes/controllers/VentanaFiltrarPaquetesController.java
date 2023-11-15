@@ -1,9 +1,7 @@
 package co.edu.uniquindio.agenciaViajes.controllers;
 
 import co.edu.uniquindio.agenciaViajes.app.Aplicacion;
-import co.edu.uniquindio.agenciaViajes.model.AgenciaViajes;
-import co.edu.uniquindio.agenciaViajes.model.Destino;
-import co.edu.uniquindio.agenciaViajes.model.Paquete;
+import co.edu.uniquindio.agenciaViajes.model.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -24,6 +22,8 @@ public class VentanaFiltrarPaquetesController implements Initializable {
 
     public AgenciaViajes agenciaViajes = AgenciaViajes.getInstance();
     public Aplicacion aplicacion;
+    public Cliente cliente;
+    public Administrador administrador;
     private List<Paquete> listaPaquetes = new ArrayList<>();
 
     @FXML
@@ -49,7 +49,8 @@ public class VentanaFiltrarPaquetesController implements Initializable {
 
                 ItemPaqueteController controlador = loader.getController();
                 controlador.setAplicacion(this.aplicacion);
-                controlador.setExisteCliente(aplicacion.getCliente() != null); //con esto se verificara si se puede reservar o no
+                controlador.setAdministrador(this.administrador);
+                controlador.setCliente(this.cliente);
                 controlador.cargarDatos(listaPaquetes.get(i));
 
 

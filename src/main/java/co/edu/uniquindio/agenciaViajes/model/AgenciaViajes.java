@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.extern.java.Log;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -149,6 +150,24 @@ public class AgenciaViajes {
         }
     }
 
+    public Administrador registrarAdministradorPrueba(String cedula, String nombre, String telefono, String foto, String correo, String contrasenia) {
+
+        Administrador administrador = Administrador.builder()
+                .cedula(cedula)
+                .nombre(nombre)
+                .telefono(telefono)
+                .foto(foto)
+                .correo(correo)
+                .contrasenia(contrasenia)
+                .build();
+
+        listaAdministradores.add(administrador);
+        //escribirCliente(cliente);
+
+        log.info("Se ha registrado un nuevo administrador con la cédula: "+cedula);
+        return administrador;
+    }
+
 
 
     public Cliente registrarCliente(String cedula, String nombre, String telefono, String foto, String correo, String direccion,String contrasenia) throws AtributoVacioException, InformacionRepetidaException, DatoNoNumericoException, CorreoInvalidoException {
@@ -210,6 +229,123 @@ public class AgenciaViajes {
         log.info("Se ha registrado un nuevo cliente con la cédula: "+cedula);
         return cliente;
     }
+
+    public void eliminarPaquete(Paquete paquete){
+        listaPaquetes.remove(paquete);
+    }
+
+    public Paquete crearPaquete(String nombre, List<Destino> listaDestinos, String diasDuracion, String descripcion, String precio, String cupoMaximo,LocalDate fecha) throws AtributoVacioException, DatoNoNumericoException, FechaInvalidaException {
+
+        if(nombre == null || nombre.isBlank()){
+            throw new AtributoVacioException("El nombre del paquete es obligatorio");
+        }
+
+        if (listaDestinos == null){
+            throw new AtributoVacioException("El paquete debe tener al menos un destino");
+        }
+
+        if(diasDuracion == null || diasDuracion.isBlank()){
+            throw new AtributoVacioException("El número de dias del paquete es obligatorio");
+        }else if (!diasDuracion.trim().matches("[0-9]+")){
+            throw new DatoNoNumericoException("El numero de días debe contener solo números");
+        }
+
+        if(descripcion == null || descripcion.isBlank()){
+            throw new AtributoVacioException("La descripción del destino es obligatorio");
+        }
+
+        if(precio == null || precio.isBlank()){
+            throw new AtributoVacioException("El precio del paquete es obligatorio");
+        }else if (!precio.trim().matches("[0-9]+")){
+            throw new DatoNoNumericoException("El precio del paquete debe contener solo números");
+        }
+
+        if(cupoMaximo == null || cupoMaximo.isBlank()){
+            throw new AtributoVacioException("El cupo máximo del paquete es obligatorio");
+        } else if (!cupoMaximo.trim().matches("[0-9]+")){
+            throw new DatoNoNumericoException("El cupo máximo del paquete debe contener solo números");
+        }
+
+        if(fecha == null ){
+            throw new AtributoVacioException("La fecha del paquete es obligatoria");
+        }else if (fecha.isBefore(LocalDate.now())){
+            throw new FechaInvalidaException("La fecha del paquete no puede ser de un dia ya pasado");
+        }
+
+
+        Paquete paquete = Paquete.builder()
+                .nombre(nombre)
+                .destinos(listaDestinos)
+                .diasDuracion(Integer.valueOf(diasDuracion))
+                .descripcion(descripcion)
+                .precio(Double.valueOf(precio))
+                .cupoMaximo(Integer.valueOf(cupoMaximo))
+                .fecha(fecha)
+                .build();
+
+        listaPaquetes.add(paquete);
+        //escribirPaquete(paquete);
+
+        log.info("Se ha registrado un nuevo paquete con nombre: "+nombre);
+        return paquete;
+    }
+
+    public Paquete editarPaquete(Paquete paquete, String nombre, List<Destino> listaDestinos, String diasDuracion, String descripcion, String precio, String cupoMaximo,LocalDate fecha) throws AtributoVacioException, DatoNoNumericoException, FechaInvalidaException {
+
+        if(nombre == null || nombre.isBlank()){
+            throw new AtributoVacioException("El nombre del paquete es obligatorio");
+        }
+
+        if (listaDestinos == null){
+            throw new AtributoVacioException("El paquete debe tener al menos un destino");
+        }
+
+        if(diasDuracion == null || diasDuracion.isBlank()){
+            throw new AtributoVacioException("El número de dias del paquete es obligatorio");
+        }else if (!diasDuracion.trim().matches("[0-9]+")){
+            throw new DatoNoNumericoException("El numero de días debe contener solo números");
+        }
+
+        if(descripcion == null || descripcion.isBlank()){
+            throw new AtributoVacioException("La descripción del destino es obligatorio");
+        }
+
+        if(precio == null || precio.isBlank()){
+            throw new AtributoVacioException("El precio del paquete es obligatorio");
+        }else if (!precio.trim().matches("[0-9]+")){
+            throw new DatoNoNumericoException("El precio del paquete debe contener solo números");
+        }
+
+        if(cupoMaximo == null || cupoMaximo.isBlank()){
+            throw new AtributoVacioException("El cupo máximo del paquete es obligatorio");
+        } else if (!cupoMaximo.trim().matches("[0-9]+")){
+            throw new DatoNoNumericoException("El cupo máximo del paquete debe contener solo números");
+        }
+
+        if(fecha == null ){
+            throw new AtributoVacioException("La fecha del paquete es obligatoria");
+        }else if (fecha.isBefore(LocalDate.now())){
+            throw new FechaInvalidaException("La fecha del paquete no puede ser de un dia ya pasado");
+        }
+
+
+        Paquete paqueteNuevo = Paquete.builder()
+                .nombre(nombre)
+                .destinos(listaDestinos)
+                .diasDuracion(Integer.valueOf(diasDuracion))
+                .descripcion(descripcion)
+                .precio(Double.valueOf(precio))
+                .cupoMaximo(Integer.valueOf(cupoMaximo))
+                .fecha(fecha)
+                .build();
+
+        listaPaquetes.replaceAll(p -> p.equals(paquete) ? paqueteNuevo : p);
+        //escribirPaquete(paquete);
+
+        log.info("Se ha editado un nuevo paquete con nombre: "+nombre);
+        return paquete;
+    }
+
 
     public GuiaTuristico buscarGuiaConCedula(String cedula){
         GuiaTuristico elegido=null;
@@ -312,5 +448,16 @@ public class AgenciaViajes {
          }
 
         return guiasDisponibles;
+    }
+
+    public ArrayList<Destino> obtenerDestinosPermitidos(List<Destino> listaDestinosYaIncluidos){
+        ArrayList<Destino> listaRespuesta = new ArrayList<>();
+        for (Destino destino : getListaDestinos()) {
+            // Verificar si el destino no está en la listaDestinosYaIncluidos
+            if (!listaDestinosYaIncluidos.contains(destino)) {
+                listaRespuesta.add(destino);
+            }
+        }
+        return listaRespuesta;
     }
 }
