@@ -18,8 +18,6 @@ import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import com.sun.mail.smtp.SMTPTransport;
-import com.sun.mail.util.BASE64EncoderStream;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

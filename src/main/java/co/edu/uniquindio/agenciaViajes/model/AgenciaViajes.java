@@ -6,12 +6,20 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.java.Log;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+import java.util.Random;
 import java.util.logging.FileHandler;
 import java.util.logging.SimpleFormatter;
 
@@ -42,7 +50,15 @@ public class AgenciaViajes {
     private static final String RUTA_PAQUETES = "src/main/resources/persistencia/paquetes.ser";
     private static final String RUTA_RESERVAS = "src/main/resources/persistencia/reservas.ser";
 
-
+    //Elementos para el envío de correos a ttravés de JavaMail
+    private static String emailFrom = "traveldreamshelp@gmail.com";
+    private static String passwordFrom = "dvctnkacqmfndtqv";
+    private String emailTo;
+    private String subject;
+    private String content;
+    private static Properties mProperties = new Properties();
+    private static Session mSession;
+    private MimeMessage mCorreo;
 
     private AgenciaViajes(){
         inicializarLogger();
@@ -450,6 +466,39 @@ public class AgenciaViajes {
         return guiasDisponibles;
     }
 
+    public static void enviarCorreo(String asunto, String contenido, String correoDestino) {
+
+        // Simple mail transfer protocol
+        mProperties.put("mail.smtp.host", "smtp.gmail.com");
+        mProperties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+        mProperties.setProperty("mail.smtp.starttls.enable", "true");
+        mProperties.setProperty("mail.smtp.port", "587");
+        mProperties.setProperty("mail.smtp.user",emailFrom);
+        mProperties.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
+        mProperties.setProperty("mail.smtp.auth", "true");
+        mSession = Session.getDefaultInstance(mProperties);
+
+        try {
+            // Crear un mensaje de correo
+            Message mensaje = new MimeMessage(mSession);
+            mensaje.setFrom(new InternetAddress(emailFrom)); // Dirección del remitente
+            mensaje.setRecipients(Message.RecipientType.TO, InternetAddress.parse(correoDestino)); // Dirección del destinatario
+            mensaje.setSubject(asunto); // Asunto del correo
+            mensaje.setText(""); // Contenido del correo
+
+            // Enviar el mensaje
+            Transport transport = mSession.getTransport("smtp");
+            transport.connect("smtp.gmail.com", 587, emailFrom, passwordFrom);
+            transport.sendMessage(mensaje, mensaje.getAllRecipients());
+            transport.close();
+
+            System.out.println("Correo enviado exitosamente.");
+
+        } catch (MessagingException e) {
+            System.out.println("Error al enviar el correo: " + e.getMessage());
+        }
+    }
+
     public ArrayList<Destino> obtenerDestinosPermitidos(List<Destino> listaDestinosYaIncluidos){
         ArrayList<Destino> listaRespuesta = new ArrayList<>();
         for (Destino destino : getListaDestinos()) {
@@ -459,5 +508,25 @@ public class AgenciaViajes {
             }
         }
         return listaRespuesta;
+    }
+
+    // Método para generar un código aleatorio de 2 letras y 4 números
+    public static String generarCodigo() {
+        // Caracteres válidos para las letras
+        String letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        // Objeto Random para generar números aleatorios
+        Random random = new Random();
+
+        // Generar dos letras aleatorias
+        char letra1 = letras.charAt(random.nextInt(letras.length()));
+        char letra2 = letras.charAt(random.nextInt(letras.length()));
+
+        // Generar cuatro números aleatorios
+        int numero = random.nextInt(10000);
+
+        // Formatear el código resultante
+        String codigo = String.format("%c%c%04d", letra1, letra2, numero);
+
+        return codigo;
     }
 }

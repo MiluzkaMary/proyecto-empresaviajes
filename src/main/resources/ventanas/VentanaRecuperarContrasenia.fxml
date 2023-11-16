@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -19,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.agenciaViajes.controllers.VentanaRecuperarContraseniaController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.agenciaViajes.controllers.VentanaRecuperarContraseniaController">
     <children>
       <ImageView fitHeight="700.0" fitWidth="1300.0">
          <image>
@@ -28,7 +21,7 @@
       </ImageView>
         <Pane fx:id="paneIngresar" layoutX="386.0" layoutY="242.0" opacity="0.99" prefHeight="216.0" prefWidth="529.0" style="-fx-background-radius: 25;" styleClass="panel_transparent" stylesheets="@../aplicacion.css">
             <children>
-                <Button layoutX="136.0" layoutY="141.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="268.0" stylesheets="@../aplicacion.css" text="Continuar" textFill="WHITE">
+                <Button fx:id="btnContinuar" layoutX="136.0" layoutY="141.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="268.0" stylesheets="@../aplicacion.css" text="Continuar" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>
@@ -37,7 +30,7 @@
                         <String fx:value="btnPaneles" />
                     </styleClass>
                 </Button>
-                <TextField fx:id="txtCorreo2" layoutX="176.0" layoutY="98.0" minHeight="25.0" prefHeight="26.0" prefWidth="220.0" promptText="Correo" style="-fx-background-radius: 50; -fx-border-radius: 50; -fx-border-width: 2; -fx-border-color: linear-gradient(to bottom right, #0052D1, #C73D76);;" />
+                <TextField fx:id="txtCorreo" layoutX="176.0" layoutY="98.0" minHeight="25.0" prefHeight="26.0" prefWidth="220.0" promptText="Correo" style="-fx-background-radius: 50; -fx-border-radius: 50; -fx-border-width: 2; -fx-border-color: linear-gradient(to bottom right, #0052D1, #C73D76);;" />
                 <Label layoutX="166.0" layoutY="14.0" text="Recuperar Cuenta" textFill="#08232f">
                     <font>
                         <Font name="Arial Black" size="20.0" />
