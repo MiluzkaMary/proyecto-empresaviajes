@@ -484,7 +484,7 @@ public class AgenciaViajes {
             mensaje.setFrom(new InternetAddress(emailFrom)); // Dirección del remitente
             mensaje.setRecipients(Message.RecipientType.TO, InternetAddress.parse(correoDestino)); // Dirección del destinatario
             mensaje.setSubject(asunto); // Asunto del correo
-            mensaje.setText(""); // Contenido del correo
+            mensaje.setText(contenido); // Contenido del correo
 
             // Enviar el mensaje
             Transport transport = mSession.getTransport("smtp");

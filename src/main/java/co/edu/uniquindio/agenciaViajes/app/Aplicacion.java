@@ -172,6 +172,25 @@ public class Aplicacion extends Application {
         }
     }
 
+    public void ventanaCambiarContrasenia(Aplicacion aplicacion) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Aplicacion.class.getResource("/ventanas/VentanaRecuperarContrasenia.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+            Stage ventana = new Stage();
+            ventana.setTitle("Travel Dreams | Recuperar Contraseña");
+            ventana.initModality(Modality.WINDOW_MODAL);
+            ventana.initOwner(stage);
+            Scene scene = new Scene(page);
+            ventana.setScene(scene);
+            VentanaRecuperarContraseniaController controlador = loader.getController();
+            controlador.setVentana(stage);
+            controlador.setAplicacion(aplicacion);
+            ventana.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) {
         launch(Aplicacion.class, args);
