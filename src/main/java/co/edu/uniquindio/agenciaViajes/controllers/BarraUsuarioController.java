@@ -40,7 +40,7 @@ public class BarraUsuarioController implements Initializable {
                 "Mary",
                 "317",
                 "/imagenes/pruebaUser.jpg",
-                "miluska@gmail.com",
+                "miluskasaire512@gmail.com",
                 "armenia",
                 "12345");
         agenciaViajes.registrarAdministradorPrueba("5656",

@@ -8,15 +8,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="448.0" prefWidth="959.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="622.0" prefWidth="1025.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.agenciaViajes.controllers.VentanaCrearEditarGuiaController">
    <children>
-      <Pane layoutX="19.0" layoutY="16.0" prefHeight="416.0" prefWidth="920.0" stylesheets="@../aplicacion.css">
+      <Pane layoutX="19.0" layoutY="16.0" prefHeight="593.0" prefWidth="992.0" stylesheets="@../aplicacion.css">
          <styleClass>
             <String fx:value="white-bg" />
             <String fx:value="shadowPane" />
          </styleClass>
          <children>
-            <ImageView fx:id="fotoGuia" fitHeight="307.0" fitWidth="270.0" layoutX="24.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="fotoGuia" fitHeight="287.0" fitWidth="287.0" layoutX="26.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true" />
             <Text fill="#433c3c" layoutX="671.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cédula:">
                <font>
                   <Font name="Calibri Bold" size="18.0" />
@@ -42,71 +42,81 @@
                   <Font name="Calibri Bold" size="18.0" />
                </font>
             </Text>
-            <Text fill="#433c3c" layoutX="339.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista de idiomas del Guía:">
+            <Text fill="#433c3c" layoutX="339.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista de idiomas del Guía:">
                <font>
                   <Font name="Calibri Bold" size="18.0" />
                </font>
             </Text>
-            <TextField fx:id="txtPrecioGestion" layoutX="417.0" layoutY="27.0" minHeight="0.0" prefHeight="23.0" prefWidth="184.0">
+            <TextField fx:id="txtNombreGuia" layoutX="417.0" layoutY="27.0" minHeight="0.0" prefHeight="23.0" prefWidth="184.0">
                <font>
                   <Font size="13.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtPrecioGestion1" layoutX="419.0" layoutY="62.0" minHeight="0.0" prefHeight="23.0" prefWidth="184.0">
+            <TextField fx:id="txtTelefonoGuia" layoutX="419.0" layoutY="62.0" minHeight="0.0" prefHeight="23.0" prefWidth="184.0">
                <font>
                   <Font size="13.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtPrecioGestion11" layoutX="510.0" layoutY="96.0" minHeight="0.0" prefHeight="23.0" prefWidth="92.0">
+            <TextField fx:id="txtExperienciaGuia" layoutX="510.0" layoutY="96.0" minHeight="0.0" prefHeight="23.0" prefWidth="92.0">
                <font>
                   <Font size="13.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtPrecioGestion111" layoutX="735.0" layoutY="27.0" minHeight="0.0" prefHeight="23.0" prefWidth="71.0">
+            <TextField fx:id="txtEdadGuia" layoutX="735.0" layoutY="27.0" minHeight="0.0" prefHeight="23.0" prefWidth="71.0">
                <font>
                   <Font size="13.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtPrecioGestion1111" layoutX="735.0" layoutY="63.0" minHeight="0.0" prefHeight="23.0" prefWidth="71.0">
+            <TextField fx:id="txtCedulaGuia" layoutX="735.0" layoutY="63.0" minHeight="0.0" prefHeight="23.0" prefWidth="71.0">
                <font>
                   <Font size="13.0" />
                </font>
             </TextField>
-            <Button fx:id="btnEliminarDestinoGestion" layoutX="686.0" layoutY="110.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="98.0" text="Guardar">
+            <Button fx:id="btnGuardarGuia" layoutX="849.0" layoutY="328.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="98.0" text="Guardar">
                <font>
                   <Font size="13.0" />
                </font>
             </Button>
-            <Button fx:id="btnEliminarDestinoGestion1" layoutX="795.0" layoutY="110.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="98.0" text="Crear">
+            <Button fx:id="btnCrearGuia" layoutX="849.0" layoutY="377.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="98.0" text="Crear">
                <font>
                   <Font size="13.0" />
                </font>
             </Button>
-            <Button fx:id="btnEliminarDestinoGestion2" layoutX="91.0" layoutY="352.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="136.0" text="Subir Foto">
+            <Button fx:id="btnSubirFoto" layoutX="102.0" layoutY="440.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="136.0" text="Subir Foto">
                <font>
                   <Font size="13.0" />
                </font>
             </Button>
-            <TableView layoutX="339.0" layoutY="201.0" prefHeight="200.0" prefWidth="191.0">
+            <TableView fx:id="tablaIdiomasGuia" layoutX="339.0" layoutY="213.0" prefHeight="357.0" prefWidth="191.0">
               <columns>
-                <TableColumn prefWidth="190.0" text="Idiomas del Guía" />
+                <TableColumn fx:id="columnaIdiomasGuias" prefWidth="190.0" text="Idiomas del Guía" />
               </columns>
             </TableView>
-            <Text fill="#433c3c" layoutX="672.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Idiomas disponibles:">
+            <Text fill="#433c3c" layoutX="576.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Idiomas disponibles:">
                <font>
                   <Font name="Calibri Bold" size="18.0" />
                </font>
             </Text>
-            <TableView layoutX="653.0" layoutY="202.0" prefHeight="200.0" prefWidth="191.0">
+            <TableView fx:id="tablaIdiomasDisponibles" layoutX="576.0" layoutY="213.0" prefHeight="357.0" prefWidth="191.0">
                <columns>
-                  <TableColumn prefWidth="190.0" text="Idiomas " />
+                  <TableColumn fx:id="columnaIdiomasDisponibles" prefWidth="190.0" text="Idiomas " />
                </columns>
             </TableView>
-            <Button fx:id="btnEliminarDestinoGestion3" layoutX="543.0" layoutY="238.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="110.0" text="Eliminar Idioma">
+            <Button fx:id="btnEliminarIdioma" layoutX="339.0" layoutY="165.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="110.0" text="Eliminar Idioma">
                <font>
                   <Font size="13.0" />
                </font>
             </Button>
+            <Button fx:id="btnAgregarIdioma" layoutX="576.0" layoutY="165.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="110.0" text="Añadir Idioma">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Button>
+            <Text fill="#433c3c" layoutX="26.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Datos del Guía:">
+               <font>
+                  <Font name="Calibri Bold" size="18.0" />
+               </font>
+            </Text>
          </children>
       </Pane>
    </children>
