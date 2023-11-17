@@ -16,10 +16,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-import java.util.Random;
+import java.util.*;
 import java.util.logging.FileHandler;
 import java.util.logging.SimpleFormatter;
 
@@ -375,10 +372,11 @@ public class AgenciaViajes {
 
 
     public Reserva registrarReserva(LocalDateTime fechaHora, LocalDate fechaInicial, LocalDate fechaFinal, Cliente cliente, int numPersonas,
-                                    String cedulaGuia, EstadoReserva estadoReserva, Paquete paquete) throws AtributoVacioException {
+                                    String cedulaGuia, EstadoReserva estadoReserva, Paquete paquete, Double valorTotal) throws AtributoVacioException {
 
         GuiaTuristico guiaElegido;
         String numerosCedula;
+        valorTotal = paquete.getPrecio()*numPersonas;
         if(cedulaGuia == null || cedulaGuia.isBlank()){
             throw new AtributoVacioException("Escoger un guia es obligatorio");
         }else{
@@ -399,6 +397,7 @@ public class AgenciaViajes {
                 .guia(guiaElegido)
                 .estado(estadoReserva)
                 .paquete(paquete)
+                .valorTotal(valorTotal)
                 .build();
 
         listaReservas.add(reservaFinal);
@@ -466,7 +465,7 @@ public class AgenciaViajes {
         return guiasDisponibles;
     }
 
-    public static void enviarCorreo(String asunto, String contenido, String correoDestino) {
+    public void enviarCorreo(String asunto, String contenido, String correoDestino) {
 
         // Simple mail transfer protocol
         mProperties.put("mail.smtp.host", "smtp.gmail.com");
@@ -510,6 +509,27 @@ public class AgenciaViajes {
         return listaRespuesta;
     }
 
+    public ArrayList<String> obtenerIdiomasPermitidos(List <String> listaIdiomasYaIncluidos){
+        ArrayList<String> listaRespuesta = new ArrayList<>();
+        List<String> idiomas = Arrays.asList(
+                "Español", "Inglés", "Mandarín", "Hindi", "Árabe", "Portugués",
+                "Bengalí", "Ruso", "Japonés", "Alemán", "Francés", "Italiano",
+                "Turco", "Coreano", "Holandés", "Polaco", "Vietnamita", "Tagalo",
+                "Swahili", "Hebreo", "Griego", "Checo", "Húngaro", "Sueco",
+                "Noruego", "Danés", "Finlandés", "Tailandés", "Malayo", "Indonesio",
+                "Rumano", "Búlgaro", "Croata", "Serbio", "Eslovaco", "Esloveno",
+                "Lituano", "Letón", "Estonio", "Georgiano", "Armenio", "Azerí",
+                "Kazajo", "Ucraniano", "Mongol", "Tibetano", "Nepalí", "Seychelense"
+
+        );
+        for (String idioma : idiomas) {
+            if (!listaIdiomasYaIncluidos.contains(idioma)) {
+                listaRespuesta.add(idioma);
+            }
+        }
+        
+        return listaRespuesta;
+    }
     // Método para generar un código aleatorio de 2 letras y 4 números
     public static String generarCodigo() {
         // Caracteres válidos para las letras
@@ -528,5 +548,30 @@ public class AgenciaViajes {
         String codigo = String.format("%c%c%04d", letra1, letra2, numero);
 
         return codigo;
+    }
+
+    public Cliente cambiarContraseniaCliente(String correo, String contrasenia, String contraseniaConfirm) throws AtributoVacioException, InformacionNoRepetidaException {
+        Cliente cliente = buscarClientePorCorreo(correo, 0);
+        if(contrasenia.equals(contraseniaConfirm)){
+            cliente.setContrasenia(contrasenia);
+            System.out.println("Se");
+        }else {
+            throw new InformacionNoRepetidaException("Las contraseñas no coinciden");
+        }
+        return cliente;
+    }
+
+    public Cliente buscarClientePorCorreo(String correoABuscar, int i) throws AtributoVacioException {
+        Cliente clienteActual = listaClientes.get(i);
+        if(!correoABuscar.isBlank()){
+            if (clienteActual.getCorreo().equals(correoABuscar)) {
+                return clienteActual;
+            } else {
+                return buscarClientePorCorreo(correoABuscar, i+1);
+            }
+        }
+        else{
+            throw new AtributoVacioException("No se ha introducido ningún correo");
+        }
     }
 }

@@ -34,4 +34,6 @@ public class TableroClienteController implements Initializable {
     public void mostrarPaquetes(){
         aplicacion.motrarVentanaPaquetes(this.cliente, this.administrador);
     }
+
+    //public void mostrarPerfilCliente(){aplicacion.mostrarVentanaPerfilCliente();}
 }

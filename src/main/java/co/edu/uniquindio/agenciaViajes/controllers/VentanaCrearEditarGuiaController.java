@@ -2,8 +2,13 @@ package co.edu.uniquindio.agenciaViajes.controllers;
 
 import co.edu.uniquindio.agenciaViajes.app.Aplicacion;
 import co.edu.uniquindio.agenciaViajes.model.*;
+import co.edu.uniquindio.agenciaViajes.util.ArchivoUtils;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
 
 import javafx.fxml.FXML;
 import java.net.URL;
@@ -11,9 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
@@ -24,16 +26,16 @@ public class VentanaCrearEditarGuiaController implements Initializable {
     private TextField txtEdadGuia;
 
     @FXML
-    private TableView<?> tablaIdiomasGuia;
+    private TableView<String> tablaIdiomasGuia;
 
     @FXML
-    private TableColumn<?, ?> columnaIdiomasGuias;
+    private TableColumn<String, String> columnaIdiomasGuias;
 
     @FXML
     private Button btnEliminarIdioma;
 
     @FXML
-    private TableColumn<?, ?> columnaIdiomasDisponibles;
+    private TableColumn<String, String> columnaIdiomasDisponibles;
 
     @FXML
     private TextField txtTelefonoGuia;
@@ -60,7 +62,7 @@ public class VentanaCrearEditarGuiaController implements Initializable {
     private TextField txtExperienciaGuia;
 
     @FXML
-    private TableView<?> tablaIdiomasDisponibles;
+    private TableView<String> tablaIdiomasDisponibles;
 
     @FXML
     private Button btnAgregarIdioma;
@@ -84,21 +86,72 @@ public class VentanaCrearEditarGuiaController implements Initializable {
             txtTelefonoGuia.setText(guiaTuristico.getTelefono());
             txtCedulaGuia.setText(guiaTuristico.getCedula());
             txtExperienciaGuia.setText(String.valueOf(guiaTuristico.getAniosExperiencia()));
+            try {
+                Image image = new Image(getClass().getResourceAsStream(guiaTuristico.getFoto()));
+                fotoGuia.setImage(image);
+            } catch (Exception e) {
+                if (!guiaTuristico.getFoto().equals("")) {
+                    Image image = new Image(guiaTuristico.getFoto());
+                    fotoGuia.setImage(image);
+                }
+            }
 
+            listaIdiomasActuales= guiaTuristico.getListaIdiomas(); //inicializacion de la lista de idiomas
+            actualizarTablaIdiomasPosibles();
+            actualizarTablaIdiomasActuales();
 
+        }else{//si no se tratara de una creacion guia
+            btnCrearGuia.setVisible(true);
+            btnGuardarGuia.setVisible(false);
 
-            listaTemporalDestinos = paquete.getDestinos(); //inicializacion de la lista destinos
-            actualizarTablaDestinosPosibles();
-            actualizarTablaDestinosActuales();
-
-        }else{//si no se tratara de una creacion paquete
-            btnCrearGestion.setVisible(true);
-            btnGuardarGestion.setVisible(false);
-            listaTemporalDestinos = new ArrayList<>();
-            actualizarTablaDestinosPosibles();
+            listaIdiomasActuales = new ArrayList<>();
+            actualizarTablaIdiomasPosibles();
         }
     }
 
+    public void actualizarTablaIdiomasActuales(){
+        tablaIdiomasGuia.getItems().clear();
+        ObservableList<String> listaIdiomasActualesProperty= FXCollections.observableArrayList();
+        listaIdiomasActualesProperty.addAll(listaIdiomasActuales);
+
+        tablaIdiomasGuia.setItems(listaIdiomasActualesProperty);
+        columnaIdiomasGuias.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()));
+
+    }
+
+    public void actualizarTablaIdiomasPosibles(){
+        tablaIdiomasDisponibles.getItems().clear();
+        ObservableList<String> listaIdiomasDisponiblesProperty= FXCollections.observableArrayList();
+        ArrayList<String> listaDisponibles= agenciaViajes.obtenerIdiomasPermitidos(listaIdiomasActuales);
+        listaIdiomasDisponiblesProperty.addAll(listaDisponibles);
+
+        tablaIdiomasDisponibles.setItems(listaIdiomasDisponiblesProperty);
+        columnaIdiomasDisponibles.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()));
+    }
+
+    public void agregarIdiomaNuevo(){
+        String idiomaElegido = tablaIdiomasDisponibles.getSelectionModel().getSelectedItem();
+        if (idiomaElegido!=null){
+            listaIdiomasActuales.add(idiomaElegido);
+            actualizarTablaIdiomasPosibles();
+            actualizarTablaIdiomasActuales(); //para mostrar el nuevo destino
+        }else{
+            ArchivoUtils.mostrarMensaje("Error", "Entrada no valida", "Debe elegir un idiomas", Alert.AlertType.ERROR);
+
+        }
+    }
+
+    public void eliminarIdioma(){
+        String idiomaElegido = tablaIdiomasGuia.getSelectionModel().getSelectedItem();
+        if (idiomaElegido!=null){
+            listaIdiomasActuales.remove(idiomaElegido);
+            actualizarTablaIdiomasActuales();
+            actualizarTablaIdiomasPosibles(); //para mostrar como posible el q fue eliminado
+        }else{
+            ArchivoUtils.mostrarMensaje("Error", "Entrada no valida", "Debe elegir un destino", Alert.AlertType.ERROR);
+
+        }
+    }
 
 
 }

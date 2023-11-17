@@ -29,6 +29,7 @@ public class Reserva implements Serializable {
     private GuiaTuristico guia;
     private EstadoReserva estado;
     private Paquete paquete;
+    private Double valorTotal;
 
 
 }

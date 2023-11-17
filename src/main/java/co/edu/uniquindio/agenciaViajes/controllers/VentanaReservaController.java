@@ -3,6 +3,7 @@ package co.edu.uniquindio.agenciaViajes.controllers;
 import co.edu.uniquindio.agenciaViajes.app.Aplicacion;
 import co.edu.uniquindio.agenciaViajes.enums.EstadoReserva;
 import co.edu.uniquindio.agenciaViajes.exceptions.AtributoVacioException;
+import co.edu.uniquindio.agenciaViajes.exceptions.EnviarCorreoException;
 import co.edu.uniquindio.agenciaViajes.model.*;
 import co.edu.uniquindio.agenciaViajes.util.ArchivoUtils;
 import javafx.collections.FXCollections;
@@ -79,15 +80,6 @@ public class VentanaReservaController implements Initializable {
     public Cliente cliente;
     public Paquete paquete;
     public int unidades=1;
-    private static String emailFrom = "travelofficialdreams@gmail.com";
-    private static String passwordFrom = "wftctrjagoucarcz";
-    private String emailTo;
-    private String subject;
-    private String content;
-    private Properties mProperties = new Properties();
-    private Session mSession;
-    private MimeMessage mCorreo;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -163,6 +155,7 @@ public class VentanaReservaController implements Initializable {
     public void reservar(){
         LocalDateTime fechaHoraActual = LocalDateTime.now();
         LocalDate fechaFinal = paquete.getFecha().plusDays(paquete.getDiasDuracion());
+        Double valorTotal = 0.0;
         try {
             Reserva reserva = agenciaViajes.registrarReserva(
                     fechaHoraActual,
@@ -172,55 +165,26 @@ public class VentanaReservaController implements Initializable {
                     unidades,
                     (String) comboGuia.getSelectionModel().getSelectedItem(), //cedula guia
                     EstadoReserva.PENDIENTE,
-                    this.paquete);
+                    this.paquete,
+                    valorTotal);
             ArchivoUtils.mostrarMensaje("Reserva completada", "Operación completada", "Se ha reservado correctamente el paquete, por favor revise su correo", Alert.AlertType.INFORMATION);
-            enviarCorreo(reserva);
-
+            enviarCorreoReserva(reserva);
 
         } catch (AtributoVacioException e) {
             ArchivoUtils.mostrarMensaje("Error", "Entradas no validas", e.getMessage(), Alert.AlertType.ERROR);
+        } catch (EnviarCorreoException e) {
+            throw new RuntimeException(e);
         }
-
     }
-    private void enviarCorreo(Reserva reserva) {
-
-        // Simple mail transfer protocol
-        mProperties.put("mail.smtp.host", "smtp.gmail.com");
-        mProperties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-        mProperties.setProperty("mail.smtp.starttls.enable", "true");
-        mProperties.setProperty("mail.smtp.port", "587");
-        mProperties.setProperty("mail.smtp.user",emailFrom);
-        mProperties.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
-        mProperties.setProperty("mail.smtp.auth", "true");
-
-        mSession = Session.getDefaultInstance(mProperties);
-
-
-        try {
-            // Crear un mensaje de correo
-            Message mensaje = new MimeMessage(mSession);
-            mensaje.setFrom(new InternetAddress(emailFrom)); // Dirección del remitente
-            mensaje.setRecipients(Message.RecipientType.TO, InternetAddress.parse(reserva.getCliente().getCorreo())); // Dirección del destinatario
-            mensaje.setSubject("Reservación en Travel Dreams"); // Asunto del correo
-            mensaje.setText("Detalles de la reservación: \n" +
-                    "Persona que reserva: " + reserva.getCliente().getNombre() + "\n" +
-                    "Nombre del paquete: "+ reserva.getPaquete() + "\n" +
-                    "Fecha de reservación: "+ reserva.getFechaSolicitud() + "\n" +
-                    "Fecha de inicio del paquete: " + reserva.getFechaInicio() + "\n" +
-                    "Fecha de finalización del paquete: " + reserva.getFechaFin() + "\n" +
-                    "Número de personas: " + reserva.getNumPersonas() + "\n" +
-                    "Gracias por su preferencia :)"); // Contenido del correo
-
-            // Enviar el mensaje
-            Transport transport = mSession.getTransport("smtp");
-            transport.connect("smtp.gmail.com", 587, emailFrom, passwordFrom);
-            transport.sendMessage(mensaje, mensaje.getAllRecipients());
-            transport.close();
-
-            System.out.println("Correo enviado exitosamente.");
-
-        } catch (MessagingException e) {
-            System.out.println("Error al enviar el correo: " + e.getMessage());
-        }
+    private void enviarCorreoReserva(Reserva reserva) throws EnviarCorreoException {
+        agenciaViajes.enviarCorreo("Detalles de la reserva",
+                "Hola " + reserva.getCliente().getNombre() + ". Gracias por reservar con nosotros, los detalles de tu reserva son:\n" +
+                        "Paquete: " + reserva.getPaquete().getNombre() + "\n" +
+                        "Número de personas: " + reserva.getNumPersonas() + "\n" +
+                        "Fecha de inicio: " + reserva.getFechaInicio() + "\n" +
+                        "Fecha de finalización: " + reserva.getFechaFin() + "\n" +
+                        "Estado: " + reserva.getEstado() + "\n" +
+                        "Guía: " + reserva.getGuia().getNombre() + "\n" +
+                        "Valor total: " + reserva.getValorTotal(), reserva.getCliente().getCorreo());
     }
 }
