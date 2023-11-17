@@ -102,12 +102,12 @@
                   <TableColumn fx:id="columnaIdiomasDisponibles" prefWidth="190.0" text="Idiomas " />
                </columns>
             </TableView>
-            <Button fx:id="btnEliminarIdioma" layoutX="339.0" layoutY="165.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="110.0" text="Eliminar Idioma">
+            <Button fx:id="btnEliminarIdioma" layoutX="339.0" layoutY="165.0" mnemonicParsing="false" onAction="#eliminarIdioma" prefHeight="29.0" prefWidth="110.0" text="Eliminar Idioma">
                <font>
                   <Font size="13.0" />
                </font>
             </Button>
-            <Button fx:id="btnAgregarIdioma" layoutX="576.0" layoutY="165.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="110.0" text="Añadir Idioma">
+            <Button fx:id="btnAgregarIdioma" layoutX="576.0" layoutY="165.0" mnemonicParsing="false" onAction="#agregarIdiomaNuevo" prefHeight="29.0" prefWidth="110.0" text="Añadir Idioma">
                <font>
                   <Font size="13.0" />
                </font>

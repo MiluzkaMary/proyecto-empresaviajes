@@ -6,6 +6,7 @@ import co.edu.uniquindio.agenciaViajes.model.AgenciaViajes;
 import co.edu.uniquindio.agenciaViajes.model.Cliente;
 import co.edu.uniquindio.agenciaViajes.util.ArchivoUtils;
 import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -25,13 +26,27 @@ public class VentanaCambiarContraseniaController implements Initializable {
     public String correo;
     public AgenciaViajes agenciaViajes = AgenciaViajes.getInstance();
     public Stage ventana;
-    public Pane paneIngresar;
-    public Button btnConfirmar;
-    public TextField txtNuevaContra;
-    public TextField txtConfirmContra;
-    public Pane paneIngresar1;
-    public Button btnConfirmar2;
-    public TextField txtCodigo;
+
+    @FXML
+    private Button btnConfirmar;
+
+    @FXML
+    private Button btnConfirmar2;
+
+    @FXML
+    private TextField txtCodigo;
+
+    @FXML
+    private Pane paneIngresar;
+
+    @FXML
+    private TextField txtNuevaContra;
+
+    @FXML
+    private TextField txtConfirmContra;
+
+    @FXML
+    private Pane paneIngresar1;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -42,7 +57,10 @@ public class VentanaCambiarContraseniaController implements Initializable {
         if (txtCodigo.getText().equals(code)) {
             paneIngresar1.setVisible(false);
             paneIngresar.setVisible(true);
-            Platform.runLater(() -> txtCodigo.requestFocus()); // Forzar foco en el campo de texto
+            /**
+             * Platform.runLater(() -> txtCodigo.requestFocus());
+             */
+// Forzar foco en el campo de texto
         }else {
             ArchivoUtils.mostrarMensaje("Error", "Entradas No Válidas", "El código no coincide", Alert.AlertType.ERROR);
         }
@@ -52,8 +70,7 @@ public class VentanaCambiarContraseniaController implements Initializable {
         try{
             Cliente cliente = agenciaViajes.cambiarContraseniaCliente(correo, txtNuevaContra.getText(), txtConfirmContra.getText());
             ArchivoUtils.mostrarMensaje("Cambio exitoso", "Operación completada", "¡Felicidades "+cliente.getNombre()+", su contraseña ha sido cambiada exitosamente!", Alert.AlertType.INFORMATION);
-            ventana.close();
-            aplicacion.mostrarVentanaRegistroIngreso(aplicacion);
+            aplicacion.mostrarVentanaRegistroIngreso(this.aplicacion);
         } catch (AtributoVacioException e) {
             ArchivoUtils.mostrarMensaje("Error", "Entradas no validas", e.getMessage(), Alert.AlertType.ERROR);
         }

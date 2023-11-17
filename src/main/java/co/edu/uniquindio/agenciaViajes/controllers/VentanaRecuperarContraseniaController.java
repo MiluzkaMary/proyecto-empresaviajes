@@ -29,6 +29,7 @@ public class VentanaRecuperarContraseniaController implements Initializable {
     }
 
     public void recuperarCuenta() {
+        //faltan las verificaciones de campo vacio o si el correo siquiera existe
         String asunto = "Código de recuperación para su cuenta";
         code = AgenciaViajes.generarCodigo();
         correo = txtCorreo.getText();

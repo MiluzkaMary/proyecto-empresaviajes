@@ -84,8 +84,8 @@ public class Aplicacion extends Application {
     public void mostrarVentanaPrincipal(Cliente cliente, Administrador admin){
         try{
             FXMLLoader loader = new FXMLLoader(Aplicacion.class.getResource("/ventanas/VentanaInicio.fxml"));
-            Parent parent = loader.load();
-            Scene scene = new Scene(parent);
+            rootLayout = (AnchorPane) loader.load();
+            Scene scene = new Scene(rootLayout);
             stage.setScene(scene);
             stage.centerOnScreen();
             stage.show();
@@ -133,18 +133,16 @@ public class Aplicacion extends Application {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Aplicacion.class.getResource("/ventanas/VentanaRegistroIngreso.fxml"));
-            AnchorPane page = (AnchorPane) loader.load();
-            Stage ventana = new Stage();
-            ventana.setTitle("Travel Dreams | Inicio de Sesion");
-            ventana.initModality(Modality.WINDOW_MODAL);
-            ventana.initOwner(stage);
-            Scene scene = new Scene(page);
-            ventana.setScene(scene);
+            rootLayout = (AnchorPane) loader.load();
+            Scene scene = new Scene(rootLayout);
+            stage.setScene(scene);
+            stage.setTitle("Travel Dreams | Inicio de Sesion");
+            stage.setResizable(false);
+            stage.show();
             VentanaRegistroIngresoController controlador = loader.getController();
             ventanaRegistroIngresoController = loader.getController(); //obteniendo valor del controlador editable
             controlador.setVentana(stage);
             controlador.setAplicacion(aplicacion);
-            ventana.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -158,46 +156,41 @@ public class Aplicacion extends Application {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Aplicacion.class.getResource("/ventanas/VentanaRecuperarContrasenia.fxml"));
-            AnchorPane page = (AnchorPane) loader.load();
-            Stage ventana = new Stage();
-            ventana.setTitle("Travel Dreams | Recuperar Contraseña");
-            ventana.initModality(Modality.WINDOW_MODAL);
-            ventana.initOwner(stage);
-            Scene scene = new Scene(page);
-            ventana.setScene(scene);
+            rootLayout = (AnchorPane) loader.load();
+            Scene scene = new Scene(rootLayout);
+            stage.setScene(scene);
+            stage.setTitle("Travel Dreams | Recuperar Contraseña");
+            stage.setResizable(false);
+            stage.show();
+
             VentanaRecuperarContraseniaController controlador = loader.getController();
             controlador.setVentana(stage);
             controlador.setAplicacion(aplicacion);
-            ventana.showAndWait();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void ventanaCambiarContrasenia(Aplicacion aplicacion, String code, String correo) {
-        Platform.runLater(() -> {
-            try {
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(Aplicacion.class.getResource("/ventanas/VentanaCambiarContrasenia.fxml"));
-                AnchorPane page = (AnchorPane) loader.load();
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Aplicacion.class.getResource("/ventanas/VentanaCambiarContrasenia.fxml"));
+            rootLayout = (AnchorPane) loader.load();
+            Scene scene = new Scene(rootLayout);
+            stage.setScene(scene);
+            stage.setTitle("Travel Dreams | Cambiar Contraseña");
+            stage.setResizable(false);
+            stage.show();
+            VentanaCambiarContraseniaController controlador = loader.getController();
+            controlador.setVentana(stage);
+            controlador.setAplicacion(aplicacion);
+            controlador.setCode(code);
+            controlador.setCorreo(correo);
 
-                VentanaCambiarContraseniaController controlador = loader.getController();
-                controlador.setVentana(stage);
-                controlador.setAplicacion(aplicacion);
-                controlador.setCode(code);
-                controlador.setCorreo(correo);
-
-                Stage ventana = new Stage();
-                ventana.setTitle("Travel Dreams | Cambiar Contraseña");
-                ventana.initModality(Modality.WINDOW_MODAL);
-                ventana.initOwner(stage);
-                Scene scene = new Scene(page);
-                ventana.setScene(scene);
-                ventana.showAndWait();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void mostrarVentanaPerfilCliente(Aplicacion aplicacion){
