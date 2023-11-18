@@ -183,7 +183,7 @@
       <Separator layoutY="69.0" prefHeight="3.0" prefWidth="272.0" />
       <Pane prefHeight="68.0" prefWidth="272.0" stylesheets="@../aplicacion.css">
          <children>
-            <Button fx:id="btnAjustesPerfil" mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="      Ajustes de Perfil">
+            <Button fx:id="btnAjustesPerfil" mnemonicParsing="false" onAction="#mostrarPerfil" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="      Ajustes de Perfil">
                <font>
                   <Font size="16.0" />
                </font>

@@ -302,7 +302,6 @@ public class VentanaRegistroIngresoController implements Initializable {
 
     /**
      * Evento que se ejecuta al hacer clic en el botón de abrir ojo.
-     *
      * Este método se ejecuta cuando se hace clic en el botón de abrir ojo. Cambia la visibilidad de los elementos de la
      * interfaz relacionados con la contraseña para mostrarlos u ocultarlos según sea necesario.
      * @param mousevent El evento de clic del ratón.
@@ -324,8 +323,4 @@ public class VentanaRegistroIngresoController implements Initializable {
     public void recuperarContrasenia(){
         aplicacion.ventanaRecuperarContrasenia(this.aplicacion);
     }
-
-
-
-
 }

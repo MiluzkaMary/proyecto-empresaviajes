@@ -5,16 +5,12 @@ import co.edu.uniquindio.agenciaViajes.controllers.VentanaInicioController;
 import co.edu.uniquindio.agenciaViajes.controllers.VentanaRecuperarContraseniaController;
 import co.edu.uniquindio.agenciaViajes.controllers.VentanaRegistroIngresoController;
 import co.edu.uniquindio.agenciaViajes.model.Administrador;
-import co.edu.uniquindio.agenciaViajes.model.AgenciaViajes;
 import co.edu.uniquindio.agenciaViajes.model.Cliente;
 import co.edu.uniquindio.agenciaViajes.model.Paquete;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.Data;
 
@@ -193,26 +189,9 @@ public class Aplicacion extends Application {
         }
     }
 
-    public void mostrarVentanaPerfilCliente(Aplicacion aplicacion){
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Aplicacion.class.getResource("/ventanas/VentanaRecuperarContrasenia.fxml"));
-            AnchorPane page = (AnchorPane) loader.load();
-            Stage ventana = new Stage();
-            ventana.setTitle("Travel Dreams | Recuperar Contraseña");
-            ventana.initModality(Modality.WINDOW_MODAL);
-            ventana.initOwner(stage);
-            Scene scene = new Scene(page);
-            ventana.setScene(scene);
-            VentanaRecuperarContraseniaController controlador = loader.getController();
-            controlador.setVentana(stage);
-            controlador.setAplicacion(aplicacion);
-            ventana.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void mostrarVentanaPerfilCliente(Cliente cliente) {
+        ventanaInicioController.mostrarPanelDerechoPerfil(cliente);
     }
-
 
     public static void main(String[] args) {
         launch(Aplicacion.class, args);

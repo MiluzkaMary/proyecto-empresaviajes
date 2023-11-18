@@ -290,6 +290,21 @@ public class VentanaInicioController  implements Initializable {
         }
     }
 
+    public void mostrarPanelDerechoPerfil(Cliente cliente){
+        try {
+            panelDerecho.getChildren().clear();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaPerfilCliente.fxml"));
+            Node node = loader.load();
+            panelDerecho.getChildren().add(node);
+            VentanaPerfilClienteController controlador = loader.getController();
+            controlador.setAplicacion(this.aplicacion);
+            controlador.setCliente(cliente);
+            controlador.setearCliente(cliente);
+        }catch (Exception e){
+            log.severe(e.getMessage());
+        }
+    }
+
     public void quemarDatosPrueba() {
 
         ArrayList<Destino> listaDestinosQuemados = new ArrayList<>();

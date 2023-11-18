@@ -13,7 +13,6 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -573,5 +572,67 @@ public class AgenciaViajes {
         else{
             throw new AtributoVacioException("No se ha introducido ningún correo");
         }
+    }
+
+    public void editarCliente(Cliente cliente){
+        try{
+            String nombre = cliente.getNombre();
+            String cedula = cliente.getCedula();
+            String foto = cliente.getFoto();
+            String correo = cliente.getCorreo();
+            String direccion = cliente.getDireccion();
+            String contrasenia = cliente.getContrasenia();
+            String telefono = cliente.getTelefono();
+            if (verificarDatosCliente(cliente)){
+                cliente.setNombre(nombre);
+                cliente.setFoto(foto);
+                cliente.setContrasenia(contrasenia);
+                cliente.setCorreo(correo);
+                cliente.setCedula(cedula);
+                cliente.setDireccion(direccion);
+                cliente.setTelefono(telefono);
+            }
+        }catch (DatoInvalidoException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    private boolean verificarDatosCliente(Cliente cliente) throws DatoInvalidoException {
+        String nombre = cliente.getNombre();
+        String cedula = cliente.getCedula();
+        String foto = cliente.getFoto();
+        String correo = cliente.getCorreo();
+        String direccion = cliente.getDireccion();
+        String contrasenia = cliente.getContrasenia();
+        String telefono = cliente.getTelefono();
+
+        if (nombre == null || nombre.isBlank() || !nombre.matches("^[a-zA-Z]+$")) {
+            throw new DatoInvalidoException("El nombre es inválido");
+        }
+
+        if (cedula == null || cedula.isBlank() || !cedula.matches("^\\d+$")) {
+            throw new DatoInvalidoException("La cédula es inválida");
+        }
+
+        if (foto == null || foto.isBlank()) {
+            throw new DatoInvalidoException("La foto no puede estar vacía");
+        }
+
+        if (!isValidEmail(correo)) {
+            throw new DatoInvalidoException("El correo es inválido");
+        }
+
+        if (direccion == null || direccion.isBlank()) {
+            throw new DatoInvalidoException("La dirección es inválida");
+        }
+
+        if (contrasenia == null || contrasenia.isBlank()) {
+            throw new DatoInvalidoException("La contraseña es inválida");
+        }
+        if (telefono == null || telefono.isBlank() || !telefono.matches("^\\d+$")) {
+            throw new DatoInvalidoException("La contraseña es inválida");
+        }
+        return true;
     }
 }
