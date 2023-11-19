@@ -1210,3 +1210,11 @@ nov. 19, 2023 2:53:25 P. M. co.edu.uniquindio.agenciaViajes.model.AgenciaViajes
 INFO: Se ha registrado un nuevo cliente con la cédula: 1111
 nov. 19, 2023 2:54:14 P. M. co.edu.uniquindio.agenciaViajes.model.AgenciaViajes registrarCliente
 INFO: Se ha registrado un nuevo cliente con la cédula: 2322
+nov. 19, 2023 4:19:25 P. M. co.edu.uniquindio.agenciaViajes.model.AgenciaViajes <init>
+INFO: Se crea una nueva instancia de AgenciaViajes
+nov. 19, 2023 4:20:18 P. M. co.edu.uniquindio.agenciaViajes.model.AgenciaViajes registrarCliente
+INFO: Se ha registrado un nuevo cliente con la cédula: 476299
+nov. 19, 2023 4:20:18 P. M. co.edu.uniquindio.agenciaViajes.model.AgenciaViajes registrarAdministradorPrueba
+INFO: Se ha registrado un nuevo administrador con la cédula: 5656
+nov. 19, 2023 4:21:09 P. M. co.edu.uniquindio.agenciaViajes.model.AgenciaViajes registrarCliente
+INFO: Se ha registrado un nuevo cliente con la cédula: 1113779400

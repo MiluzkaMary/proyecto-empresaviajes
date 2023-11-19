@@ -234,7 +234,7 @@ public class AgenciaViajes {
             throw new DatoNoNumericoException("La cédula debe contener solo números");
         }
 
-        if (obtenerCliente(cedula) != null) {
+        if (obtenerCliente(cedula, 0) != null) {
             throw new InformacionRepetidaException("La cédula " + cedula + " ya está registrada");
         }
 
@@ -361,7 +361,7 @@ public class AgenciaViajes {
             throw new DatoNoNumericoException("La cédula debe contener solo números");
         }
 
-        if (obtenerGuia(cedula) != null) {
+        if (obtenerGuia(cedula, 0) != null) {
             throw new InformacionRepetidaException("La cédula " + cedula + " ya está registrada");
         }
 
@@ -577,11 +577,19 @@ public class AgenciaViajes {
                 .listaIdiomas(listaIdiomas)
                 .aniosExperiencia(Integer.parseInt(aniosExperiencia))
                 .build();
-        listaGuias.replaceAll(p -> p.equals(guiaAnterior) ? guia : p);
+        reemplazarGuiaParte2(guiaAnterior, guia, 0);
         //escribirGuia(guia);
 
         log.info("Se ha editado un nuevo guia con nombre: " + nombre);
         return guia;
+    }
+    private void reemplazarGuiaParte2(GuiaTuristico guiaAnterior, GuiaTuristico guia, int i) {
+        if (i < listaGuias.size()) {
+            if (listaGuias.get(i).equals(guiaAnterior)) {
+                listaGuias.set(i, guia);
+            }
+            reemplazarGuiaParte2(guiaAnterior, guia, i + 1);
+        }
     }
 
     public Destino editarDestino(Destino destinoAnterior, String nombre, String ciudad, String descripcion, String clima, List<String> listaFotos) throws AtributoVacioException, InformacionRepetidaException {
@@ -614,27 +622,38 @@ public class AgenciaViajes {
                 .valoraciones(destinoAnterior.getValoraciones())
                 .build();
 
-        listaDestinos.replaceAll(p -> p.equals(destinoAnterior) ? destino : p);
+        reemplazarDestinoParte2(destinoAnterior, destino, 0);
+
         //escribirDestino(destino);
 
         log.info("Se ha editado un nuevo destino con nombre: " + nombre);
         return destino;
     }
 
-    public GuiaTuristico buscarGuiaConCedula(String cedula) {
-        GuiaTuristico elegido = null;
-        for (GuiaTuristico guia : listaGuias) {
-            if (guia.getCedula().equals(cedula)) {
-                elegido = guia;
+    private void reemplazarDestinoParte2(Destino destinoAnterior, Destino destino, int i) {
+        if (i < listaDestinos.size()) {
+            if (listaDestinos.get(i).equals(destinoAnterior)) {
+                listaDestinos.set(i, destino);
             }
+            reemplazarDestinoParte2(destinoAnterior, destino, i + 1);
         }
-        return elegido;
+    }
+
+
+    public GuiaTuristico buscarGuiaConCedula(String cedula, int i) {
+        if (i >= listaGuias.size()) {
+            return null;
+        }
+        GuiaTuristico guia = listaGuias.get(i);
+        if (guia.getCedula().equals(cedula)) {
+            return guia;
+        }
+        return buscarGuiaConCedula(cedula, i + 1);
     }
 
 
     public Reserva registrarReserva(LocalDateTime fechaHora, LocalDate fechaInicial, LocalDate fechaFinal, Cliente cliente, int numPersonas,
                                     String cedulaGuia, EstadoReserva estadoReserva, Paquete paquete, Double valorTotal) throws AtributoVacioException {
-
         GuiaTuristico guiaElegido;
         String numerosCedula;
         valorTotal = paquete.getPrecio() * numPersonas;
@@ -642,7 +661,7 @@ public class AgenciaViajes {
             throw new AtributoVacioException("Escoger un guia es obligatorio");
         } else {
             numerosCedula = cedulaGuia.substring(cedulaGuia.indexOf("-") + 1).trim();
-            guiaElegido = buscarGuiaConCedula(numerosCedula);
+            guiaElegido = buscarGuiaConCedula(numerosCedula, 0);
         }
 
         if (guiaElegido == null) {
@@ -680,51 +699,66 @@ public class AgenciaViajes {
         return email.matches(regex);
     }
 
-    public int buscarUnidadesDisponibles(Paquete paquete) {
-        int unidadesDisponibles = paquete.getCupoMaximo();
-        for (Reserva reserva : listaReservas) {
-            if (reserva.getPaquete().equals(paquete) && reserva.getEstado() == EstadoReserva.PENDIENTE) {
-                unidadesDisponibles -= reserva.getNumPersonas();
-            }
+    public int buscarUnidadesDisponibles(Paquete paquete, EstadoReserva estado, int i) {
+        if (i >= listaReservas.size()) {
+            return paquete.getCupoMaximo();
         }
-        return unidadesDisponibles;
+
+        Reserva reserva = listaReservas.get(i);
+        if (reserva.getPaquete().equals(paquete) && reserva.getEstado() == estado) {
+            int personasReservadas = reserva.getNumPersonas();
+            int unidadesOcupadas = buscarUnidadesDisponibles(paquete, estado, i + 1);
+            return unidadesOcupadas - personasReservadas;
+        }
+
+        return buscarUnidadesDisponibles(paquete, estado, i + 1);
     }
 
-    public ArrayList<GuiaTuristico> obtenerGuiasTrabajandoEn(LocalDate fechaInicial, LocalDate fechaFinal) {
-        ArrayList<GuiaTuristico> listaTrabajando = new ArrayList<>();
-
-        for (Reserva reserva : listaReservas) {
-            LocalDate fechaTrabajoInicio = reserva.getFechaInicio();
-            LocalDate fechaTrabajoFin = reserva.getFechaFin();
-
-            // Verificar si la reserva está dentro del rango especificado
-            if ((fechaTrabajoInicio.isAfter(fechaInicial) || fechaTrabajoInicio.isEqual(fechaInicial)) &&
-                    (fechaTrabajoFin.isBefore(fechaFinal) || fechaTrabajoFin.isEqual(fechaFinal))) {
-
-                // Agregar el guía asociado a la reserva a la lista de guías trabajando
-                GuiaTuristico guia = reserva.getGuia();
-                listaTrabajando.add(guia);
-            } else if ((fechaTrabajoInicio.isEqual(fechaInicial) || fechaTrabajoFin.isEqual(fechaFinal)) &&
-                    !listaTrabajando.contains(reserva.getGuia())) {
-                // Agregar el guía si trabaja el mismo día que fechaInicial o fechaFinal
-                listaTrabajando.add(reserva.getGuia());
-            }
+    public ArrayList<GuiaTuristico> obtenerGuiasTrabajandoEn(LocalDate fechaInicial, LocalDate fechaFinal, int i, ArrayList<GuiaTuristico> listaTrabajando) {
+        if (i >= listaReservas.size()) {
+            return listaTrabajando;
         }
 
-        return listaTrabajando;
+        Reserva reserva = listaReservas.get(i);
+        LocalDate fechaTrabajoInicio = reserva.getFechaInicio();
+        LocalDate fechaTrabajoFin = reserva.getFechaFin();
+
+        if ((fechaTrabajoInicio.isAfter(fechaInicial) || fechaTrabajoInicio.isEqual(fechaInicial)) &&
+                (fechaTrabajoFin.isBefore(fechaFinal) || fechaTrabajoFin.isEqual(fechaFinal))) {
+            listaTrabajando.add(reserva.getGuia());
+        } else if ((fechaTrabajoInicio.isEqual(fechaInicial) || fechaTrabajoFin.isEqual(fechaFinal)) &&
+                !listaTrabajando.contains(reserva.getGuia())) {
+            listaTrabajando.add(reserva.getGuia());
+        }
+
+        return obtenerGuiasTrabajandoEn(fechaInicial, fechaFinal, i + 1, listaTrabajando);
     }
 
-    public ArrayList<GuiaTuristico> obtenerGuiasDisponiblesEnFecha(LocalDate fechaInicial, LocalDate fechaFinal) {
-        ArrayList<GuiaTuristico> guiasDisponibles = new ArrayList<>();
-
-        ArrayList<GuiaTuristico> guiasNoDisponibles = obtenerGuiasTrabajandoEn(fechaInicial, fechaFinal);
-        for (GuiaTuristico guia : listaGuias) {
-            if (!guiasNoDisponibles.contains(guia)) {
-                guiasDisponibles.add(guia);
-            }
+    public ArrayList<GuiaTuristico> obtenerGuiasDisponiblesEnFecha(LocalDate fechaInicial, LocalDate fechaFinal,  int i, ArrayList<GuiaTuristico> guiasDisponibles) {
+        if (i >= listaGuias.size()) {
+            return guiasDisponibles;
         }
 
-        return guiasDisponibles;
+        GuiaTuristico guia = listaGuias.get(i);
+        ArrayList<GuiaTuristico> guiasTrabajando = obtenerGuiasTrabajandoEn(fechaInicial, fechaFinal, 0, new ArrayList<>());
+
+        if (!guiasTrabajando.contains(guia)) {
+            guiasDisponibles.add(guia);
+        }
+
+        return obtenerGuiasDisponiblesEnFecha(fechaInicial, fechaFinal, i + 1, guiasDisponibles);
+    }
+
+    public void obtenerNombresGuiasDisponiblesEnFecha(Paquete paquete, LocalDate fechaFinal, int index, ArrayList<String> guias) {
+        if (index >= agenciaViajes.obtenerGuiasDisponiblesEnFecha(paquete.getFecha(), fechaFinal, 0, new ArrayList<>()).size()) {
+            return;
+        }
+
+        GuiaTuristico guia = agenciaViajes.obtenerGuiasDisponiblesEnFecha(paquete.getFecha(), fechaFinal, 0, new ArrayList<>()).get(index);
+        String nombreCedula = guia.getNombre() + " - " + guia.getCedula();
+        guias.add(nombreCedula);
+
+        obtenerNombresGuiasDisponiblesEnFecha(paquete, fechaFinal, index + 1, guias);
     }
 
     public void enviarCorreo(String asunto, String contenido, String correoDestino) {
@@ -760,19 +794,21 @@ public class AgenciaViajes {
         }
     }
 
-    public ArrayList<Destino> obtenerDestinosPermitidos(List<Destino> listaDestinosYaIncluidos) {
-        ArrayList<Destino> listaRespuesta = new ArrayList<>();
-        for (Destino destino : getListaDestinos()) {
-            // Verificar si el destino no está en la listaDestinosYaIncluidos
-            if (!listaDestinosYaIncluidos.contains(destino)) {
-                listaRespuesta.add(destino);
-            }
+    public ArrayList<Destino> obtenerDestinosPermitidos(List<Destino> listaDestinosYaIncluidos, int i, ArrayList<Destino> listaRespuesta) {
+        if (i >= getListaDestinos().size()) {
+            return listaRespuesta;
         }
+
+        Destino destino = getListaDestinos().get(i);
+        if (!listaDestinosYaIncluidos.contains(destino)) {
+            listaRespuesta.add(destino);
+        }
+
+        obtenerDestinosPermitidos(listaDestinosYaIncluidos, i + 1, listaRespuesta);
         return listaRespuesta;
     }
 
-    public ArrayList<String> obtenerIdiomasPermitidos(List<String> listaIdiomasYaIncluidos) {
-        ArrayList<String> listaRespuesta = new ArrayList<>();
+    public ArrayList<String> obtenerIdiomasPermitidos(List<String> listaIdiomasYaIncluidos, int index, ArrayList<String> listaRespuesta) {
         List<String> idiomas = Arrays.asList(
                 "Español", "Inglés", "Mandarín", "Hindi", "Árabe", "Portugués",
                 "Bengalí", "Ruso", "Japonés", "Alemán", "Francés", "Italiano",
@@ -782,16 +818,21 @@ public class AgenciaViajes {
                 "Rumano", "Búlgaro", "Croata", "Serbio", "Eslovaco", "Esloveno",
                 "Lituano", "Letón", "Estonio", "Georgiano", "Armenio", "Azerí",
                 "Kazajo", "Ucraniano", "Mongol", "Tibetano", "Nepalí", "Seychelense"
-
         );
-        for (String idioma : idiomas) {
-            if (!listaIdiomasYaIncluidos.contains(idioma)) {
-                listaRespuesta.add(idioma);
-            }
+
+        if (index >= idiomas.size()) {
+            return listaRespuesta;
         }
 
+        String idioma = idiomas.get(index);
+        if (!listaIdiomasYaIncluidos.contains(idioma)) {
+            listaRespuesta.add(idioma);
+        }
+
+        obtenerIdiomasPermitidos(listaIdiomasYaIncluidos, index + 1, listaRespuesta);
         return listaRespuesta;
     }
+
 
     // Método para generar un código aleatorio de 2 letras y 4 números
     public static String generarCodigo() {
@@ -875,60 +916,19 @@ public class AgenciaViajes {
                 .paquetesReservados(new ArrayList<>())
                 .build();
         System.out.println("se mando al cliente"+ clienteAnterior.getCedula());
-        listaClientes.replaceAll(p -> p.equals(clienteAnterior) ? cliente : p);
+        editarClienteParte2(clienteAnterior, cliente, 0);
         return cliente;
     }
 
-    public void editarCliente2(String cedula, String nombre, String telefono, String foto, String direccion, String correo, String contrasenia) throws DatoInvalidoException, CorreoNoDisponibleException, AtributoVacioException {
-        Cliente clienteEncontrado = null;
-        for (Cliente cliente : listaClientes) {
-            System.out.println("Cédula actual: " + cliente.getCedula());
-            if (cliente.getCedula().equals(cedula)) {
-                clienteEncontrado = cliente;
-                break;
+    public void editarClienteParte2(Cliente clienteAnterior, Cliente nuevoCliente, int index) {
+        if (index < listaClientes.size()) {
+            if (listaClientes.get(index).equals(clienteAnterior)) {
+                listaClientes.set(index, nuevoCliente);
             }
-        }
-
-        if (clienteEncontrado != null) {
-            // Realizar las validaciones necesarias con los nuevos datos
-            if (nombre == null || nombre.isBlank() || !nombre.matches("^[a-zA-Z]+$")) {
-                throw new DatoInvalidoException("El nombre es inválido");
-            }
-            if (cedula == null || cedula.isBlank() || !cedula.matches("^\\d+$")) {
-                throw new DatoInvalidoException("La cédula es inválida");
-            }
-            if (foto == null || foto.isBlank()) {
-                throw new DatoInvalidoException("La foto no puede estar vacía");
-            }
-            if (!isValidEmail(correo)) {
-                throw new DatoInvalidoException("El correo es inválido");
-            }
-            if (verificarExistenciaClienteCorreo(correo, 0)) {
-                if (!buscarClientePorCorreo(correo, 0).getCedula().equals(clienteEncontrado.getCedula())) {
-                    throw new CorreoNoDisponibleException("El correo ya se encuentra registrado a otra cuenta");
-                }
-            }
-            if (direccion == null || direccion.isBlank()) {
-                throw new DatoInvalidoException("La dirección es inválida");
-            }
-            if (contrasenia == null || contrasenia.isBlank()) {
-                throw new DatoInvalidoException("La contraseña es inválida");
-            }
-            if (telefono == null || telefono.isBlank() || !telefono.matches("^\\d+$")) {
-                throw new DatoInvalidoException("La contraseña es inválida");
-            }
-
-            // Actualizar los datos del cliente encontrado
-            clienteEncontrado.setNombre(nombre);
-            clienteEncontrado.setTelefono(telefono);
-            clienteEncontrado.setFoto(foto);
-            clienteEncontrado.setDireccion(direccion);
-            clienteEncontrado.setCorreo(correo);
-            clienteEncontrado.setContrasenia(contrasenia);
-        } else {
-            throw new DatoInvalidoException("El cliente no fue encontrado");
+            editarClienteParte2(clienteAnterior, nuevoCliente, index + 1);
         }
     }
+
     public boolean verificarExistenciaClienteCorreo(String correo, int i){
         if (i<listaClientes.size()) {
             if (listaClientes.get(i).getCorreo().equals(correo)) {
@@ -987,31 +987,46 @@ public class AgenciaViajes {
 
     public Map<String, Integer> obtenerDatosReservaCantidadDestinos(List<Reserva> reservas) {
         Map<String, Integer> contadorNombresDestinos = new HashMap<>();
+        return obtenerDatosReservaCantidadDestinosParte2(reservas, 0, contadorNombresDestinos);
+    }
 
-        for (Reserva reserva : reservas) {
-            Paquete paquete = reserva.getPaquete();
-
-            for (Destino destino : paquete.getDestinos()) {
-                String nombreDestino = destino.getNombre();
-
-                // Actualizar el contador del nombre del destino
-                contadorNombresDestinos.put(nombreDestino, contadorNombresDestinos.getOrDefault(nombreDestino, 0) + 1);
-            }
+    private Map<String, Integer> obtenerDatosReservaCantidadDestinosParte2(List<Reserva> reservas, int index, Map<String, Integer> contadorNombresDestinos) {
+        if (index < reservas.size()) {
+            Paquete paquete = reservas.get(index).getPaquete();
+            actualizarContadorDestinos(paquete, contadorNombresDestinos);
+            return obtenerDatosReservaCantidadDestinosParte2(reservas, index + 1, contadorNombresDestinos);
         }
         return contadorNombresDestinos;
     }
 
+    private void actualizarContadorDestinos(Paquete paquete, Map<String, Integer> contadorNombresDestinos) {
+        actualizarContadorDestinosParte2(paquete.getDestinos(), 0, contadorNombresDestinos);
+    }
+
+    private void actualizarContadorDestinosParte2(List<Destino> destinos, int index, Map<String, Integer> contadorNombresDestinos) {
+        if (index < destinos.size()) {
+            String nombreDestino = destinos.get(index).getNombre();
+            contadorNombresDestinos.put(nombreDestino, contadorNombresDestinos.getOrDefault(nombreDestino, 0) + 1);
+            actualizarContadorDestinosParte2(destinos, index + 1, contadorNombresDestinos);
+        }
+    }
+
     public Map<String, Integer> obtenerDatosReservaCantidadPaquetes(List<Reserva> reservas) {
         Map<String, Integer> contadorNombresPaquetes = new HashMap<>();
+        return obtenerDatosReservaCantidadPaquetesParte2(reservas, 0, contadorNombresPaquetes);
+    }
 
-        for (Reserva reserva : reservas) {
-            Paquete paquete = reserva.getPaquete();
-            String nombrePaquete = paquete.getNombre(); // Asumo que hay un método getNombre() en la clase Paquete
-
-            // Actualizar el contador del nombre del paquete
-            contadorNombresPaquetes.put(nombrePaquete, contadorNombresPaquetes.getOrDefault(nombrePaquete, 0) + 1);
+    private Map<String, Integer> obtenerDatosReservaCantidadPaquetesParte2(List<Reserva> reservas, int index, Map<String, Integer> contadorNombresPaquetes) {
+        if (index < reservas.size()) {
+            Paquete paquete = reservas.get(index).getPaquete();
+            String nombrePaquete = paquete.getNombre();
+            actualizarContadorPaquetes(nombrePaquete, contadorNombresPaquetes);
+            return obtenerDatosReservaCantidadPaquetesParte2(reservas, index + 1, contadorNombresPaquetes);
         }
-
         return contadorNombresPaquetes;
+    }
+
+    private void actualizarContadorPaquetes(String nombrePaquete, Map<String, Integer> contadorNombresPaquetes) {
+        contadorNombresPaquetes.put(nombrePaquete, contadorNombresPaquetes.getOrDefault(nombrePaquete, 0) + 1);
     }
 }

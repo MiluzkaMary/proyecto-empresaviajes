@@ -15,6 +15,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import lombok.Data;
+
+import java.util.ArrayList;
 import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -118,10 +120,7 @@ public class VentanaReservaController implements Initializable {
 
         //combobox
         ObservableList<String> guias= FXCollections.observableArrayList();
-        for (GuiaTuristico turistico : agenciaViajes.obtenerGuiasDisponiblesEnFecha(paquete.getFecha(), fechaFinal)) {
-            String nombreCedula=turistico.getNombre() + " - "+ turistico.getCedula()+"";
-            guias.add(nombreCedula);
-        }
+        agenciaViajes.obtenerNombresGuiasDisponiblesEnFecha(paquete, fechaFinal, 0, new ArrayList<>());
         comboGuia.setItems(guias);
 
     }
@@ -140,7 +139,7 @@ public class VentanaReservaController implements Initializable {
     }
 
     public void mas(){
-        int unidadesDisponibles=agenciaViajes.buscarUnidadesDisponibles(paquete);
+        int unidadesDisponibles=agenciaViajes.buscarUnidadesDisponibles(paquete, EstadoReserva.PENDIENTE, 0);
         if (unidades!=unidadesDisponibles){
             unidades++;
             txtUnidades.setText(String.valueOf(unidades));

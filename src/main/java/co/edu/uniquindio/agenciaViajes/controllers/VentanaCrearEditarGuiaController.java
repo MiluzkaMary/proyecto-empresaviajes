@@ -143,7 +143,7 @@ public class VentanaCrearEditarGuiaController implements Initializable {
     public void actualizarTablaIdiomasPosibles(){
         tablaIdiomasDisponibles.getItems().clear();
         ObservableList<String> listaIdiomasDisponiblesProperty= FXCollections.observableArrayList();
-        ArrayList<String> listaDisponibles= agenciaViajes.obtenerIdiomasPermitidos(listaIdiomasActuales);
+        ArrayList<String> listaDisponibles= agenciaViajes.obtenerIdiomasPermitidos(listaIdiomasActuales, 0 , new ArrayList<>());
         listaIdiomasDisponiblesProperty.addAll(listaDisponibles);
 
         tablaIdiomasDisponibles.setItems(listaIdiomasDisponiblesProperty);

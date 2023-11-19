@@ -1,6 +1,7 @@
 package co.edu.uniquindio.agenciaViajes.controllers;
 
 import co.edu.uniquindio.agenciaViajes.app.Aplicacion;
+import co.edu.uniquindio.agenciaViajes.enums.EstadoReserva;
 import co.edu.uniquindio.agenciaViajes.exceptions.*;
 import co.edu.uniquindio.agenciaViajes.model.*;
 import co.edu.uniquindio.agenciaViajes.util.ArchivoUtils;
@@ -186,7 +187,7 @@ public class VentanaDetallesPaqueteController implements Initializable {
         txtDias.setText(String.valueOf(paquete.getDiasDuracion()));
         txtTitulo.setText(paquete.getNombre());
         txtCupoMaximo.setText(String.valueOf(paquete.getCupoMaximo()));
-        int unidadesDisponibles=agenciaViajes.buscarUnidadesDisponibles(paquete);
+        int unidadesDisponibles=agenciaViajes.buscarUnidadesDisponibles(paquete, EstadoReserva.PENDIENTE, 0);
         txtCupoDisponible.setText(String.valueOf(unidadesDisponibles));
         txtValoracion.setText(String.valueOf(paquete.obtenerPromedioValoraciones()));
         txtNumValoraciones.setText(String.valueOf("("+paquete.obtenerNumValoraciones()+")"));
@@ -294,7 +295,7 @@ public class VentanaDetallesPaqueteController implements Initializable {
     public void actualizarTablaDestinosPosibles(){
         tablaDisponiblesAgencia.getItems().clear();
         ObservableList<Destino> listaDestinosPosiblesProperty= FXCollections.observableArrayList();
-        ArrayList<Destino> listaDestinosPosibles= agenciaViajes.obtenerDestinosPermitidos(listaTemporalDestinos);
+        ArrayList<Destino> listaDestinosPosibles= agenciaViajes.obtenerDestinosPermitidos(listaTemporalDestinos, 0, new ArrayList<>());
         for (Destino destino : listaDestinosPosibles) {
             listaDestinosPosiblesProperty.add(destino);
         }
