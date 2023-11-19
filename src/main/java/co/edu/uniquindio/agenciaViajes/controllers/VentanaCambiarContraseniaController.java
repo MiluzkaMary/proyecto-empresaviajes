@@ -54,24 +54,20 @@ public class VentanaCambiarContraseniaController implements Initializable {
     }
 
     public void confirmarCodigo() {
-        if (txtCodigo.getText().equals(code)) {
+        try {
+            agenciaViajes.compararDatos(txtCodigo.getText(), code);
             paneIngresar1.setVisible(false);
             paneIngresar.setVisible(true);
-            /**
-             * Platform.runLater(() -> txtCodigo.requestFocus());
-             */
-// Forzar foco en el campo de texto
-        }else {
-            ArchivoUtils.mostrarMensaje("Error", "Entradas No Válidas", "El código no coincide", Alert.AlertType.ERROR);
+        } catch (InformacionNoRepetidaException | AtributoVacioException e){
+            ArchivoUtils.mostrarMensaje("Error", "Entradas no validas", e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
-    public void cambiarContrasenia() throws InformacionNoRepetidaException {
+    public void cambiarContrasenia() {
         try{
-            Cliente cliente = agenciaViajes.cambiarContraseniaCliente(correo, txtNuevaContra.getText(), txtConfirmContra.getText());
-            ArchivoUtils.mostrarMensaje("Cambio exitoso", "Operación completada", "¡Felicidades "+cliente.getNombre()+", su contraseña ha sido cambiada exitosamente!", Alert.AlertType.INFORMATION);
+            agenciaViajes.cambiarContraseniaCliente(correo, txtNuevaContra.getText(), txtConfirmContra.getText());
             aplicacion.mostrarVentanaRegistroIngreso(this.aplicacion);
-        } catch (AtributoVacioException e) {
+        } catch (AtributoVacioException | InformacionNoRepetidaException e) {
             ArchivoUtils.mostrarMensaje("Error", "Entradas no validas", e.getMessage(), Alert.AlertType.ERROR);
         }
     }

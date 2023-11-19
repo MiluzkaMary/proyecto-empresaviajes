@@ -143,21 +143,34 @@ public class VentanaGuiaController implements Initializable {
             }
         }
 
-        Cliente clienteComentario=comentarios.get(indexComentarios).getCliente();
-        txtNombreCliente.setText(clienteComentario.getNombre());
-        txtComentarioCliente.setText((comentarios.get(indexComentarios)).getComentario());
-        txtPuntajeCliente.setText(String.valueOf((comentarios.get(indexComentarios)).getPuntuacion()));
-        try {
-            Image image = new Image(getClass().getResourceAsStream(clienteComentario.getFoto()));
-            userPic.setImage(image);
-        } catch (Exception e) {
-            if (!clienteComentario.getFoto().equals("")) {
-                Image image = new Image(clienteComentario.getFoto());
+        // solo si hay comentarios
+        if (!comentarios.isEmpty()){
+            Cliente clienteComentario=comentarios.get(indexComentarios).getCliente();
+            txtNombreCliente.setText(clienteComentario.getNombre());
+            txtComentarioCliente.setText((comentarios.get(indexComentarios)).getComentario());
+            txtPuntajeCliente.setText(String.valueOf((comentarios.get(indexComentarios)).getPuntuacion()));
+            try {
+                Image image = new Image(getClass().getResourceAsStream(clienteComentario.getFoto()));
                 userPic.setImage(image);
+            } catch (Exception e) {
+                if (!clienteComentario.getFoto().equals("")) {
+                    Image image = new Image(clienteComentario.getFoto());
+                    userPic.setImage(image);
+                }
             }
+            Circle clip = new Circle(userPic.getFitWidth() / 2, userPic.getFitHeight() / 2, userPic.getFitWidth() / 2);
+            userPic.setClip(clip);
+        }else{
+            Image image = new Image ("/imagenes/user.png");
+            userPic.setImage(image);
+            txtNombreCliente.setText("No hay calificaciones a este guía");
+            txtComentarioCliente.setText("No hay comentarios");
+            txtPuntajeCliente.setText("0.0");
+            btnAntesCalificacion.setVisible(false);
+            btnDespuesCalificacion.setVisible(false);
         }
-        Circle clip = new Circle(userPic.getFitWidth() / 2, userPic.getFitHeight() / 2, userPic.getFitWidth() / 2);
-        userPic.setClip(clip);
+
+        //es gestion o no
 
         if (esGestion){
             btnGestionar.setVisible(true);
@@ -184,8 +197,6 @@ public class VentanaGuiaController implements Initializable {
             }
             Circle clip = new Circle(userPic.getFitWidth() / 2, userPic.getFitHeight() / 2, userPic.getFitWidth() / 2);
             userPic.setClip(clip);
-
-
         }
 
     }

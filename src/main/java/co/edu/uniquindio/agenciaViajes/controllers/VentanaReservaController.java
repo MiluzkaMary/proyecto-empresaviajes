@@ -80,6 +80,7 @@ public class VentanaReservaController implements Initializable {
     public Cliente cliente;
     public Paquete paquete;
     public int unidades=1;
+    public Administrador administrador;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -155,7 +156,7 @@ public class VentanaReservaController implements Initializable {
     public void reservar(){
         LocalDateTime fechaHoraActual = LocalDateTime.now();
         LocalDate fechaFinal = paquete.getFecha().plusDays(paquete.getDiasDuracion());
-        Double valorTotal = 0.0;
+        Double valorTotal = paquete.getPrecio()*unidades;
         try {
             Reserva reserva = agenciaViajes.registrarReserva(
                     fechaHoraActual,
@@ -176,6 +177,11 @@ public class VentanaReservaController implements Initializable {
             throw new RuntimeException(e);
         }
     }
+
+    public void cancelar(){
+        aplicacion.motrarVentanaPaquetes(this.cliente, this.administrador);
+    }
+
     private void enviarCorreoReserva(Reserva reserva) throws EnviarCorreoException {
         agenciaViajes.enviarCorreo("Detalles de la reserva",
                 "Hola " + reserva.getCliente().getNombre() + ". Gracias por reservar con nosotros, los detalles de tu reserva son:\n" +

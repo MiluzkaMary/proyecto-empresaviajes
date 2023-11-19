@@ -160,7 +160,7 @@ public class VentanaRegistroIngresoController implements Initializable {
     }
 
     public void registrarCliente(){
-        String foto=null;
+        String foto="/ventanas/user.png";
 
         try {
             Cliente cliente = agenciaViajes.registrarCliente(
@@ -178,7 +178,6 @@ public class VentanaRegistroIngresoController implements Initializable {
                  CorreoInvalidoException e) {
             ArchivoUtils.mostrarMensaje("Error", "Entradas no validas", e.getMessage(), Alert.AlertType.ERROR);
         }
-
     }
 
 

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="622.0" prefWidth="1025.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.agenciaViajes.controllers.VentanaCrearEditarDestinoController">
+   <children>
+      <Pane layoutX="17.0" layoutY="15.0" prefHeight="593.0" prefWidth="992.0" stylesheets="@../aplicacion.css">
+         <styleClass>
+            <String fx:value="white-bg" />
+            <String fx:value="shadowPane" />
+         </styleClass>
+         <children>
+            <TextField fx:id="txtNombreDestino" layoutX="114.0" layoutY="430.0" minHeight="0.0" prefHeight="23.0" prefWidth="207.0">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="txtCiudadDestino" layoutX="114.0" layoutY="470.0" minHeight="0.0" prefHeight="23.0" prefWidth="207.0">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </TextField>
+            <Text fill="#433c3c" layoutX="31.0" layoutY="487.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ciudad:">
+               <font>
+                  <Font name="Calibri Bold" size="15.0" />
+               </font>
+            </Text>
+            <Text fill="#433c3c" layoutX="31.0" layoutY="447.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre:">
+               <font>
+                  <Font name="Calibri Bold" size="15.0" />
+               </font>
+            </Text>
+            <Text fill="#433c3c" layoutX="31.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Datos del Destino:">
+               <font>
+                  <Font name="Calibri Bold" size="18.0" />
+               </font>
+            </Text>
+            <Text fill="#433c3c" layoutX="31.0" layoutY="533.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Clima:">
+               <font>
+                  <Font name="Calibri Bold" size="15.0" />
+               </font>
+            </Text>
+            <ComboBox fx:id="comboClima" layoutX="114.0" layoutY="516.0" minHeight="0.0" prefHeight="23.0" prefWidth="207.0" />
+            <ImageView fx:id="mainPicture" fitHeight="337.0" fitWidth="337.0" layoutX="64.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/noPicture.png" />
+               </image>
+            </ImageView>
+            <Text fill="#433c3c" layoutX="379.0" layoutY="447.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descripción:">
+               <font>
+                  <Font name="Calibri Bold" size="15.0" />
+               </font>
+            </Text>
+            <TextArea fx:id="txtDescripcionDestino" layoutX="469.0" layoutY="442.0" prefHeight="110.0" prefWidth="433.0" />
+            <Button fx:id="btnDespuesFoto" layoutX="401.0" layoutY="212.0" mnemonicParsing="false" onAction="#pasarFoto" style="-fx-border-color: #686868;" text="&gt;">
+               <styleClass>
+                  <String fx:value="transparent" />
+                  <String fx:value="over" />
+               </styleClass>
+            </Button>
+            <Button fx:id="btnAntesFoto" layoutX="31.0" layoutY="212.0" mnemonicParsing="false" onAction="#retrocederFoto" style="-fx-border-color: #686868;" text="&lt;">
+               <styleClass>
+                  <String fx:value="transparent" />
+                  <String fx:value="over" />
+               </styleClass>
+            </Button>
+            <Button fx:id="btnSubirFoto" layoutX="525.0" layoutY="260.0" mnemonicParsing="false" onAction="#subirFoto" prefHeight="29.0" prefWidth="131.0" text="Subir foto">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnEliminarFoto" layoutX="525.0" layoutY="329.0" mnemonicParsing="false" onAction="#eliminarFoto" prefHeight="29.0" prefWidth="131.0" text="Eliminar Foto">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnCrearDestino" layoutX="816.0" layoutY="46.0" mnemonicParsing="false" onAction="#crearDestino" prefHeight="29.0" prefWidth="131.0" text="Crear Destino" visible="false">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnGuardarDestino" layoutX="816.0" layoutY="46.0" mnemonicParsing="false" onAction="#guardarDestino" prefHeight="29.0" prefWidth="131.0" text="Guardar Destino">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Button>
+            <ImageView fx:id="fotoSubida" fitHeight="150.0" fitWidth="200.0" layoutX="695.0" layoutY="146.0" pickOnBounds="true" preserveRatio="true" visible="false" />
+            <Button fx:id="btnSubirFoto1" layoutX="643.0" layoutY="46.0" mnemonicParsing="false" onAction="#volver" prefHeight="29.0" prefWidth="131.0" text="Volver">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+   </children>
+</Pane>

@@ -4,9 +4,7 @@ import co.edu.uniquindio.agenciaViajes.controllers.VentanaCambiarContraseniaCont
 import co.edu.uniquindio.agenciaViajes.controllers.VentanaInicioController;
 import co.edu.uniquindio.agenciaViajes.controllers.VentanaRecuperarContraseniaController;
 import co.edu.uniquindio.agenciaViajes.controllers.VentanaRegistroIngresoController;
-import co.edu.uniquindio.agenciaViajes.model.Administrador;
-import co.edu.uniquindio.agenciaViajes.model.Cliente;
-import co.edu.uniquindio.agenciaViajes.model.Paquete;
+import co.edu.uniquindio.agenciaViajes.model.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -73,8 +71,20 @@ public class Aplicacion extends Application {
         ventanaInicioController.mostrarPanelDerechoGestionGuias(cliente, administrador);
     }
 
-    public void mostrarVentanaCrearPaquete(Paquete paquete, Administrador administrador){
+    public void mostrarVentanaCrearEditarPaquete(Paquete paquete, Administrador administrador){
         ventanaInicioController.mostrarPanelDerechoCrearEditarPaquete(paquete, administrador);
+    }
+
+    public void mostrarVentanaCrearEditarGuia(GuiaTuristico guia, Administrador administrador){
+        ventanaInicioController.mostrarPanelDerechoCrearEditarGuia(guia, administrador);
+    }
+
+    public void mostrarVentanaCrearEditarDestino(Destino destino, Administrador administrador){
+        ventanaInicioController.mostrarPanelDerechoCrearEditarDestino(destino, administrador);
+    }
+
+    public void mostrarVentanaEstadisticas(){
+        ventanaInicioController.mostrarPanelDerechoEstadisticas();
     }
 
     public void mostrarVentanaPrincipal(Cliente cliente, Administrador admin){
@@ -88,6 +98,7 @@ public class Aplicacion extends Application {
             VentanaInicioController controlador = loader.getController();
             ventanaInicioController = loader.getController(); //obteniendo valor editable del controlador
             controlador.setAplicacion(this);
+            controlador.setVentana(stage);
             controlador.quemarDatosPrueba();
 
 
@@ -105,6 +116,7 @@ public class Aplicacion extends Application {
                 controlador.mostrarPanelIzquierdoCliente();
                 controlador.mostrarPanelDerechoPaquetes(cliente, admin);
                 controlador.mostrarBarraSuperiorCliente();
+                System.out.println("se mando al cliente"+ cliente.getCedula());
             }
 
             //activa los paneles para un administrador

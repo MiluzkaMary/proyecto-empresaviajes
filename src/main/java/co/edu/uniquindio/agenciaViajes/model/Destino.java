@@ -42,6 +42,8 @@ public class Destino implements Serializable {
         return msj;
     }
 
+
+
     public double obtenerPromedioValoracion(){
         if (valoraciones.isEmpty()) {
             return 0.0;

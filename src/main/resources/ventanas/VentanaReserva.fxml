@@ -142,7 +142,7 @@
                </font>
             </Text>
             <ComboBox fx:id="comboGuia" layoutX="306.0" layoutY="75.0" minHeight="0.0" minWidth="0.0" prefHeight="29.0" prefWidth="215.0" promptText="Elegir guía" />
-            <Button layoutX="703.0" layoutY="102.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="130.0" styleClass="eliminarBtn" stylesheets="@../aplicacion.css" text="Cancelar">
+            <Button layoutX="703.0" layoutY="102.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="33.0" prefWidth="130.0" styleClass="eliminarBtn" stylesheets="@../aplicacion.css" text="Cancelar">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>

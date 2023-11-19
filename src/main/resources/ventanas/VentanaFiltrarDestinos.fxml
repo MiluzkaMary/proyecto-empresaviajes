@@ -83,7 +83,7 @@
             <String fx:value="shadowPane" />
          </styleClass>
       </Pane>
-      <ScrollPane fx:id="scrollDestinos" layoutX="10.0" layoutY="200.0" prefHeight="403.0" prefWidth="990.0" styleClass="transparent" stylesheets="@../aplicacion.css">
+      <ScrollPane fx:id="scrollDestinos" layoutX="10.0" layoutY="199.0" prefHeight="403.0" prefWidth="990.0" styleClass="transparent" stylesheets="@../aplicacion.css">
          <content>
             <GridPane fx:id="gridDestino" layoutY="-20.0" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="0.0">
                <rowConstraints>

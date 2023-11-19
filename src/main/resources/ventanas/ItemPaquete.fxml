@@ -93,7 +93,7 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <Button fx:id="btnDetalles" layoutX="68.0" layoutY="718.0" mnemonicParsing="false" onAction="#mostrarDetallesPaquete" prefHeight="33.0" prefWidth="171.0" styleClass="reservaButton" stylesheets="@../aplicacion.css" text="Ver Detalles">
+      <Button fx:id="btnDetalles" layoutX="68.0" layoutY="717.0" mnemonicParsing="false" onAction="#mostrarDetallesPaquete" prefHeight="33.0" prefWidth="171.0" styleClass="reservaButton" stylesheets="@../aplicacion.css" text="Ver Detalles">
          <font>
             <Font name="Calibri Bold" size="16.0" />
          </font>

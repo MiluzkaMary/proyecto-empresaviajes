@@ -1,6 +1,7 @@
 package co.edu.uniquindio.agenciaViajes.controllers;
 
 import co.edu.uniquindio.agenciaViajes.app.Aplicacion;
+import co.edu.uniquindio.agenciaViajes.exceptions.*;
 import co.edu.uniquindio.agenciaViajes.model.*;
 import co.edu.uniquindio.agenciaViajes.util.ArchivoUtils;
 import javafx.beans.property.SimpleStringProperty;
@@ -11,14 +12,26 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 
 import javafx.fxml.FXML;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import lombok.Data;
 
+@Data
 
 public class VentanaCrearEditarGuiaController implements Initializable {
 
@@ -71,8 +84,11 @@ public class VentanaCrearEditarGuiaController implements Initializable {
     public Aplicacion aplicacion;
     public Cliente cliente;
     public Administrador administrador;
+    public Stage ventana;
     public GuiaTuristico guiaTuristico;
-    public List<String> listaIdiomasActuales;
+    public ArrayList<String> listaIdiomasActuales;
+
+    public String fotoElegida;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -86,6 +102,8 @@ public class VentanaCrearEditarGuiaController implements Initializable {
             txtTelefonoGuia.setText(guiaTuristico.getTelefono());
             txtCedulaGuia.setText(guiaTuristico.getCedula());
             txtExperienciaGuia.setText(String.valueOf(guiaTuristico.getAniosExperiencia()));
+            fotoElegida=guiaTuristico.getFoto();
+
             try {
                 Image image = new Image(getClass().getResourceAsStream(guiaTuristico.getFoto()));
                 fotoGuia.setImage(image);
@@ -106,6 +124,9 @@ public class VentanaCrearEditarGuiaController implements Initializable {
 
             listaIdiomasActuales = new ArrayList<>();
             actualizarTablaIdiomasPosibles();
+
+            Image image = new Image("/imagenes/user.png");
+            fotoGuia.setImage(image);
         }
     }
 
@@ -151,6 +172,78 @@ public class VentanaCrearEditarGuiaController implements Initializable {
             ArchivoUtils.mostrarMensaje("Error", "Entrada no valida", "Debe elegir un destino", Alert.AlertType.ERROR);
 
         }
+    }
+
+    public void crearGuia(){
+
+        //para la foto
+        if (fotoGuia.getImage()!=null) {
+            fotoElegida=fotoGuia.getImage().getUrl();
+        }
+
+        try {
+            GuiaTuristico guia = agenciaViajes.registrarGuia(
+                    txtCedulaGuia.getText(),
+                    txtNombreGuia.getText(),
+                    txtTelefonoGuia.getText(),
+                    fotoElegida,
+                    txtEdadGuia.getText(),
+                    listaIdiomasActuales,
+                    txtExperienciaGuia.getText());
+            ArchivoUtils.mostrarMensaje("Registro Confirmado", "Operación completada", "Se ha registrado correctamente el guia: "+guia.getNombre(), Alert.AlertType.INFORMATION);
+            aplicacion.mostrarVentanaGestionGuias(this.cliente, this.administrador);
+
+        } catch (AtributoVacioException | InformacionRepetidaException | DatoNoNumericoException e) {
+            ArchivoUtils.mostrarMensaje("Error", "Entradas no validas", e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
+    public void guardarCambiosGuia(){
+
+        //para la foto
+        if (fotoGuia.getImage()!=null) {
+            fotoElegida=fotoGuia.getImage().getUrl();
+        }
+        try {
+            GuiaTuristico guia = agenciaViajes.editarGuia(
+                    this.guiaTuristico,
+                    txtCedulaGuia.getText(),
+                    txtNombreGuia.getText(),
+                    txtTelefonoGuia.getText(),
+                    fotoElegida,
+                    txtEdadGuia.getText(),
+                    listaIdiomasActuales,
+                    txtExperienciaGuia.getText()
+            );
+            ArchivoUtils.mostrarMensaje("Edición Confirmada", "Operación completada", "Se ha editado correctamente el guia: "+guia.getNombre(), Alert.AlertType.INFORMATION);
+            aplicacion.mostrarVentanaGestionGuias(this.cliente, this.administrador);
+
+        } catch (AtributoVacioException | DatoNoNumericoException | InformacionRepetidaException e) {
+            ArchivoUtils.mostrarMensaje("Error", "Entradas no validas", e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
+    public void subirFoto(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Archivos de Imagen", "*.jpg", "*.png", "*.jpeg"));
+
+        // Mostrar el cuadro de diálogo para seleccionar un archivo
+        File selectedFile = fileChooser.showOpenDialog(ventana);
+
+        if (selectedFile != null) {
+            Image image = new Image(selectedFile.toURI().toString());
+            fotoGuia.setImage(image);
+        } else {
+            // Restaurar la imagen a null si no se selecciona ninguna
+            Image image =  new Image ("/imagenes/user.png");
+            fotoGuia.setImage(image);
+        }
+
+    }
+
+    public void volver(){
+        aplicacion.mostrarVentanaGestionGuias(this.cliente, this.administrador);
     }
 
 

@@ -19,70 +19,70 @@
             <ImageView fx:id="fotoGuia" fitHeight="287.0" fitWidth="287.0" layoutX="26.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true" />
             <Text fill="#433c3c" layoutX="671.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cédula:">
                <font>
-                  <Font name="Calibri Bold" size="18.0" />
+                  <Font name="Calibri Bold" size="15.0" />
                </font>
             </Text>
             <Text fill="#433c3c" layoutX="339.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Télefono:">
                <font>
-                  <Font name="Calibri Bold" size="18.0" />
+                  <Font name="Calibri Bold" size="15.0" />
                </font>
             </Text>
-            <Text fill="#433c3c" layoutX="339.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Años de experiencia:">
+            <Text fill="#433c3c" layoutX="339.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Años de experiencia:">
                <font>
-                  <Font name="Calibri Bold" size="18.0" />
+                  <Font name="Calibri Bold" size="15.0" />
                </font>
             </Text>
             <Text fill="#433c3c" layoutX="671.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Edad:">
                <font>
-                  <Font name="Calibri Bold" size="18.0" />
+                  <Font name="Calibri Bold" size="15.0" />
                </font>
             </Text>
             <Text fill="#433c3c" layoutX="339.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre:">
                <font>
-                  <Font name="Calibri Bold" size="18.0" />
+                  <Font name="Calibri Bold" size="15.0" />
                </font>
             </Text>
             <Text fill="#433c3c" layoutX="339.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista de idiomas del Guía:">
                <font>
-                  <Font name="Calibri Bold" size="18.0" />
+                  <Font name="Calibri Bold" size="16.0" />
                </font>
             </Text>
-            <TextField fx:id="txtNombreGuia" layoutX="417.0" layoutY="27.0" minHeight="0.0" prefHeight="23.0" prefWidth="184.0">
+            <TextField fx:id="txtNombreGuia" layoutX="419.0" layoutY="29.0" minHeight="0.0" prefHeight="23.0" prefWidth="184.0">
                <font>
                   <Font size="13.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtTelefonoGuia" layoutX="419.0" layoutY="62.0" minHeight="0.0" prefHeight="23.0" prefWidth="184.0">
+            <TextField fx:id="txtTelefonoGuia" layoutX="419.0" layoutY="71.0" minHeight="0.0" prefHeight="23.0" prefWidth="184.0">
                <font>
                   <Font size="13.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtExperienciaGuia" layoutX="510.0" layoutY="96.0" minHeight="0.0" prefHeight="23.0" prefWidth="92.0">
+            <TextField fx:id="txtExperienciaGuia" layoutX="511.0" layoutY="103.0" minHeight="0.0" prefHeight="23.0" prefWidth="92.0">
                <font>
                   <Font size="13.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtEdadGuia" layoutX="735.0" layoutY="27.0" minHeight="0.0" prefHeight="23.0" prefWidth="71.0">
+            <TextField fx:id="txtEdadGuia" layoutX="732.0" layoutY="30.0" minHeight="0.0" prefHeight="23.0" prefWidth="110.0">
                <font>
                   <Font size="13.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtCedulaGuia" layoutX="735.0" layoutY="63.0" minHeight="0.0" prefHeight="23.0" prefWidth="71.0">
+            <TextField fx:id="txtCedulaGuia" layoutX="732.0" layoutY="64.0" minHeight="0.0" prefHeight="23.0" prefWidth="110.0">
                <font>
                   <Font size="13.0" />
                </font>
             </TextField>
-            <Button fx:id="btnGuardarGuia" layoutX="849.0" layoutY="328.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="98.0" text="Guardar">
+            <Button fx:id="btnGuardarGuia" layoutX="822.0" layoutY="326.0" mnemonicParsing="false" onAction="#guardarCambiosGuia" prefHeight="29.0" prefWidth="136.0" text="Guardar">
                <font>
                   <Font size="13.0" />
                </font>
             </Button>
-            <Button fx:id="btnCrearGuia" layoutX="849.0" layoutY="377.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="98.0" text="Crear">
+            <Button fx:id="btnCrearGuia" layoutX="822.0" layoutY="326.0" mnemonicParsing="false" onAction="#crearGuia" prefHeight="29.0" prefWidth="136.0" text="Crear" visible="false">
                <font>
                   <Font size="13.0" />
                </font>
             </Button>
-            <Button fx:id="btnSubirFoto" layoutX="102.0" layoutY="440.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="136.0" text="Subir Foto">
+            <Button fx:id="btnSubirFoto" layoutX="102.0" layoutY="440.0" mnemonicParsing="false" onAction="#subirFoto" prefHeight="29.0" prefWidth="136.0" text="Subir Foto">
                <font>
                   <Font size="13.0" />
                </font>
@@ -94,7 +94,7 @@
             </TableView>
             <Text fill="#433c3c" layoutX="576.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Idiomas disponibles:">
                <font>
-                  <Font name="Calibri Bold" size="18.0" />
+                  <Font name="Calibri Bold" size="16.0" />
                </font>
             </Text>
             <TableView fx:id="tablaIdiomasDisponibles" layoutX="576.0" layoutY="213.0" prefHeight="357.0" prefWidth="191.0">
@@ -117,6 +117,11 @@
                   <Font name="Calibri Bold" size="18.0" />
                </font>
             </Text>
+            <Button fx:id="btnVolver" layoutX="822.0" layoutY="369.0" mnemonicParsing="false" onAction="#volver" prefHeight="29.0" prefWidth="136.0" text="Volver">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
    </children>

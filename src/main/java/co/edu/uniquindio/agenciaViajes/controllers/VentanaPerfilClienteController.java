@@ -1,9 +1,17 @@
 package co.edu.uniquindio.agenciaViajes.controllers;
 
 import co.edu.uniquindio.agenciaViajes.app.Aplicacion;
+import co.edu.uniquindio.agenciaViajes.exceptions.AtributoVacioException;
+import co.edu.uniquindio.agenciaViajes.exceptions.CorreoNoDisponibleException;
+import co.edu.uniquindio.agenciaViajes.exceptions.DatoInvalidoException;
+import co.edu.uniquindio.agenciaViajes.exceptions.DatoNoNumericoException;
+import co.edu.uniquindio.agenciaViajes.model.Administrador;
 import co.edu.uniquindio.agenciaViajes.model.AgenciaViajes;
 import co.edu.uniquindio.agenciaViajes.model.Cliente;
+import co.edu.uniquindio.agenciaViajes.util.ArchivoUtils;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -28,6 +36,7 @@ public class VentanaPerfilClienteController implements Initializable {
     private Aplicacion aplicacion;
     public AgenciaViajes agenciaViajes = AgenciaViajes.getInstance();
     public Cliente cliente;
+    public Administrador administrador;
     public String password;
     public TextField txtNombre;
     public TextField txtCedula;
@@ -41,6 +50,7 @@ public class VentanaPerfilClienteController implements Initializable {
     public Button btnEditar;
     public Button btnConfirmar;
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -49,8 +59,12 @@ public class VentanaPerfilClienteController implements Initializable {
     public void setearCliente(Cliente cliente) {
         this.cliente = cliente;
         cargarDatos(); // Cargar los datos del cliente al iniciar el controlador
+        txtShowPassword.setVisible(false);
+        openEye.setVisible(false);
+        password=cliente.getContrasenia();
     }
     public void cargarDatos(){
+
         InputStream inputStream = getClass().getResourceAsStream(cliente.getFoto());
         Image image = new Image(inputStream);
         userPic.setImage(image);
@@ -65,6 +79,10 @@ public class VentanaPerfilClienteController implements Initializable {
         txtTelefono.setText(cliente.getTelefono());
         txtDireccion.setText(cliente.getDireccion());
         txtHidePassword.setText(cliente.getContrasenia());
+        txtShowPassword.setText(cliente.getContrasenia());
+
+        System.out.println("link de userPic en la inicializacion de la ventana: "+userPic.getImage().getUrl());
+
     }
     public void close_Eye_ClickOnAction(MouseEvent mousevent) {
         txtShowPassword.setVisible(true);
@@ -76,6 +94,21 @@ public class VentanaPerfilClienteController implements Initializable {
         password = txtHidePassword.getText();
         txtShowPassword.setText(String.valueOf(password));
     }
+
+    @FXML
+    public void Open_Eye_OnClickAction(MouseEvent mousevent) {
+        txtShowPassword.setVisible(false);
+        openEye.setVisible(false);
+        closeEye.setVisible(true);
+        txtHidePassword.setVisible(true);
+    }
+
+    @FXML
+    public void ShowPasswordOnAction(KeyEvent keyevent) {
+        password = txtShowPassword.getText();
+        txtHidePassword.setText(password);
+    }
+
     public void habilitarEdicion(){
         txtNombre.setEditable(true);
         txtCedula.setEditable(true);
@@ -89,11 +122,32 @@ public class VentanaPerfilClienteController implements Initializable {
         btnEditar.setVisible(false);
         btnConfirmar.setVisible(true);
     }
-    public void confirmarEdicion(){
-        agenciaViajes.editarCliente(cliente);
-        btnConfirmar.setVisible(false);
-        btnEditar.setVisible(true);
+
+    public void confirmarEdicion() {
+        try {
+            Cliente cliente = agenciaViajes.editarCliente(
+                    this.cliente,
+                    txtCedula.getText(),
+                    txtNombre.getText(),
+                    txtTelefono.getText(),
+                    userPic.getImage().getUrl(),
+                    txtDireccion.getText(),
+                    txtCorreo.getText(),
+                    password);
+            aplicacion.motrarVentanaPaquetes(cliente, this.administrador);
+            ArchivoUtils.mostrarMensaje("Registro Confirmado", "Operación completada", "Se ha editado correctamente al cliente: " + cliente.getNombre(), Alert.AlertType.INFORMATION);
+
+            /**
+             *
+             btnConfirmar.setVisible(false);
+             btnEditar.setVisible(true);
+             */
+        } catch (AtributoVacioException | DatoInvalidoException | CorreoNoDisponibleException |
+                 DatoNoNumericoException e) {
+            ArchivoUtils.mostrarMensaje("Error", "Cambio Fallido", e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
+
     public void cambiarFoto(){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleccionar una imagen");

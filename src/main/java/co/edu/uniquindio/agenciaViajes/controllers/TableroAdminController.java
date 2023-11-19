@@ -34,4 +34,8 @@ public class TableroAdminController implements Initializable {
     public void gestionPaquetes(){
         aplicacion.motrarVentanaGestionPaquetes(this.cliente, this.administrador);
     }
+
+    public void estadisticas(){
+        aplicacion.mostrarVentanaEstadisticas();
+    }
 }

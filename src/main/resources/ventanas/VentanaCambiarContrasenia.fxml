@@ -57,7 +57,7 @@
                 <Insets />
             </opaqueInsets>
         </Pane>
-      <Pane fx:id="paneIngresar1" layoutX="475.0" layoutY="261.0" opacity="0.99" prefHeight="210.0" prefWidth="323.0" style="-fx-background-radius: 25;" styleClass="panel_transparent" stylesheets="@../aplicacion.css">
+      <Pane fx:id="paneIngresar1" layoutX="475.0" layoutY="261.0" opacity="0.99" prefHeight="210.0" prefWidth="330.0" style="-fx-background-radius: 25;" styleClass="panel_transparent" stylesheets="@../aplicacion.css">
          <children>
             <Button fx:id="btnConfirmar2" layoutX="31.0" layoutY="134.0" mnemonicParsing="false" onAction="#confirmarCodigo" prefHeight="39.0" prefWidth="268.0" stylesheets="@../aplicacion.css" text="Confirmar" textFill="WHITE">
                <font>

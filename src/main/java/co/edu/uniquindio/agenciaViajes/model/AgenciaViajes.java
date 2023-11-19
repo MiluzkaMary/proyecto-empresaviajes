@@ -1,7 +1,11 @@
 package co.edu.uniquindio.agenciaViajes.model;
 
 import co.edu.uniquindio.agenciaViajes.enums.EstadoReserva;
+import co.edu.uniquindio.agenciaViajes.enums.TipoClima;
 import co.edu.uniquindio.agenciaViajes.exceptions.*;
+import co.edu.uniquindio.agenciaViajes.util.ArchivoUtils;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TextField;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.java.Log;
@@ -16,6 +20,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.SimpleFormatter;
 
@@ -46,7 +51,7 @@ public class AgenciaViajes {
     private static final String RUTA_PAQUETES = "src/main/resources/persistencia/paquetes.ser";
     private static final String RUTA_RESERVAS = "src/main/resources/persistencia/reservas.ser";
 
-    //Elementos para el envío de correos a ttravés de JavaMail
+    //Elementos para el envío de correos a través de JavaMail
     private static String emailFrom = "traveldreamshelp@gmail.com";
     private static String passwordFrom = "dvctnkacqmfndtqv";
     private String emailTo;
@@ -56,9 +61,9 @@ public class AgenciaViajes {
     private static Session mSession;
     private MimeMessage mCorreo;
 
-    private AgenciaViajes(){
+    private AgenciaViajes() {
         inicializarLogger();
-        log.info("Se crea una nueva instancia de AgenciaViajes" );
+        log.info("Se crea una nueva instancia de AgenciaViajes");
 
         this.listaClientes = new ArrayList<>();
         //leerClientes();
@@ -79,18 +84,18 @@ public class AgenciaViajes {
         //leerGuias();
     }
 
-    private void inicializarLogger(){
+    private void inicializarLogger() {
         try {
             FileHandler fh = new FileHandler("logs.log", true);
-            fh.setFormatter( new SimpleFormatter());
+            fh.setFormatter(new SimpleFormatter());
             log.addHandler(fh);
-        }catch (IOException e){
-            log.severe(e.getMessage() );
+        } catch (IOException e) {
+            log.severe(e.getMessage());
         }
     }
 
-    public static AgenciaViajes getInstance(){
-        if(agenciaViajes == null){
+    public static AgenciaViajes getInstance() {
+        if (agenciaViajes == null) {
             agenciaViajes = new AgenciaViajes();
         }
 
@@ -99,11 +104,49 @@ public class AgenciaViajes {
 
     /**
      * Metodo que permite encontrar a un cliente por su cedula
+     *
      * @param cedula Cedula del cliente que se busca
      * @return Cliente al cual pertenece la cedula
      */
-    public Cliente obtenerCliente(String cedula){
-        return listaClientes.stream().filter(c -> c.getCedula().equals(cedula)).findFirst().orElse(null);
+    public Cliente obtenerCliente(String cedula, int i) {
+        // Caso base: Si el índice es igual o mayor que el tamaño de la lista, retorna null
+        if (i >= listaClientes.size()) {
+            return null;
+        }
+        Cliente clienteActual = listaClientes.get(i);
+        // Si se encuentra el cliente con la cédula buscada, lo retorna
+        if (clienteActual.getCedula().equals(cedula)) {
+            return clienteActual;
+        }
+        // Llamada recursiva con el siguiente índice
+        return obtenerCliente(cedula, i + 1);    }
+
+    public Destino obtenerDestinoConNombre(String nombre, int i) {
+        // Caso base: Si el índice es igual o mayor que el tamaño de la lista, retorna null
+        if (i >= listaDestinos.size()) {
+            return null;
+        }
+        Destino destinoActual = listaDestinos.get(i);
+        // Si se encuentra el destino con el nombre buscado, lo retorna
+        if (destinoActual.getNombre().equals(nombre)) {
+            return destinoActual;
+        }
+        // Llamada recursiva con el siguiente índice
+        return obtenerDestinoConNombre(nombre, i + 1);
+    }
+
+    public GuiaTuristico obtenerGuia(String cedula, int i) {
+// Caso base: Si el índice es igual o mayor que el tamaño de la lista, retorna null
+        if (i >= listaGuias.size()) {
+            return null;
+        }
+        GuiaTuristico guiaActual = listaGuias.get(i);
+        // Si se encuentra el guía con la cédula buscada, lo retorna
+        if (guiaActual.getCedula().equals(cedula)) {
+            return guiaActual;
+        }
+        // Llamada recursiva con el siguiente índice
+        return obtenerGuia(cedula, i + 1);
     }
 
     /**
@@ -137,19 +180,19 @@ public class AgenciaViajes {
     }
 
     public String buscarTipoUsuario(String nombre, String correo, String contrasenia) throws AtributoVacioException, CorreoInvalidoException, UsuarioNoExistenteException {
-        if(nombre == null || nombre.isBlank()){
+        if (nombre == null || nombre.isBlank()) {
             throw new AtributoVacioException("El nombre es obligatorio");
         }
 
-        if(correo == null || correo.isBlank()){
+        if (correo == null || correo.isBlank()) {
             throw new AtributoVacioException("El correo es obligatorio");
         }
 
-        if (!isValidEmail(correo)){
+        if (!isValidEmail(correo)) {
             throw new CorreoInvalidoException("El correo no cumple con el formato usuario@dominio.ext");
         }
 
-        if(contrasenia == null || contrasenia.isBlank()){
+        if (contrasenia == null || contrasenia.isBlank()) {
             throw new AtributoVacioException("La contraseña es obligatoria");
         }
 
@@ -176,51 +219,50 @@ public class AgenciaViajes {
         listaAdministradores.add(administrador);
         //escribirCliente(cliente);
 
-        log.info("Se ha registrado un nuevo administrador con la cédula: "+cedula);
+        log.info("Se ha registrado un nuevo administrador con la cédula: " + cedula);
         return administrador;
     }
 
 
+    public Cliente registrarCliente(String cedula, String nombre, String telefono, String foto, String correo, String direccion, String contrasenia) throws AtributoVacioException, InformacionRepetidaException, DatoNoNumericoException, CorreoInvalidoException {
 
-    public Cliente registrarCliente(String cedula, String nombre, String telefono, String foto, String correo, String direccion,String contrasenia) throws AtributoVacioException, InformacionRepetidaException, DatoNoNumericoException, CorreoInvalidoException {
-
-        if(cedula == null || cedula.isBlank()){
+        if (cedula == null || cedula.isBlank()) {
             throw new AtributoVacioException("La cédula es obligatoria");
         }
 
-        if (!cedula.trim().matches("[0-9]+")){
+        if (!cedula.trim().matches("[0-9]+")) {
             throw new DatoNoNumericoException("La cédula debe contener solo números");
         }
 
-        if( obtenerCliente(cedula) != null ){
-            throw new InformacionRepetidaException("La cédula "+cedula+" ya está registrada");
+        if (obtenerCliente(cedula) != null) {
+            throw new InformacionRepetidaException("La cédula " + cedula + " ya está registrada");
         }
 
-        if(nombre == null || nombre.isBlank()){
+        if (nombre == null || nombre.isBlank()) {
             throw new AtributoVacioException("El nombre es obligatorio");
         }
 
-        if(telefono == null || telefono.isBlank()){
+        if (telefono == null || telefono.isBlank()) {
             throw new AtributoVacioException("El teléfono es obligatorio");
         }
 
-        if (!telefono.trim().matches("[0-9]+")){
+        if (!telefono.trim().matches("[0-9]+")) {
             throw new DatoNoNumericoException("El teléfono debe contener solo números");
         }
 
-        if(correo == null || correo.isBlank()){
+        if (correo == null || correo.isBlank()) {
             throw new AtributoVacioException("El email es obligatorio");
         }
 
-        if (!isValidEmail(correo)){
+        if (!isValidEmail(correo)) {
             throw new CorreoInvalidoException("El correo no cumple con el formato usuario@dominio.ext");
         }
 
-        if(direccion == null || direccion.isBlank()){
+        if (direccion == null || direccion.isBlank()) {
             throw new AtributoVacioException("La dirección es obligatoria");
         }
 
-        if(contrasenia == null || contrasenia.isBlank()){
+        if (contrasenia == null || contrasenia.isBlank()) {
             throw new AtributoVacioException("La contraseña es obligatoria");
         }
 
@@ -232,55 +274,63 @@ public class AgenciaViajes {
                 .correo(correo)
                 .direccion(direccion)
                 .contrasenia(contrasenia)
-                .paquetesFavoritos(new ArrayList<>())
+                .paquetesReservados(new ArrayList<>())
                 .build();
 
         listaClientes.add(cliente);
         //escribirCliente(cliente);
 
-        log.info("Se ha registrado un nuevo cliente con la cédula: "+cedula);
+        log.info("Se ha registrado un nuevo cliente con la cédula: " + cedula);
         return cliente;
     }
 
-    public void eliminarPaquete(Paquete paquete){
+    public void eliminarPaquete(Paquete paquete) {
         listaPaquetes.remove(paquete);
     }
 
-    public Paquete crearPaquete(String nombre, List<Destino> listaDestinos, String diasDuracion, String descripcion, String precio, String cupoMaximo,LocalDate fecha) throws AtributoVacioException, DatoNoNumericoException, FechaInvalidaException {
+    public void eliminarGuia(GuiaTuristico guia) {
+        listaGuias.remove(guia);
+    }
 
-        if(nombre == null || nombre.isBlank()){
+    public void eliminarDestino(Destino destino) {
+        listaDestinos.remove(destino);
+    }
+
+    public Paquete crearPaquete(String nombre, List<Destino> listaDestinos, String diasDuracion, String descripcion, String precio, String cupoMaximo, LocalDate fecha) throws AtributoVacioException, DatoNoNumericoException, FechaInvalidaException {
+
+        if (nombre == null || nombre.isBlank()) {
             throw new AtributoVacioException("El nombre del paquete es obligatorio");
         }
 
-        if (listaDestinos == null){
+        if (listaDestinos == null) {
             throw new AtributoVacioException("El paquete debe tener al menos un destino");
         }
 
-        if(diasDuracion == null || diasDuracion.isBlank()){
+        if (diasDuracion == null || diasDuracion.isBlank()) {
             throw new AtributoVacioException("El número de dias del paquete es obligatorio");
-        }else if (!diasDuracion.trim().matches("[0-9]+")){
+        } else if (!diasDuracion.trim().matches("[0-9]+")) {
             throw new DatoNoNumericoException("El numero de días debe contener solo números");
         }
 
-        if(descripcion == null || descripcion.isBlank()){
+        if (descripcion == null || descripcion.isBlank()) {
             throw new AtributoVacioException("La descripción del destino es obligatorio");
         }
 
-        if(precio == null || precio.isBlank()){
+        if (precio == null || precio.isBlank()) {
             throw new AtributoVacioException("El precio del paquete es obligatorio");
-        }else if (!precio.trim().matches("[0-9]+")){
+        } else if (!precio.trim().matches("[0-9]+")) {
             throw new DatoNoNumericoException("El precio del paquete debe contener solo números");
         }
 
-        if(cupoMaximo == null || cupoMaximo.isBlank()){
+        if (cupoMaximo == null || cupoMaximo.isBlank()) {
             throw new AtributoVacioException("El cupo máximo del paquete es obligatorio");
-        } else if (!cupoMaximo.trim().matches("[0-9]+")){
+        } else if (!cupoMaximo.trim().matches("[0-9]+")) {
             throw new DatoNoNumericoException("El cupo máximo del paquete debe contener solo números");
         }
 
-        if(fecha == null ){
+        if (fecha == null) {
             throw new AtributoVacioException("La fecha del paquete es obligatoria");
-        }else if (fecha.isBefore(LocalDate.now())){
+        } else if (fecha.isBefore(LocalDate.now())) {
             throw new FechaInvalidaException("La fecha del paquete no puede ser de un dia ya pasado");
         }
 
@@ -298,45 +348,165 @@ public class AgenciaViajes {
         listaPaquetes.add(paquete);
         //escribirPaquete(paquete);
 
-        log.info("Se ha registrado un nuevo paquete con nombre: "+nombre);
+        log.info("Se ha registrado un nuevo paquete con nombre: " + nombre);
         return paquete;
     }
 
-    public Paquete editarPaquete(Paquete paquete, String nombre, List<Destino> listaDestinos, String diasDuracion, String descripcion, String precio, String cupoMaximo,LocalDate fecha) throws AtributoVacioException, DatoNoNumericoException, FechaInvalidaException {
+    public GuiaTuristico registrarGuia(String cedula, String nombre, String telefono, String foto, String edad, ArrayList<String> listaIdiomas, String aniosExperiencia) throws AtributoVacioException, DatoNoNumericoException, InformacionRepetidaException {
+        if (cedula == null || cedula.isBlank()) {
+            throw new AtributoVacioException("La cédula es obligatoria");
+        }
 
-        if(nombre == null || nombre.isBlank()){
+        if (!cedula.trim().matches("[0-9]+")) {
+            throw new DatoNoNumericoException("La cédula debe contener solo números");
+        }
+
+        if (obtenerGuia(cedula) != null) {
+            throw new InformacionRepetidaException("La cédula " + cedula + " ya está registrada");
+        }
+
+        if (nombre == null || nombre.isBlank()) {
+            throw new AtributoVacioException("El nombre es obligatorio");
+        }
+
+        if (telefono == null || telefono.isBlank()) {
+            throw new AtributoVacioException("El teléfono es obligatorio");
+        }
+
+        if (!telefono.trim().matches("[0-9]+")) {
+            throw new DatoNoNumericoException("El teléfono debe contener solo números");
+        }
+
+        if (edad == null || edad.isBlank()) {
+            throw new AtributoVacioException("La edad es obligatorio");
+        } else if (!edad.trim().matches("[0-9]+")) {
+            throw new DatoNoNumericoException("La edad debe contener solo números");
+        }
+
+        if (foto == null || foto.isBlank()) {
+            throw new AtributoVacioException("La foto es obligatoria");
+        }
+
+        if (listaIdiomas == null || listaIdiomas.isEmpty()) {
+            throw new AtributoVacioException("Al menos 1 idioma es obligatorio");
+        }
+
+        if (aniosExperiencia == null || aniosExperiencia.isBlank()) {
+            throw new AtributoVacioException("Los años de experiencia son obligatorios");
+        }
+
+        GuiaTuristico guia = GuiaTuristico.builder()
+                .cedula(cedula)
+                .nombre(nombre)
+                .telefono(telefono)
+                .foto(foto)
+                .edad(Integer.parseInt(edad))
+                .valoraciones(new ArrayList<>())
+                .listaIdiomas(listaIdiomas)
+                .aniosExperiencia(Integer.parseInt(aniosExperiencia))
+                .build();
+
+        listaGuias.add(guia);
+        //escribirGuia(guia);
+
+        log.info("Se ha registrado un nuevo guia con la cédula: " + cedula);
+        return guia;
+    }
+
+    public Destino registrarDestino(String nombre, String ciudad, String descripcion, String clima, List<String> listaFotos) throws AtributoVacioException {
+        if (nombre == null || nombre.isBlank()) {
+            throw new AtributoVacioException("El nombre es obligatorio");
+        }
+
+        if (ciudad == null || ciudad.isBlank()) {
+            throw new AtributoVacioException("La ciudad es obligatoria");
+        }
+
+        if (descripcion == null || descripcion.isBlank()) {
+            throw new AtributoVacioException("La descripción es obligatoria");
+        }
+
+        if (clima == null || clima.isBlank()) {
+            throw new AtributoVacioException("El clima es obligatorio");
+        }
+
+        if (listaFotos == null || listaFotos.isEmpty()) {
+            throw new AtributoVacioException("Al menos una foto es requerida para crear el destino");
+        }
+
+        Destino destino = Destino.builder()
+                .nombre(nombre)
+                .ciudad(ciudad)
+                .descripcion(descripcion)
+                .clima(obtenerTipoClima(clima))
+                .fotos(listaFotos)
+                .valoraciones(new ArrayList<>())
+                .build();
+
+        listaDestinos.add(destino);
+        //escribirDestino(destino);
+
+        log.info("Se ha registrado un nuevo destino con nombre: " + nombre);
+        return destino;
+    }
+
+    public TipoClima obtenerTipoClima(String cadenaClima) {
+        TipoClima clima = null;
+        switch (cadenaClima) {
+            case "TROPICAL":
+                clima = TipoClima.TROPICAL;
+                break;
+            case "SECO":
+                clima = TipoClima.SECO;
+                break;
+            case "TEMPLADO":
+                clima = TipoClima.TEMPLADO;
+                break;
+            case "CONTINENTAL":
+                clima = TipoClima.CONTINENTAL;
+                break;
+            case "POLAR":
+                clima = TipoClima.POLAR;
+                break;
+        }
+        return clima;
+    }
+
+    public Paquete editarPaquete(Paquete paquete, String nombre, List<Destino> listaDestinos, String diasDuracion, String descripcion, String precio, String cupoMaximo, LocalDate fecha) throws AtributoVacioException, DatoNoNumericoException, FechaInvalidaException {
+
+        if (nombre == null || nombre.isBlank()) {
             throw new AtributoVacioException("El nombre del paquete es obligatorio");
         }
 
-        if (listaDestinos == null){
+        if (listaDestinos == null) {
             throw new AtributoVacioException("El paquete debe tener al menos un destino");
         }
 
-        if(diasDuracion == null || diasDuracion.isBlank()){
+        if (diasDuracion == null || diasDuracion.isBlank()) {
             throw new AtributoVacioException("El número de dias del paquete es obligatorio");
-        }else if (!diasDuracion.trim().matches("[0-9]+")){
+        } else if (!diasDuracion.trim().matches("[0-9]+")) {
             throw new DatoNoNumericoException("El numero de días debe contener solo números");
         }
 
-        if(descripcion == null || descripcion.isBlank()){
+        if (descripcion == null || descripcion.isBlank()) {
             throw new AtributoVacioException("La descripción del destino es obligatorio");
         }
 
-        if(precio == null || precio.isBlank()){
+        if (precio == null || precio.isBlank()) {
             throw new AtributoVacioException("El precio del paquete es obligatorio");
-        }else if (!precio.trim().matches("[0-9]+")){
+        } else if (!precio.trim().matches("[0-9]+")) {
             throw new DatoNoNumericoException("El precio del paquete debe contener solo números");
         }
 
-        if(cupoMaximo == null || cupoMaximo.isBlank()){
+        if (cupoMaximo == null || cupoMaximo.isBlank()) {
             throw new AtributoVacioException("El cupo máximo del paquete es obligatorio");
-        } else if (!cupoMaximo.trim().matches("[0-9]+")){
+        } else if (!cupoMaximo.trim().matches("[0-9]+")) {
             throw new DatoNoNumericoException("El cupo máximo del paquete debe contener solo números");
         }
 
-        if(fecha == null ){
+        if (fecha == null) {
             throw new AtributoVacioException("La fecha del paquete es obligatoria");
-        }else if (fecha.isBefore(LocalDate.now())){
+        } else if (fecha.isBefore(LocalDate.now())) {
             throw new FechaInvalidaException("La fecha del paquete no puede ser de un dia ya pasado");
         }
 
@@ -354,16 +524,108 @@ public class AgenciaViajes {
         listaPaquetes.replaceAll(p -> p.equals(paquete) ? paqueteNuevo : p);
         //escribirPaquete(paquete);
 
-        log.info("Se ha editado un nuevo paquete con nombre: "+nombre);
+        log.info("Se ha editado un nuevo paquete con nombre: " + nombre);
         return paquete;
     }
 
+    public GuiaTuristico editarGuia(GuiaTuristico guiaAnterior, String cedula, String nombre, String telefono, String foto, String edad, ArrayList<String> listaIdiomas, String aniosExperiencia) throws AtributoVacioException, DatoNoNumericoException, InformacionRepetidaException {
+        if (cedula == null || cedula.isBlank()) {
+            throw new AtributoVacioException("La cédula es obligatoria");
+        }
 
-    public GuiaTuristico buscarGuiaConCedula(String cedula){
-        GuiaTuristico elegido=null;
-        for(GuiaTuristico guia: listaGuias){
-            if (guia.getCedula().equals(cedula)){
-                elegido=guia;
+        if (!cedula.trim().matches("[0-9]+")) {
+            throw new DatoNoNumericoException("La cédula debe contener solo números");
+        }
+
+        if (nombre == null || nombre.isBlank()) {
+            throw new AtributoVacioException("El nombre es obligatorio");
+        }
+
+        if (telefono == null || telefono.isBlank()) {
+            throw new AtributoVacioException("El teléfono es obligatorio");
+        }
+
+        if (!telefono.trim().matches("[0-9]+")) {
+            throw new DatoNoNumericoException("El teléfono debe contener solo números");
+        }
+
+        if (edad == null || edad.isBlank()) {
+            throw new AtributoVacioException("La edad es obligatorio");
+        } else if (!edad.trim().matches("[0-9]+")) {
+            throw new DatoNoNumericoException("La edad debe contener solo números");
+        }
+
+        if (foto == null || foto.isBlank()) {
+            throw new AtributoVacioException("La foto es obligatoria");
+        }
+
+        if (listaIdiomas == null || listaIdiomas.isEmpty()) {
+            throw new AtributoVacioException("Al menos 1 idioma es obligatorio");
+        }
+
+        if (aniosExperiencia == null || aniosExperiencia.isBlank()) {
+            throw new AtributoVacioException("Los años de experiencia son obligatorios");
+        }
+
+        GuiaTuristico guia = GuiaTuristico.builder()
+                .cedula(cedula)
+                .nombre(nombre)
+                .telefono(telefono)
+                .foto(foto)
+                .edad(Integer.parseInt(edad))
+                .valoraciones(guiaAnterior.getValoraciones())
+                .listaIdiomas(listaIdiomas)
+                .aniosExperiencia(Integer.parseInt(aniosExperiencia))
+                .build();
+        listaGuias.replaceAll(p -> p.equals(guiaAnterior) ? guia : p);
+        //escribirGuia(guia);
+
+        log.info("Se ha editado un nuevo guia con nombre: " + nombre);
+        return guia;
+    }
+
+    public Destino editarDestino(Destino destinoAnterior, String nombre, String ciudad, String descripcion, String clima, List<String> listaFotos) throws AtributoVacioException, InformacionRepetidaException {
+        if (nombre == null || nombre.isBlank()) {
+            throw new AtributoVacioException("El nombre es obligatorio");
+        }
+
+        if (ciudad == null || ciudad.isBlank()) {
+            throw new AtributoVacioException("La ciudad es obligatoria");
+        }
+
+        if (descripcion == null || descripcion.isBlank()) {
+            throw new AtributoVacioException("La descripción es obligatoria");
+        }
+
+        if (clima == null || clima.isBlank()) {
+            throw new AtributoVacioException("El clima es obligatorio");
+        }
+
+        if (listaFotos == null || listaFotos.isEmpty()) {
+            throw new AtributoVacioException("Al menos una foto es requerida para crear el destino");
+        }
+
+        Destino destino = Destino.builder()
+                .nombre(nombre)
+                .ciudad(ciudad)
+                .descripcion(descripcion)
+                .clima(obtenerTipoClima(clima))
+                .fotos(listaFotos)
+                .valoraciones(destinoAnterior.getValoraciones())
+                .build();
+
+        listaDestinos.replaceAll(p -> p.equals(destinoAnterior) ? destino : p);
+        //escribirDestino(destino);
+
+        log.info("Se ha editado un nuevo destino con nombre: " + nombre);
+        return destino;
+    }
+
+    public GuiaTuristico buscarGuiaConCedula(String cedula) {
+        GuiaTuristico elegido = null;
+        for (GuiaTuristico guia : listaGuias) {
+            if (guia.getCedula().equals(cedula)) {
+                elegido = guia;
             }
         }
         return elegido;
@@ -375,15 +637,15 @@ public class AgenciaViajes {
 
         GuiaTuristico guiaElegido;
         String numerosCedula;
-        valorTotal = paquete.getPrecio()*numPersonas;
-        if(cedulaGuia == null || cedulaGuia.isBlank()){
+        valorTotal = paquete.getPrecio() * numPersonas;
+        if (cedulaGuia == null || cedulaGuia.isBlank()) {
             throw new AtributoVacioException("Escoger un guia es obligatorio");
-        }else{
+        } else {
             numerosCedula = cedulaGuia.substring(cedulaGuia.indexOf("-") + 1).trim();
-            guiaElegido= buscarGuiaConCedula(numerosCedula);
+            guiaElegido = buscarGuiaConCedula(numerosCedula);
         }
 
-        if(guiaElegido == null){
+        if (guiaElegido == null) {
             throw new AtributoVacioException("El guía elegido no existe");
         }
 
@@ -402,12 +664,13 @@ public class AgenciaViajes {
         listaReservas.add(reservaFinal);
         //escribirCliente(cliente);
 
-        log.info("Se ha registrado una nueva reserva a las horas: "+fechaHora);
+        log.info("Se ha registrado una nueva reserva a las horas: " + fechaHora);
         return reservaFinal;
     }
 
     /**
      * Metodo que verifica si el email string cumple con el formato de usuario@dominio.ext
+     *
      * @param email
      * @return boolean true si es valido, false en caso contrario
      */
@@ -417,7 +680,7 @@ public class AgenciaViajes {
         return email.matches(regex);
     }
 
-    public int buscarUnidadesDisponibles(Paquete paquete){
+    public int buscarUnidadesDisponibles(Paquete paquete) {
         int unidadesDisponibles = paquete.getCupoMaximo();
         for (Reserva reserva : listaReservas) {
             if (reserva.getPaquete().equals(paquete) && reserva.getEstado() == EstadoReserva.PENDIENTE) {
@@ -451,15 +714,15 @@ public class AgenciaViajes {
         return listaTrabajando;
     }
 
-    public ArrayList<GuiaTuristico> obtenerGuiasDisponiblesEnFecha(LocalDate fechaInicial, LocalDate fechaFinal){
+    public ArrayList<GuiaTuristico> obtenerGuiasDisponiblesEnFecha(LocalDate fechaInicial, LocalDate fechaFinal) {
         ArrayList<GuiaTuristico> guiasDisponibles = new ArrayList<>();
 
-        ArrayList<GuiaTuristico> guiasNoDisponibles= obtenerGuiasTrabajandoEn(fechaInicial, fechaFinal);
-         for (GuiaTuristico guia: listaGuias){
-             if (!guiasNoDisponibles.contains(guia)){
-                 guiasDisponibles.add(guia);
-             }
-         }
+        ArrayList<GuiaTuristico> guiasNoDisponibles = obtenerGuiasTrabajandoEn(fechaInicial, fechaFinal);
+        for (GuiaTuristico guia : listaGuias) {
+            if (!guiasNoDisponibles.contains(guia)) {
+                guiasDisponibles.add(guia);
+            }
+        }
 
         return guiasDisponibles;
     }
@@ -471,7 +734,7 @@ public class AgenciaViajes {
         mProperties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
         mProperties.setProperty("mail.smtp.starttls.enable", "true");
         mProperties.setProperty("mail.smtp.port", "587");
-        mProperties.setProperty("mail.smtp.user",emailFrom);
+        mProperties.setProperty("mail.smtp.user", emailFrom);
         mProperties.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
         mProperties.setProperty("mail.smtp.auth", "true");
         mSession = Session.getDefaultInstance(mProperties);
@@ -497,7 +760,7 @@ public class AgenciaViajes {
         }
     }
 
-    public ArrayList<Destino> obtenerDestinosPermitidos(List<Destino> listaDestinosYaIncluidos){
+    public ArrayList<Destino> obtenerDestinosPermitidos(List<Destino> listaDestinosYaIncluidos) {
         ArrayList<Destino> listaRespuesta = new ArrayList<>();
         for (Destino destino : getListaDestinos()) {
             // Verificar si el destino no está en la listaDestinosYaIncluidos
@@ -508,7 +771,7 @@ public class AgenciaViajes {
         return listaRespuesta;
     }
 
-    public ArrayList<String> obtenerIdiomasPermitidos(List <String> listaIdiomasYaIncluidos){
+    public ArrayList<String> obtenerIdiomasPermitidos(List<String> listaIdiomasYaIncluidos) {
         ArrayList<String> listaRespuesta = new ArrayList<>();
         List<String> idiomas = Arrays.asList(
                 "Español", "Inglés", "Mandarín", "Hindi", "Árabe", "Portugués",
@@ -526,9 +789,10 @@ public class AgenciaViajes {
                 listaRespuesta.add(idioma);
             }
         }
-        
+
         return listaRespuesta;
     }
+
     // Método para generar un código aleatorio de 2 letras y 4 números
     public static String generarCodigo() {
         // Caracteres válidos para las letras
@@ -549,90 +813,205 @@ public class AgenciaViajes {
         return codigo;
     }
 
-    public Cliente cambiarContraseniaCliente(String correo, String contrasenia, String contraseniaConfirm) throws AtributoVacioException, InformacionNoRepetidaException {
+    public void cambiarContraseniaCliente(String correo, String contrasenia, String contraseniaConfirm) throws AtributoVacioException, InformacionNoRepetidaException {
         Cliente cliente = buscarClientePorCorreo(correo, 0);
-        if(contrasenia.equals(contraseniaConfirm)){
+        if (contrasenia.equals(contraseniaConfirm)) {
             cliente.setContrasenia(contrasenia);
-            System.out.println("Se");
-        }else {
+            ArchivoUtils.mostrarMensaje("Cambio exitoso", "Operación completada", "¡Felicidades " + cliente.getNombre() + ", su contraseña ha sido cambiada exitosamente!", Alert.AlertType.INFORMATION);
+
+        } else {
             throw new InformacionNoRepetidaException("Las contraseñas no coinciden");
         }
-        return cliente;
     }
 
     public Cliente buscarClientePorCorreo(String correoABuscar, int i) throws AtributoVacioException {
         Cliente clienteActual = listaClientes.get(i);
-        if(!correoABuscar.isBlank()){
+        if (!correoABuscar.isBlank()) {
             if (clienteActual.getCorreo().equals(correoABuscar)) {
                 return clienteActual;
             } else {
-                return buscarClientePorCorreo(correoABuscar, i+1);
+                return buscarClientePorCorreo(correoABuscar, i + 1);
             }
-        }
-        else{
+        } else {
             throw new AtributoVacioException("No se ha introducido ningún correo");
         }
     }
 
-    public void editarCliente(Cliente cliente){
-        try{
-            String nombre = cliente.getNombre();
-            String cedula = cliente.getCedula();
-            String foto = cliente.getFoto();
-            String correo = cliente.getCorreo();
-            String direccion = cliente.getDireccion();
-            String contrasenia = cliente.getContrasenia();
-            String telefono = cliente.getTelefono();
-            if (verificarDatosCliente(cliente)){
-                cliente.setNombre(nombre);
-                cliente.setFoto(foto);
-                cliente.setContrasenia(contrasenia);
-                cliente.setCorreo(correo);
-                cliente.setCedula(cedula);
-                cliente.setDireccion(direccion);
-                cliente.setTelefono(telefono);
-            }
-        }catch (DatoInvalidoException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    private boolean verificarDatosCliente(Cliente cliente) throws DatoInvalidoException {
-        String nombre = cliente.getNombre();
-        String cedula = cliente.getCedula();
-        String foto = cliente.getFoto();
-        String correo = cliente.getCorreo();
-        String direccion = cliente.getDireccion();
-        String contrasenia = cliente.getContrasenia();
-        String telefono = cliente.getTelefono();
-
+    public Cliente editarCliente(Cliente clienteAnterior, String cedula, String nombre, String telefono, String foto, String direccion, String correo, String contrasenia) throws AtributoVacioException, DatoNoNumericoException, DatoInvalidoException, CorreoNoDisponibleException {
         if (nombre == null || nombre.isBlank() || !nombre.matches("^[a-zA-Z]+$")) {
             throw new DatoInvalidoException("El nombre es inválido");
         }
-
         if (cedula == null || cedula.isBlank() || !cedula.matches("^\\d+$")) {
             throw new DatoInvalidoException("La cédula es inválida");
         }
-
         if (foto == null || foto.isBlank()) {
             throw new DatoInvalidoException("La foto no puede estar vacía");
         }
-
         if (!isValidEmail(correo)) {
             throw new DatoInvalidoException("El correo es inválido");
         }
-
+        if (verificarExistenciaClienteCorreo(correo, 0)) {
+            if (!buscarClientePorCorreo(correo, 0).getCedula().equals(clienteAnterior.getCedula())) {
+                throw new CorreoNoDisponibleException("El correo ya se encuentra registrado a otra cuenta");
+            }
+        }
         if (direccion == null || direccion.isBlank()) {
             throw new DatoInvalidoException("La dirección es inválida");
         }
-
         if (contrasenia == null || contrasenia.isBlank()) {
             throw new DatoInvalidoException("La contraseña es inválida");
         }
         if (telefono == null || telefono.isBlank() || !telefono.matches("^\\d+$")) {
             throw new DatoInvalidoException("La contraseña es inválida");
         }
-        return true;
+        Cliente cliente = Cliente.builder()
+                .cedula(cedula)
+                .nombre(nombre)
+                .telefono(telefono)
+                .foto(foto)
+                .correo(correo)
+                .direccion(direccion)
+                .contrasenia(contrasenia)
+                .paquetesReservados(new ArrayList<>())
+                .build();
+        System.out.println("se mando al cliente"+ clienteAnterior.getCedula());
+        listaClientes.replaceAll(p -> p.equals(clienteAnterior) ? cliente : p);
+        return cliente;
+    }
+
+    public void editarCliente2(String cedula, String nombre, String telefono, String foto, String direccion, String correo, String contrasenia) throws DatoInvalidoException, CorreoNoDisponibleException, AtributoVacioException {
+        Cliente clienteEncontrado = null;
+        for (Cliente cliente : listaClientes) {
+            System.out.println("Cédula actual: " + cliente.getCedula());
+            if (cliente.getCedula().equals(cedula)) {
+                clienteEncontrado = cliente;
+                break;
+            }
+        }
+
+        if (clienteEncontrado != null) {
+            // Realizar las validaciones necesarias con los nuevos datos
+            if (nombre == null || nombre.isBlank() || !nombre.matches("^[a-zA-Z]+$")) {
+                throw new DatoInvalidoException("El nombre es inválido");
+            }
+            if (cedula == null || cedula.isBlank() || !cedula.matches("^\\d+$")) {
+                throw new DatoInvalidoException("La cédula es inválida");
+            }
+            if (foto == null || foto.isBlank()) {
+                throw new DatoInvalidoException("La foto no puede estar vacía");
+            }
+            if (!isValidEmail(correo)) {
+                throw new DatoInvalidoException("El correo es inválido");
+            }
+            if (verificarExistenciaClienteCorreo(correo, 0)) {
+                if (!buscarClientePorCorreo(correo, 0).getCedula().equals(clienteEncontrado.getCedula())) {
+                    throw new CorreoNoDisponibleException("El correo ya se encuentra registrado a otra cuenta");
+                }
+            }
+            if (direccion == null || direccion.isBlank()) {
+                throw new DatoInvalidoException("La dirección es inválida");
+            }
+            if (contrasenia == null || contrasenia.isBlank()) {
+                throw new DatoInvalidoException("La contraseña es inválida");
+            }
+            if (telefono == null || telefono.isBlank() || !telefono.matches("^\\d+$")) {
+                throw new DatoInvalidoException("La contraseña es inválida");
+            }
+
+            // Actualizar los datos del cliente encontrado
+            clienteEncontrado.setNombre(nombre);
+            clienteEncontrado.setTelefono(telefono);
+            clienteEncontrado.setFoto(foto);
+            clienteEncontrado.setDireccion(direccion);
+            clienteEncontrado.setCorreo(correo);
+            clienteEncontrado.setContrasenia(contrasenia);
+        } else {
+            throw new DatoInvalidoException("El cliente no fue encontrado");
+        }
+    }
+    public boolean verificarExistenciaClienteCorreo(String correo, int i){
+        if (i<listaClientes.size()) {
+            if (listaClientes.get(i).getCorreo().equals(correo)) {
+                return true;
+            } else {
+                return verificarExistenciaClienteCorreo(correo, i + 1);
+            }
+        }
+        return false;
+    }
+
+    public boolean verificarValidezCorreo(String correo) {
+        if(correo != null && !correo.isBlank()){
+            if (isValidEmail(correo)){
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+
+    public void enviarCorreoRecuperarContrasenia(String correo) {
+        String asunto = "Código de recuperación para su cuenta";
+        String code = generarCodigo();
+        String mensaje = "Su código de verificación es: \n" + code +
+                "\nIMPORTANTE: Si usted no solicitó este código, haga caso omiso a este correo electrónico";
+        enviarCorreo(asunto, mensaje, correo);
+    }
+
+    public void validarRecuperarCuenta(TextField txtCorreo) throws CorreoInvalidoException, CorreoInexistenteException {
+        if (verificarValidezCorreo(txtCorreo.getText())){
+            if (verificarExistenciaClienteCorreo(txtCorreo.getText(), 0)) {
+                enviarCorreoRecuperarContrasenia(txtCorreo.getText());
+            }
+            else {
+                throw new CorreoInexistenteException("El correo ingresado no está asociado a ningún cliente");
+            }
+        }
+        else {
+            throw new CorreoInvalidoException("El campo está vacío o se introdujo un correo inválido");
+        }
+    }
+
+    public void compararDatos(String text, String code) throws InformacionNoRepetidaException, AtributoVacioException{
+        if (text!=null && !text.isBlank()) {
+            if (text.equals(code)) {
+                ArchivoUtils.mostrarMensaje("Éxito", "Código Validado", "El código es correcto", Alert.AlertType.INFORMATION);
+            } else {
+                throw new InformacionNoRepetidaException("Los códigos no coinciden");
+            }
+        }
+        else{
+            throw new AtributoVacioException("El campo de código no puede estar vacío");
+        }
+    }
+
+    public Map<String, Integer> obtenerDatosReservaCantidadDestinos(List<Reserva> reservas) {
+        Map<String, Integer> contadorNombresDestinos = new HashMap<>();
+
+        for (Reserva reserva : reservas) {
+            Paquete paquete = reserva.getPaquete();
+
+            for (Destino destino : paquete.getDestinos()) {
+                String nombreDestino = destino.getNombre();
+
+                // Actualizar el contador del nombre del destino
+                contadorNombresDestinos.put(nombreDestino, contadorNombresDestinos.getOrDefault(nombreDestino, 0) + 1);
+            }
+        }
+        return contadorNombresDestinos;
+    }
+
+    public Map<String, Integer> obtenerDatosReservaCantidadPaquetes(List<Reserva> reservas) {
+        Map<String, Integer> contadorNombresPaquetes = new HashMap<>();
+
+        for (Reserva reserva : reservas) {
+            Paquete paquete = reserva.getPaquete();
+            String nombrePaquete = paquete.getNombre(); // Asumo que hay un método getNombre() en la clase Paquete
+
+            // Actualizar el contador del nombre del paquete
+            contadorNombresPaquetes.put(nombrePaquete, contadorNombresPaquetes.getOrDefault(nombrePaquete, 0) + 1);
+        }
+
+        return contadorNombresPaquetes;
     }
 }

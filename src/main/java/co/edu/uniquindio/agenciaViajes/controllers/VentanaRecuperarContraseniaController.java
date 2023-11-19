@@ -1,8 +1,13 @@
 package co.edu.uniquindio.agenciaViajes.controllers;
 
 import co.edu.uniquindio.agenciaViajes.app.Aplicacion;
+import co.edu.uniquindio.agenciaViajes.exceptions.CorreoInexistenteException;
+import co.edu.uniquindio.agenciaViajes.exceptions.CorreoInvalidoException;
 import co.edu.uniquindio.agenciaViajes.model.AgenciaViajes;
+import co.edu.uniquindio.agenciaViajes.model.Cliente;
+import co.edu.uniquindio.agenciaViajes.util.ArchivoUtils;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
@@ -29,14 +34,12 @@ public class VentanaRecuperarContraseniaController implements Initializable {
     }
 
     public void recuperarCuenta() {
-        //faltan las verificaciones de campo vacio o si el correo siquiera existe
-        String asunto = "Código de recuperación para su cuenta";
-        code = AgenciaViajes.generarCodigo();
-        correo = txtCorreo.getText();
-        String mensaje = "Su código de verificación es: \n" + code +
-                "\nIMPORTANTE: Si usted no solicitó este código, haga caso omiso a este correo electrónico";
-        agenciaViajes.enviarCorreo(asunto, mensaje, correo);
-        abrirVentanaCambiarContrasenia();
+        try{
+            agenciaViajes.validarRecuperarCuenta(txtCorreo);
+            abrirVentanaCambiarContrasenia();
+        }catch (CorreoInvalidoException | CorreoInexistenteException e){
+            ArchivoUtils.mostrarMensaje("Error", "Correo no enviado", e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
 
     public void abrirVentanaCambiarContrasenia() {

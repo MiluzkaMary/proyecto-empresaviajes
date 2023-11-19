@@ -7,9 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -20,6 +18,7 @@ import lombok.Data;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 @Data
 
@@ -247,25 +246,35 @@ public class VentanaGestionarController implements Initializable {
     public void crear(){
         if (esGestionPaquetes) {
             Paquete paqueteVacio=null;
-            aplicacion.mostrarVentanaCrearPaquete(paqueteVacio, this.administrador);
+            aplicacion.mostrarVentanaCrearEditarPaquete(paqueteVacio, this.administrador);
         }else if (esGestionGuias){
-
+            GuiaTuristico guiaVacio=null;
+            aplicacion.mostrarVentanaCrearEditarGuia(guiaVacio, this.administrador);
         }else if (esGestionDestinos){
-
+            Destino destinoVacio=null;
+            aplicacion.mostrarVentanaCrearEditarDestino(destinoVacio, this.administrador);
         }
     }
 
     public void editar(){
         if (esGestionPaquetes) {
             if (paqueteElegido!=null){
-                aplicacion.mostrarVentanaCrearPaquete(paqueteElegido, this.administrador);
+                aplicacion.mostrarVentanaCrearEditarPaquete(paqueteElegido, this.administrador);
             }else{
                 ArchivoUtils.mostrarMensaje("Error", "Entrada no valida", "Por favor seleccione un paquete primero", Alert.AlertType.ERROR);
             }
         }else if (esGestionGuias){
-
+            if (guiaElegido!=null){
+                aplicacion.mostrarVentanaCrearEditarGuia(guiaElegido, this.administrador);
+            }else{
+                ArchivoUtils.mostrarMensaje("Error", "Entrada no valida", "Por favor seleccione un guia primero", Alert.AlertType.ERROR);
+            }
         }else if (esGestionDestinos){
-
+            if (destinoElegido!=null){
+                aplicacion.mostrarVentanaCrearEditarDestino(destinoElegido, this.administrador);
+            }else{
+                ArchivoUtils.mostrarMensaje("Error", "Entrada no valida", "Por favor seleccione un destino primero", Alert.AlertType.ERROR);
+            }
         }
     }
 
@@ -278,9 +287,9 @@ public class VentanaGestionarController implements Initializable {
             }
         }else if (esGestionGuias){
             if (guiaElegido!=null){
-                ArchivoUtils.mostrarMensaje("Información", "Datos ya presentados", "Todos los detalles del guiía se encuentran ya expuestos", Alert.AlertType.INFORMATION);
+                ArchivoUtils.mostrarMensaje("Información", "Datos ya presentados", "Todos los detalles del guía se encuentran ya expuestos", Alert.AlertType.INFORMATION);
             }else{
-                ArchivoUtils.mostrarMensaje("Error", "Entrada no valida", "Por favor seleccione un paquete primero", Alert.AlertType.ERROR);
+                ArchivoUtils.mostrarMensaje("Error", "Entrada no valida", "Por favor seleccione un guía primero", Alert.AlertType.ERROR);
             }
         }else if (esGestionDestinos){
             if (destinoElegido!=null){
@@ -295,18 +304,55 @@ public class VentanaGestionarController implements Initializable {
     public void eliminar(){
         if (esGestionPaquetes) {
             if (paqueteElegido!=null){
-                //URGENTE -> ANIADIR MINIVENTANA PARA CONFIRMAR SI EL ADMIN DESEA ELIMINAR EL PAQUETE DE LA AGENCIA
-                agenciaViajes.eliminarPaquete(paqueteElegido);
-                iniciarScrollPaquetes();
+                if (confirmarEliminacion("paquete")){
+                    agenciaViajes.eliminarPaquete(paqueteElegido);
+                    iniciarScrollPaquetes();
+                }
             }else{
                 ArchivoUtils.mostrarMensaje("Error", "Entrada no valida", "Por favor seleccione un paquete primero", Alert.AlertType.ERROR);
             }
-        }else if (esGestionGuias){
+        } else if (esGestionGuias){
+            if (paqueteElegido!=null){
+                if (confirmarEliminacion("guía")){
+                    agenciaViajes.eliminarGuia(guiaElegido);
+                    iniciarScrollGuias();
+                }
+            }else{
+                ArchivoUtils.mostrarMensaje("Error", "Entrada no valida", "Por favor seleccione un guía primero", Alert.AlertType.ERROR);
+            }
 
         }else if (esGestionDestinos){
-
+            if (destinoElegido!=null){
+                if (confirmarEliminacion("destino")){
+                    agenciaViajes.eliminarDestino(destinoElegido);
+                    iniciarScrollDestinos();
+                }
+            }else{
+                ArchivoUtils.mostrarMensaje("Error", "Entrada no valida", "Por favor seleccione un destino primero", Alert.AlertType.ERROR);
+            }
         }
     }
+
+
+    public boolean confirmarEliminacion(String objeto) {
+        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+        alerta.setTitle("Confirmar Eliminación");
+        alerta.setHeaderText("¿Está seguro de eliminar el "+objeto+" seleccionado?");
+        alerta.setContentText("Esta acción no se puede deshacer.");
+
+        // Configurar los botones del cuadro de diálogo
+        ButtonType botonSi = new ButtonType("Sí");
+        ButtonType botonCancelar = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alerta.getButtonTypes().setAll(botonSi, botonCancelar);
+
+        // Mostrar el cuadro de diálogo y esperar la respuesta del usuario
+        Optional<ButtonType> resultado = alerta.showAndWait();
+
+        // Devolver true si el usuario ha confirmado, false si ha cancelado
+        return resultado.isPresent() && resultado.get() == botonSi;
+    }
+
 
 
 }

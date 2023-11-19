@@ -7,17 +7,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import lombok.Data;
 import lombok.extern.java.Log;
 
-import javax.swing.*;
-import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 @Log
@@ -45,7 +42,7 @@ public class VentanaInicioController  implements Initializable {
 
     public AgenciaViajes agenciaViajes = AgenciaViajes.getInstance();
 
-
+    public Stage ventana;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -165,6 +162,19 @@ public class VentanaInicioController  implements Initializable {
         }
     }
 
+    public void mostrarPanelDerechoEstadisticas(){
+        try {
+            panelDerecho.getChildren().clear();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaEstadisticas.fxml"));
+            Node node = loader.load();
+            panelDerecho.getChildren().add(node);
+            VentanaEstadisticasController controlador = loader.getController();
+            controlador.iniciarDatos();
+        }catch (Exception e){
+            log.severe(e.getMessage());
+        }
+    }
+
     public void mostrarPanelDerechoGuias(){
         try {
             panelDerecho.getChildren().clear();
@@ -246,6 +256,44 @@ public class VentanaInicioController  implements Initializable {
         }
     }
 
+    public void mostrarPanelDerechoCrearEditarGuia(GuiaTuristico guia, Administrador administrador){
+        try {
+            panelDerecho.getChildren().clear();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaCrearEditarGuia.fxml"));
+            Node node = loader.load();
+            panelDerecho.getChildren().add(node);
+            VentanaCrearEditarGuiaController controlador = loader.getController();
+            controlador.setAplicacion(this.aplicacion);
+            controlador.setAdministrador(administrador);
+            controlador.setVentana(ventana);
+            //para saber si se esta creando o editando
+            controlador.setGuiaTuristico(guia);
+            controlador.iniciarDatosCrearEditar();
+
+        }catch (Exception e){
+            log.severe(e.getMessage());
+        }
+    }
+
+    public void mostrarPanelDerechoCrearEditarDestino(Destino destino, Administrador administrador){
+        try {
+            panelDerecho.getChildren().clear();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaCrearEditarDestino.fxml"));
+            Node node = loader.load();
+            panelDerecho.getChildren().add(node);
+            VentanaCrearEditarDestinoController controlador = loader.getController();
+            controlador.setAplicacion(this.aplicacion);
+            controlador.setAdministrador(administrador);
+            controlador.setVentana(ventana);
+            //para saber si se esta creando o editando
+            controlador.setDestino(destino);
+            controlador.iniciarDatosCrearEditar();
+
+        }catch (Exception e){
+            log.severe(e.getMessage());
+        }
+    }
+
 
     public void mostrarBarraSuperior(){
         try {
@@ -292,11 +340,13 @@ public class VentanaInicioController  implements Initializable {
 
     public void mostrarPanelDerechoPerfil(Cliente cliente){
         try {
+            System.out.println("hasta aq no");
             panelDerecho.getChildren().clear();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaPerfilCliente.fxml"));
             Node node = loader.load();
             panelDerecho.getChildren().add(node);
             VentanaPerfilClienteController controlador = loader.getController();
+            System.out.println("antes de setar apli");
             controlador.setAplicacion(this.aplicacion);
             controlador.setCliente(cliente);
             controlador.setearCliente(cliente);
@@ -349,7 +399,7 @@ public class VentanaInicioController  implements Initializable {
                 .correo("JaneSmith@gmail.com")
                 .direccion("Calle 456 Oak St")
                 .contrasenia("jane123")
-                .paquetesFavoritos(new ArrayList<>())
+                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -374,7 +424,7 @@ public class VentanaInicioController  implements Initializable {
                 .correo("JohnDoe@gmail.com")
                 .direccion("NY calle 7 Main St")
                 .contrasenia("john123")
-                .paquetesFavoritos(new ArrayList<>())
+                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -399,7 +449,7 @@ public class VentanaInicioController  implements Initializable {
                 .correo("AliceJohnson@gmail.com")
                 .direccion("456 Elm St")
                 .contrasenia("alice123")
-                .paquetesFavoritos(new ArrayList<>())
+                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -422,7 +472,7 @@ public class VentanaInicioController  implements Initializable {
                 .correo("DavidWilson@gmail.com")
                 .direccion("789 Pine St")
                 .contrasenia("david123")
-                .paquetesFavoritos(new ArrayList<>())
+                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -444,7 +494,7 @@ public class VentanaInicioController  implements Initializable {
                 .correo("MichaelBrown@gmail.com")
                 .direccion("123 Oak Ave")
                 .contrasenia("michael123")
-                .paquetesFavoritos(new ArrayList<>())
+                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -467,7 +517,7 @@ public class VentanaInicioController  implements Initializable {
                         "vistas impresionantes del mar Caribe mientras exploras estas antiguas estructuras. " +
                         "Un destino fascinante que combina historia y belleza natural.")
                 .clima(TipoClima.TROPICAL)
-                .fotos(Arrays.asList("/imagenes/tulum1.png", "/imagenes/tulum2.png", "/imagenes/tulum3.png"))
+                .fotos(new ArrayList<>(List.of("/imagenes/tulum1.png", "/imagenes/tulum2.png", "/imagenes/tulum3.png")))
                 .valoraciones(listaValoracionesQuemadas)
                 .build();
 
@@ -486,7 +536,7 @@ public class VentanaInicioController  implements Initializable {
                 .correo("EllaAnderson@gmail.com")
                 .direccion("123 Palm St 3N-8")
                 .contrasenia("ella123")
-                .paquetesFavoritos(new ArrayList<>())
+                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -508,7 +558,7 @@ public class VentanaInicioController  implements Initializable {
                 .correo("JohnSmith@gmail.com")
                 .direccion("456 Beach Blvd")
                 .contrasenia("john123")
-                .paquetesFavoritos(new ArrayList<>())
+                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -530,7 +580,7 @@ public class VentanaInicioController  implements Initializable {
                 .correo("SophiaMartinez@gmail.com")
                 .direccion("789 Ocean Dr")
                 .contrasenia("sophia123")
-                .paquetesFavoritos(new ArrayList<>())
+                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -551,7 +601,7 @@ public class VentanaInicioController  implements Initializable {
                 .correo("MichaelBrown@gmail.com")
                 .direccion("987 Forest Ln")
                 .contrasenia("michael123")
-                .paquetesFavoritos(new ArrayList<>())
+                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -573,7 +623,7 @@ public class VentanaInicioController  implements Initializable {
                 .correo("OliviaTaylor@gmail.com")
                 .direccion("111 Hill Rd")
                 .contrasenia("olivia123")
-                .paquetesFavoritos(new ArrayList<>())
+                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -597,7 +647,7 @@ public class VentanaInicioController  implements Initializable {
                         "y aguas cristalinas. Aquí, encontrarás un rincón del mundo donde el clima tropical " +
                         "crea un ambiente de eterno verano. ")
                 .clima(TipoClima.TROPICAL)
-                .fotos(Arrays.asList("/imagenes/hawai1.png", "/imagenes/hawai2.png", "/imagenes/hawai3.png"))
+                .fotos(new ArrayList<>(List.of("/imagenes/hawai1.png", "/imagenes/hawai2.png", "/imagenes/hawai3.png")))
                 .valoraciones(listaValoracionesQuemadas)
                 .build();
 
@@ -616,7 +666,7 @@ public class VentanaInicioController  implements Initializable {
                 .correo("LiamJohnson@gmail.com")
                 .direccion("456 Sunset Blvd")
                 .contrasenia("liam123")
-                .paquetesFavoritos(new ArrayList<>())
+                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -638,7 +688,7 @@ public class VentanaInicioController  implements Initializable {
                 .correo("SophieDavis@gmail.com")
                 .direccion("789 Sunrise Rd")
                 .contrasenia("sophie123")
-                .paquetesFavoritos(new ArrayList<>())
+                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -660,7 +710,7 @@ public class VentanaInicioController  implements Initializable {
                 .correo("MiaWilson@gmail.com")
                 .direccion("101 Palm Ave")
                 .contrasenia("mia123")
-                .paquetesFavoritos(new ArrayList<>())
+                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -682,7 +732,7 @@ public class VentanaInicioController  implements Initializable {
                 .correo("BenjaminLewis@gmail.com")
                 .direccion("222 Ocean View Dr")
                 .contrasenia("benjamin123")
-                .paquetesFavoritos(new ArrayList<>())
+                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -704,7 +754,7 @@ public class VentanaInicioController  implements Initializable {
                 .correo("EmmaMoore@gmail.com")
                 .direccion("333 Hillside Ave")
                 .contrasenia("emma123")
-                .paquetesFavoritos(new ArrayList<>())
+                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -725,7 +775,7 @@ public class VentanaInicioController  implements Initializable {
                         "maravillas geotérmicas y vida silvestre. Con su clima templado y paisajes asombrosos, " +
                         "este destino te ofrece una experiencia única en la naturaleza.")
                 .clima(TipoClima.TEMPLADO)
-                .fotos(Arrays.asList("/imagenes/yellowstone1.png", "/imagenes/yellowstone2.png", "/imagenes/yellowstone3.png"))
+                .fotos(new ArrayList<>(List.of("/imagenes/yellowstone1.png", "/imagenes/yellowstone2.png", "/imagenes/yellowstone3.png")))
                 .valoraciones(listaValoracionesQuemadas)
                 .build();
 
@@ -761,7 +811,7 @@ public class VentanaInicioController  implements Initializable {
                 .correo("juanperez@gmail.com")
                 .direccion("Av. Principal 123")
                 .contrasenia("juanito123")
-                .paquetesFavoritos(new ArrayList<>())
+                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -783,7 +833,7 @@ public class VentanaInicioController  implements Initializable {
                 .correo("mariagonzalez@gmail.com")
                 .direccion("Calle 7 Sur #45")
                 .contrasenia("maria123")
-                .paquetesFavoritos(new ArrayList<>())
+                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -805,7 +855,7 @@ public class VentanaInicioController  implements Initializable {
                 .correo("carloslopez@gmail.com")
                 .direccion("Calle 15 #20-30")
                 .contrasenia("carlos123")
-                .paquetesFavoritos(new ArrayList<>())
+                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -827,7 +877,7 @@ public class VentanaInicioController  implements Initializable {
                 .correo("lauraramirez@gmail.com")
                 .direccion("Av. Libertador #10-15")
                 .contrasenia("laura123")
-                .paquetesFavoritos(new ArrayList<>())
+                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -848,7 +898,7 @@ public class VentanaInicioController  implements Initializable {
                 .correo("gabrielafernandez@gmail.com")
                 .direccion("Calle 20 #30-40")
                 .contrasenia("gabriela123")
-                .paquetesFavoritos(new ArrayList<>())
+                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -866,7 +916,7 @@ public class VentanaInicioController  implements Initializable {
                 .descripcion("Descubre la majestuosidad de las Montañas Rocosas en Colorado. Un paraíso " +
                         "para los amantes de la naturaleza y los deportes al aire libre.")
                 .clima(TipoClima.TEMPLADO) // Podrías tener un enum con diferentes tipos de clima
-                .fotos(Arrays.asList("/imagenes/montana1.jpg", "/imagenes/montana2.jpg", "/imagenes/montana3.jpg"))
+                .fotos(new ArrayList<>(List.of("/imagenes/montana1.jpg", "/imagenes/montana2.jpg", "/imagenes/montana3.jpg")))
                 .valoraciones(listaValoracionesQuemadas)
                 .build();
 
@@ -886,7 +936,7 @@ public class VentanaInicioController  implements Initializable {
                 .correo("luismartinez@gmail.com")
                 .direccion("Carrera 25 #67")
                 .contrasenia("luisillo123")
-                .paquetesFavoritos(new ArrayList<>())
+                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -906,7 +956,7 @@ public class VentanaInicioController  implements Initializable {
                 .correo("luisagarcia@gmail.com")
                 .direccion("Calle 7 Sur #45")
                 .contrasenia("luisa123")
-                .paquetesFavoritos(new ArrayList<>())
+                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente1);
         valoracion = Valoracion.builder()
@@ -926,7 +976,7 @@ public class VentanaInicioController  implements Initializable {
                 .correo("pedromartinez@gmail.com")
                 .direccion("Carrera 25 #67")
                 .contrasenia("pedro123")
-                .paquetesFavoritos(new ArrayList<>())
+                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente2);
 
@@ -946,7 +996,7 @@ public class VentanaInicioController  implements Initializable {
                 .correo("lauraramirez@gmail.com")
                 .direccion("Av. Principal 123")
                 .contrasenia("laura123")
-                .paquetesFavoritos(new ArrayList<>())
+                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente3);
 
@@ -966,7 +1016,7 @@ public class VentanaInicioController  implements Initializable {
                 .correo("jorgerodriguez@gmail.com")
                 .direccion("Calle 15 #20-30")
                 .contrasenia("jorge123")
-                .paquetesFavoritos(new ArrayList<>())
+                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente4);
 
@@ -983,7 +1033,7 @@ public class VentanaInicioController  implements Initializable {
                 .descripcion("Descubre la belleza de Playa Paraíso en la Riviera Maya. Aguas cristalinas y " +
                         "arena blanca te esperan en este paraíso tropical.")
                 .clima(TipoClima.TROPICAL)
-                .fotos(Arrays.asList("/imagenes/playaparaiso1.jpg", "/imagenes/playaparaiso2.jpg", "/imagenes/playaparaiso3.jpg"))
+                .fotos(new ArrayList<>(List.of("/imagenes/playaparaiso1.jpg", "/imagenes/playaparaiso2.jpg", "/imagenes/playaparaiso3.jpg")))
                 .valoraciones(listaValoracionesQuemadas)
                 .build();
 
@@ -1003,7 +1053,7 @@ public class VentanaInicioController  implements Initializable {
                 .correo("anarodriguez@gmail.com")
                 .direccion("Calle 10 #30-15")
                 .contrasenia("ana123")
-                .paquetesFavoritos(new ArrayList<>())
+                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente1TercerDestino);
 
@@ -1023,7 +1073,7 @@ public class VentanaInicioController  implements Initializable {
                 .correo("javiergomez@gmail.com")
                 .direccion("Av. Libertadores #45")
                 .contrasenia("javier123")
-                .paquetesFavoritos(new ArrayList<>())
+                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente2TercerDestino);
 
@@ -1043,7 +1093,7 @@ public class VentanaInicioController  implements Initializable {
                 .correo("mariaperez@gmail.com")
                 .direccion("Calle 20 #15-30")
                 .contrasenia("maria123")
-                .paquetesFavoritos(new ArrayList<>())
+                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente3TercerDestino);
 
@@ -1063,7 +1113,7 @@ public class VentanaInicioController  implements Initializable {
                 .correo("carlosmartinez@gmail.com")
                 .direccion("Av. Bolívar #50")
                 .contrasenia("carlos123")
-                .paquetesFavoritos(new ArrayList<>())
+                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente4TercerDestino);
 
@@ -1083,7 +1133,7 @@ public class VentanaInicioController  implements Initializable {
                 .correo("sofialopez@gmail.com")
                 .direccion("Carrera 30 #40-50")
                 .contrasenia("sofia123")
-                .paquetesFavoritos(new ArrayList<>())
+                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente5TercerDestino);
 
@@ -1100,7 +1150,7 @@ public class VentanaInicioController  implements Initializable {
                 .descripcion("Descubre la exuberante Selva Amazónica en la región del Amazonas. " +
                         "Sumérgete en la diversidad de la flora y fauna de este ecosistema único.")
                 .clima(TipoClima.TROPICAL)
-                .fotos(Arrays.asList("/imagenes/amazon1.png", "/imagenes/amazon2.png", "/imagenes/amazon3.jpeg"))
+                .fotos(new ArrayList<>(List.of("/imagenes/amazon1.png", "/imagenes/amazon2.png", "/imagenes/amazon3.jpeg")))
                 .valoraciones(listaValoracionesQuemadas)
                 .build();
 
@@ -1133,7 +1183,7 @@ public class VentanaInicioController  implements Initializable {
                 .contrasenia("123")
                 .direccion("dsfds")
                 .foto("imagenes/user.png")
-                .paquetesFavoritos(new ArrayList<>()).build();
+                .paquetesReservados(new ArrayList<>()).build();
         listaClientesQuemados.add(cliente);
         //-------------- GUIAS QUEMADOS ----------------//
 

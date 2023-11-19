@@ -231,7 +231,7 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="btnEliminarDestinoGestion" layoutX="517.0" layoutY="241.0" mnemonicParsing="false" onAction="#eliminarDestino" text="Eliminar Destino">
+            <Button fx:id="btnEliminarDestinoGestion" layoutX="503.0" layoutY="240.0" mnemonicParsing="false" onAction="#eliminarDestino" prefHeight="29.0" prefWidth="127.0" text="Eliminar Destino">
                <font>
                   <Font size="13.0" />
                </font>
@@ -254,7 +254,7 @@
       </Pane>
       <Pane fx:id="panelInferiorGestion" layoutX="18.0" layoutY="315.0" prefHeight="295.0" prefWidth="990.0" stylesheets="@../aplicacion.css">
          <children>
-            <Button fx:id="btnAgregarDestinoGestion" layoutX="855.0" layoutY="151.0" mnemonicParsing="false" onAction="#agregarDestinoNuevo" text="Agregar Destino">
+            <Button fx:id="btnAgregarDestinoGestion" layoutX="848.0" layoutY="151.0" mnemonicParsing="false" onAction="#agregarDestinoNuevo" prefHeight="29.0" prefWidth="124.0" text="Agregar Destino">
                <font>
                   <Font size="13.0" />
                </font>

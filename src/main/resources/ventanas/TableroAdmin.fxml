@@ -8,7 +8,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <Pane prefHeight="800.0" prefWidth="270.0" styleClass="white-color" stylesheets="@../aplicacion.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.agenciaViajes.controllers.TableroAdminController">
    <children>
       <Pane layoutY="674.0" prefHeight="68.0" prefWidth="272.0">
@@ -103,7 +102,7 @@
       </Pane>
       <Pane layoutY="277.0" prefHeight="68.0" prefWidth="272.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Estadísticas">
+            <Button mnemonicParsing="false" onAction="#estadisticas" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Estadísticas">
                <font>
                   <Font size="16.0" />
                </font>

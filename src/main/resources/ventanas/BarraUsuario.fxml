@@ -39,7 +39,7 @@
          </image>
       </ImageView>
       <ComboBox layoutX="1182.0" layoutY="24.0" prefHeight="31.0" prefWidth="110.0" promptText="español - ES" styleClass="transparent" stylesheets="@../aplicacion.css" />
-      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="1152.0" layoutY="25.0">
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="1151.0" layoutY="25.0">
          <image>
             <Image url="@../imagenes/español.png" />
          </image>
