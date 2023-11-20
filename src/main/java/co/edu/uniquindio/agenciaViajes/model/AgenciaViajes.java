@@ -1454,21 +1454,27 @@ public class AgenciaViajes {
     }
 
     /**
-     * Cancela el estado de una reserva dada, cambiando su estado a "CANCELADA".
+     * Cancela el estado de una reserva dada, cambiando su estado a "CANCELADA" de forma recursiva.
      *
      * @param reserva Reserva que se desea cancelar.
      *                (Se asume que la clase Reserva tiene un método equals implementado para comparar reservas).
      */
-    public void cancelarEstadoReserva(Reserva reserva){
-        for (Reserva posibleReserva : listaReservas) {
-            if (posibleReserva.equals(reserva)) {
-                posibleReserva.setEstado(EstadoReserva.CANCELADA);
-                break; // Se detiene después de cambiar el estado de la reserva
+    public void cancelarEstadoReserva(Reserva reserva) {
+        cancelarEstadoReservaParte2(reserva, 0);
+    }
+
+    private void cancelarEstadoReservaParte2(Reserva reserva, int index) {
+        if (index < listaReservas.size()) {
+            if (listaReservas.get(index).equals(reserva)) {
+                listaReservas.get(index).setEstado(EstadoReserva.CANCELADA);
+                return; // Detiene la recursión después de cambiar el estado de la reserva
             }
+            cancelarEstadoReservaParte2(reserva, index + 1);
         }
     }
+
     /**
-     * Califica a un guía turístico con un puntaje y un comentario.
+     * Califica a un guía turístico con un puntaje y un comentario de forma recursiva.
      *
      * @param guia       Guía que se va a calificar.
      * @param puntaje    Puntaje asignado al guía.
@@ -1477,10 +1483,10 @@ public class AgenciaViajes {
      * @throws AtributoVacioException si el puntaje o el comentario son nulos o están vacíos.
      */
     public void calificarGuia(GuiaTuristico guia, String puntaje, Cliente cliente, String comentario) throws AtributoVacioException {
-        if (puntaje==null || puntaje.isBlank()){
+        if (puntaje == null || puntaje.isBlank()) {
             throw new AtributoVacioException("Elegir un puntaje es obligatorio");
         }
-        if (comentario==null || comentario.isBlank()){
+        if (comentario == null || comentario.isBlank()) {
             throw new AtributoVacioException("Escribir un comentario es obligatorio");
         }
 
@@ -1490,46 +1496,75 @@ public class AgenciaViajes {
                 .comentario(comentario)
                 .build();
 
-        for (GuiaTuristico guiaPosible : listaGuias){
-            if (guiaPosible.equals(guia)){
-                ArrayList<Valoracion> anterioresValoracion = guiaPosible.getValoraciones();
-                anterioresValoracion.add(valoracion);
-                guiaPosible.setValoraciones(anterioresValoracion);
-                break;
+        calificarGuiaParte2(guia, valoracion, 0);
+    }
+
+    private void calificarGuiaParte2(GuiaTuristico guia, Valoracion valoracion, int index) {
+        if (index < listaGuias.size()) {
+            if (listaGuias.get(index).equals(guia)) {
+                listaGuias.get(index).getValoraciones().add(valoracion);
+                return; // Detiene la recursión después de agregar la valoración al guía
             }
+            calificarGuiaParte2(guia, valoracion, index + 1);
         }
     }
 
+    /**
+     * Verifica el estado de las reservas en la lista.
+     * Si la fecha actual es posterior a la fecha de inicio de una reserva,
+     * cambia su estado a "CONFIRMADA".
+     */
+    public void verificarEstadoReservaLista() {
+        LocalDate diaHoy = LocalDate.now();
+        verificarEstadoReservaParte2(listaReservas, diaHoy, 0);
+    }
 
-    public void verificarEstadoReservaLista(){
-        LocalDate diaHoy= LocalDate.now();
-        for (Reserva reserva: listaReservas){
-            if (diaHoy.isAfter(reserva.getFechaInicio())){
+    private void verificarEstadoReservaParte2(List<Reserva> reservas, LocalDate diaHoy, int index) {
+        if (index < reservas.size()) {
+            Reserva reserva = reservas.get(index);
+            if (diaHoy.isAfter(reserva.getFechaInicio())) {
                 reserva.setEstado(EstadoReserva.CONFIRMADA);
             }
+            verificarEstadoReservaParte2(reservas, diaHoy, index + 1);
         }
     }
 
+    /**
+     * Obtiene las reservas asociadas a un cliente dado.
+     * Verifica el estado de las reservas en la lista antes de realizar la búsqueda.
+     * @param cliente El cliente para el que se buscan las reservas.
+     * @return ArrayList con las reservas asociadas al cliente.
+     */
     public ArrayList<Reserva> obtenerReservasDeCliente(Cliente cliente) {
+        verificarEstadoReservaLista(); // Verifica y actualiza el estado de las reservas en la lista
+        return obtenerReservasClienteParte2(cliente, new ArrayList<>(), 0);
+    }
 
-        verificarEstadoReservaLista();
-
-        ArrayList<Reserva> reservasCliente = new ArrayList<>();
-
-        for (Reserva reserva : listaReservas) {
+    private ArrayList<Reserva> obtenerReservasClienteParte2(Cliente cliente, ArrayList<Reserva> reservasCliente, int index) {
+        if (index < listaReservas.size()) {
+            Reserva reserva = listaReservas.get(index);
             if (reserva.getCliente().equals(cliente)) {
                 reservasCliente.add(reserva);
             }
+            return obtenerReservasClienteParte2(cliente, reservasCliente, index + 1);
         }
-
         return reservasCliente;
     }
 
+
+    /**
+     * Califica un destino dado por un cliente con un puntaje y comentario.
+     * @param destino     El destino que se va a calificar.
+     * @param puntaje     El puntaje asignado al destino.
+     * @param cliente     El cliente que realiza la calificación.
+     * @param comentario  El comentario asociado a la calificación.
+     * @throws AtributoVacioException Si el puntaje o el comentario están vacíos o son nulos.
+     */
     public void calificarDestino(Destino destino, String puntaje, Cliente cliente, String comentario) throws AtributoVacioException {
-        if (puntaje==null || puntaje.isBlank()){
+        if (puntaje == null || puntaje.isBlank()){
             throw new AtributoVacioException("Elegir un puntaje es obligatorio");
         }
-        if (comentario==null || comentario.isBlank()){
+        if (comentario == null || comentario.isBlank()){
             throw new AtributoVacioException("Escribir un comentario es obligatorio");
         }
 
@@ -1539,13 +1574,23 @@ public class AgenciaViajes {
                 .comentario(comentario)
                 .build();
 
-        for (Destino destinoPosible : listaDestinos){
-            if (destinoPosible.equals(destino)){
+        agregarValoracionParte2(destino, valoracion);
+    }
+
+    private void agregarValoracionParte2(Destino destino, Valoracion valoracion) {
+        agregarValoracionParte3(destino, valoracion, 0);
+    }
+
+    private void agregarValoracionParte3(Destino destino, Valoracion valoracion, int index) {
+        if (index < listaDestinos.size()) {
+            Destino destinoPosible = listaDestinos.get(index);
+            if (destinoPosible.equals(destino)) {
                 ArrayList<Valoracion> anterioresValoracion = destinoPosible.getValoraciones();
                 anterioresValoracion.add(valoracion);
                 destinoPosible.setValoraciones(anterioresValoracion);
-                break;
+                return; // Detiene la recursión después de agregar la valoración
             }
+            agregarValoracionParte3(destino, valoracion, index + 1);
         }
     }
 }
