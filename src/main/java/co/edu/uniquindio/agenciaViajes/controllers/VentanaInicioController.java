@@ -113,6 +113,22 @@ public class VentanaInicioController  implements Initializable {
         }
     }
 
+    public void mostrarPanelDerechosMisReservas(Cliente cliente, Administrador administrador){
+        try {
+            panelDerecho.getChildren().clear();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaGestionReserva.fxml"));
+            Node node = loader.load();
+            panelDerecho.getChildren().add(node);
+            VentanaGestionReservaController controlador = loader.getController();
+            controlador.setAplicacion(this.aplicacion);
+            controlador.setCliente(cliente);
+            controlador.setAdministrador(administrador);
+            controlador.iniciarDatos();
+        }catch (Exception e){
+            log.severe(e.getMessage());
+        }
+    }
+
     public void mostrarPanelDerechoReservas(Paquete paquete, Cliente cliente){
         try {
             panelDerecho.getChildren().clear();
@@ -338,16 +354,14 @@ public class VentanaInicioController  implements Initializable {
         }
     }
 
-    public void mostrarPanelDerechoPerfil(Cliente cliente){
+    public void mostrarPanelDerechoPerfil(Aplicacion aplicacion, Cliente cliente){
         try {
-            System.out.println("hasta aq no");
             panelDerecho.getChildren().clear();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/VentanaPerfilCliente.fxml"));
             Node node = loader.load();
             panelDerecho.getChildren().add(node);
             VentanaPerfilClienteController controlador = loader.getController();
-            System.out.println("antes de setar apli");
-            controlador.setAplicacion(this.aplicacion);
+            controlador.setAplicacion(aplicacion);
             controlador.setCliente(cliente);
             controlador.setearCliente(cliente);
         }catch (Exception e){
@@ -1159,7 +1173,7 @@ public class VentanaInicioController  implements Initializable {
         listaDestinos2.add(destino);
 
         // Creación del paquete con los destinos existentes y los nuevos destinos
-        LocalDate fechaPaquete = LocalDate.of(2024, 3, 15);
+        LocalDate fechaPaquete = LocalDate.of(2023, 3, 15);
         Paquete paquete2 = Paquete.builder()
                 .nombre("Experiencia Natural y Aventura Cultural")
                 .destinos(listaDestinos2)

@@ -8,6 +8,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
@@ -30,6 +31,22 @@ public class Reserva implements Serializable {
     private EstadoReserva estado;
     private Paquete paquete;
     private Double valorTotal;
+
+    public String obtenerEstadoCadena() {
+        String msj="";
+        switch(estado) {
+            case PENDIENTE: msj="Pendiente"; break;
+            case CANCELADA: msj="Cancelada"; break;
+            case CONFIRMADA: msj="Confirmada"; break;
+        }
+        return msj;
+    }
+
+    public String obtenerFechaSolicitudComoString() {
+        // Formatear la fecha de solicitud como una cadena
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return fechaSolicitud.format(formatter);
+    }
 
 
 }

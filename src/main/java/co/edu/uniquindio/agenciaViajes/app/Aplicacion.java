@@ -51,6 +51,10 @@ public class Aplicacion extends Application {
         ventanaInicioController.mostrarPanelDerechoPaquetes(cliente, administrador);
     }
 
+    public void mostrarVentanaMisPaquetes(Cliente cliente, Administrador administrador){
+        ventanaInicioController.mostrarPanelDerechosMisReservas(cliente, administrador);
+    }
+
     public void mostrarVentanaReserva(Paquete paquete, Cliente cliente){
         ventanaInicioController.mostrarPanelDerechoReservas(paquete, cliente);
     }
@@ -116,7 +120,6 @@ public class Aplicacion extends Application {
                 controlador.mostrarPanelIzquierdoCliente();
                 controlador.mostrarPanelDerechoPaquetes(cliente, admin);
                 controlador.mostrarBarraSuperiorCliente();
-                System.out.println("se mando al cliente"+ cliente.getCedula());
             }
 
             //activa los paneles para un administrador
@@ -201,8 +204,8 @@ public class Aplicacion extends Application {
         }
     }
 
-    public void mostrarVentanaPerfilCliente(Cliente cliente) {
-        ventanaInicioController.mostrarPanelDerechoPerfil(cliente);
+    public void mostrarVentanaPerfilCliente(Aplicacion aplicacion, Cliente cliente) {
+        ventanaInicioController.mostrarPanelDerechoPerfil(aplicacion, cliente);
     }
 
     public static void main(String[] args) {

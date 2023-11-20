@@ -49,6 +49,7 @@ public class VentanaPerfilClienteController implements Initializable {
     public PasswordField txtHidePassword;
     public Button btnEditar;
     public Button btnConfirmar;
+    public String fotoElegida;
 
 
     @Override
@@ -62,15 +63,22 @@ public class VentanaPerfilClienteController implements Initializable {
         txtShowPassword.setVisible(false);
         openEye.setVisible(false);
         password=cliente.getContrasenia();
+        fotoElegida=cliente.getFoto();
     }
     public void cargarDatos(){
-
-        InputStream inputStream = getClass().getResourceAsStream(cliente.getFoto());
-        Image image = new Image(inputStream);
-        userPic.setImage(image);
+        try {
+            Image image = new Image(getClass().getResourceAsStream(cliente.getFoto()));
+            userPic.setImage(image);
+            userPic2.setImage(image);
+        } catch (Exception e) {
+            if (!cliente.getFoto().equals("")) {
+                Image image = new Image(cliente.getFoto());
+                userPic.setImage(image);
+                userPic2.setImage(image);
+            }
+        }
         Circle clip = new Circle(userPic.getFitWidth() / 2, userPic.getFitHeight() / 2, userPic.getFitWidth() / 2);
         userPic.setClip(clip);
-        userPic2.setImage(image);
         Circle clip2 = new Circle(userPic2.getFitWidth() / 2, userPic2.getFitHeight() / 2, userPic2.getFitWidth() / 2);
         userPic2.setClip(clip2);
         txtNombre.setText(cliente.getNombre());
@@ -81,7 +89,6 @@ public class VentanaPerfilClienteController implements Initializable {
         txtHidePassword.setText(cliente.getContrasenia());
         txtShowPassword.setText(cliente.getContrasenia());
 
-        System.out.println("link de userPic en la inicializacion de la ventana: "+userPic.getImage().getUrl());
 
     }
     public void close_Eye_ClickOnAction(MouseEvent mousevent) {
@@ -130,18 +137,13 @@ public class VentanaPerfilClienteController implements Initializable {
                     txtCedula.getText(),
                     txtNombre.getText(),
                     txtTelefono.getText(),
-                    userPic.getImage().getUrl(),
+                    fotoElegida,
                     txtDireccion.getText(),
                     txtCorreo.getText(),
                     password);
-            aplicacion.motrarVentanaPaquetes(cliente, this.administrador);
+            aplicacion.mostrarVentanaPrincipal(cliente, this.administrador);
             ArchivoUtils.mostrarMensaje("Registro Confirmado", "Operación completada", "Se ha editado correctamente al cliente: " + cliente.getNombre(), Alert.AlertType.INFORMATION);
 
-            /**
-             *
-             btnConfirmar.setVisible(false);
-             btnEditar.setVisible(true);
-             */
         } catch (AtributoVacioException | DatoInvalidoException | CorreoNoDisponibleException |
                  DatoNoNumericoException e) {
             ArchivoUtils.mostrarMensaje("Error", "Cambio Fallido", e.getMessage(), Alert.AlertType.ERROR);
@@ -165,6 +167,7 @@ public class VentanaPerfilClienteController implements Initializable {
             Image newImage = new Image(selectedFile.toURI().toString());
             userPic.setImage(newImage);
             userPic2.setImage(newImage);
+            fotoElegida=userPic2.getImage().getUrl();
         }
     }
 }

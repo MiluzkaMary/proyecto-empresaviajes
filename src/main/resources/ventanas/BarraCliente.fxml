@@ -27,18 +27,28 @@
          </image>
       </ImageView>
       <Separator layoutX="276.0" orientation="VERTICAL" prefHeight="78.0" />
-      <ImageView fx:id="userPic" fitHeight="50.0" fitWidth="50.0" layoutX="1185.0" layoutY="14.0">
+      <ImageView fx:id="userPic" fitHeight="50.0" fitWidth="50.0" layoutX="1025.0" layoutY="15.0">
          <image>
             <Image url="@../imagenes/user.png" />
          </image>
       </ImageView>
-      <Separator layoutX="1126.0" orientation="VERTICAL" prefHeight="78.0" prefWidth="6.0" />
-      <Text fx:id="txtBienvenida" layoutX="1022.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bienvenid@,  ">
+      <Separator layoutX="990.0" orientation="VERTICAL" prefHeight="78.0" prefWidth="6.0" />
+      <Text fx:id="txtBienvenida" layoutX="886.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bienvenid@,  ">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Text>
-      <Circle fill="#00ff48" layoutX="1265.0" layoutY="40.0" radius="7.0" stroke="WHITE" strokeType="INSIDE" />
+      <Circle fill="#00ff48" layoutX="1105.0" layoutY="40.0" radius="7.0" stroke="WHITE" strokeType="INSIDE" />
+      <Label fx:id="lblFecha" layoutX="488.0" layoutY="35.0" text="MM:DD:YYYY">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="40.0" fitWidth="83.0" layoutX="1187.0" layoutY="19.0" onMouseClicked="#salirCuenta" pickOnBounds="true" styleClass="cursor_hand">
+         <image>
+            <Image url="@../imagenes/logout.png" />
+         </image>
+      </ImageView>
    </children>
    <styleClass>
       <String fx:value="white-bg" />

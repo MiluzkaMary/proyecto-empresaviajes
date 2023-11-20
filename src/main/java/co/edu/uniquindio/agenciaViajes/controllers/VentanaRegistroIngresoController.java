@@ -160,10 +160,9 @@ public class VentanaRegistroIngresoController implements Initializable {
     }
 
     public void registrarCliente(){
-        String foto="/ventanas/user.png";
-
+        String foto="/imagenes/user.png";
         try {
-            Cliente cliente = agenciaViajes.registrarCliente(
+            agenciaViajes.registrarCliente(
                     txtCedula.getText(),
                     txtNombre.getText(),
                     txtTelefono.getText(),
@@ -171,7 +170,7 @@ public class VentanaRegistroIngresoController implements Initializable {
                     txtCorreo.getText(),
                     txtDireccion.getText(),
                     password);
-            ArchivoUtils.mostrarMensaje("Registro Confirmado", "Operación completada", "Se ha registrado correctamente el cliente: "+cliente.getNombre(), Alert.AlertType.INFORMATION);
+            ArchivoUtils.mostrarMensaje("Registro Confirmado", "Operación completada", "Se ha registrado correctamente el cliente: "+ txtNombre.getText(), Alert.AlertType.INFORMATION);
             limpiarRegistrarPanel();
 
         } catch (AtributoVacioException | InformacionRepetidaException | DatoNoNumericoException |

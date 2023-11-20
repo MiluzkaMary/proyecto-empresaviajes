@@ -5,6 +5,7 @@ import lombok.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class Paquete implements Serializable {
     private static final long serialVersionUID = 912713L;
 
     private String nombre;
-    private List<Destino> destinos;
+    private ArrayList<Destino> destinos;
     private int diasDuracion;
     private  String descripcion;
     private Double precio;
@@ -54,6 +55,12 @@ public class Paquete implements Serializable {
             nombresDestinos.add(destino.getNombre());
         }
         return nombresDestinos;
+    }
+
+    public String obtenerFechaComoString() {
+        // Formatear la fecha como una cadena
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return fecha.format(formatter);
     }
 
 

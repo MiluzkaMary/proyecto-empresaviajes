@@ -169,7 +169,7 @@
       </Text>
       <Pane layoutY="70.0" prefHeight="68.0" prefWidth="272.0" stylesheets="@../aplicacion.css">
          <children>
-            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="Reservas">
+            <Button mnemonicParsing="false" onAction="#mostrarMisReservas" prefHeight="68.0" prefWidth="272.0" styleClass="transparent" stylesheets="@../aplicacion.css" text="     Mis Reservas">
                <font>
                   <Font size="16.0" />
                </font>

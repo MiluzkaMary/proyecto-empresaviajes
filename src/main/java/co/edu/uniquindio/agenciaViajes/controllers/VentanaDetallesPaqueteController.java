@@ -167,7 +167,7 @@ public class VentanaDetallesPaqueteController implements Initializable {
     public Cliente cliente;
     public Administrador administrador;
     public Paquete paquete;
-    public List<Destino> listaTemporalDestinos;
+    public ArrayList<Destino> listaTemporalDestinos;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

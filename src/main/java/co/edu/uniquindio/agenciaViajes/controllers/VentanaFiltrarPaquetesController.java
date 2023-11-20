@@ -81,5 +81,6 @@ public class VentanaFiltrarPaquetesController implements Initializable {
 
     public void establecerListaPaquetes(){
         this.listaPaquetes=agenciaViajes.getListaPaquetes();
+
     }
 }

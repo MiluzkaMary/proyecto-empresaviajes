@@ -241,7 +241,7 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="btnCrearGestion" layoutX="835.0" layoutY="148.0" mnemonicParsing="false" onAction="#crearPaquete" prefHeight="30.0" prefWidth="127.0" text="Crear" visible="false">
+            <Button fx:id="btnCrearGestion" layoutX="835.0" layoutY="115.0" mnemonicParsing="false" onAction="#crearPaquete" prefHeight="30.0" prefWidth="127.0" text="Crear" visible="false">
                <font>
                   <Font size="14.0" />
                </font>

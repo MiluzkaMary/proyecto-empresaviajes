@@ -120,7 +120,8 @@ public class VentanaReservaController implements Initializable {
 
         //combobox
         ObservableList<String> guias= FXCollections.observableArrayList();
-        agenciaViajes.obtenerNombresGuiasDisponiblesEnFecha(paquete, fechaFinal, 0, new ArrayList<>());
+        ArrayList <String> listaGuiasDisponibles = agenciaViajes.obtenerNombresGuiasDisponiblesEnFecha(paquete, fechaFinal, 0, new ArrayList<>());
+        guias.addAll(listaGuiasDisponibles);
         comboGuia.setItems(guias);
 
     }
@@ -169,7 +170,7 @@ public class VentanaReservaController implements Initializable {
                     valorTotal);
             ArchivoUtils.mostrarMensaje("Reserva completada", "Operación completada", "Se ha reservado correctamente el paquete, por favor revise su correo", Alert.AlertType.INFORMATION);
             enviarCorreoReserva(reserva);
-
+            aplicacion.mostrarVentanaPrincipal(this.cliente, this.administrador);
         } catch (AtributoVacioException e) {
             ArchivoUtils.mostrarMensaje("Error", "Entradas no validas", e.getMessage(), Alert.AlertType.ERROR);
         } catch (EnviarCorreoException e) {
