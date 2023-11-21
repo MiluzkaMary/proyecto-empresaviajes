@@ -21,5 +21,5 @@ public class Cliente implements Serializable {
     private String correo;
     private String direccion;
     private String contrasenia;
-    private ArrayList<Paquete> paquetesReservados;
+
 }

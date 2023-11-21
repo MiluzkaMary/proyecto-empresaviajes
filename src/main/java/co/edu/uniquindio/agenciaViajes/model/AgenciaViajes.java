@@ -17,6 +17,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -127,12 +128,14 @@ public class AgenciaViajes {
             return clienteActual;
         }
         // Llamada recursiva con el siguiente índice
-        return obtenerCliente(cedula, i + 1);    }
+        return obtenerCliente(cedula, i + 1);
+    }
 
     /**
      * Método que permite encontrar a un Destino por medio de su Nombre
+     *
      * @param nombre que tiene el Destino
-     * @param i contador general
+     * @param i      contador general
      * @return destinoActual que se busca
      */
     public Destino obtenerDestinoConNombre(String nombre, int i) {
@@ -151,8 +154,9 @@ public class AgenciaViajes {
 
     /**
      * Método que permite encontrar a un Guia por medio de su cedula
+     *
      * @param cedula que tiene el guia
-     * @param i contador general
+     * @param i      contador general
      * @return guiaActual que se busca
      */
     public GuiaTuristico obtenerGuia(String cedula, int i) {
@@ -203,8 +207,9 @@ public class AgenciaViajes {
      * Método necesario para iniciar sesión, promero valida los datos de los
      * parámetros y luego revisa si quien inició sesión fue un administrador o
      * un cliente
-     * @param nombre que contiene el TextField
-     * @param correo que contiene el TextField
+     *
+     * @param nombre      que contiene el TextField
+     * @param correo      que contiene el TextField
      * @param contrasenia que contiene el TextField
      */
     public String buscarTipoUsuario(String nombre, String correo, String contrasenia) throws AtributoVacioException, CorreoInvalidoException, UsuarioNoExistenteException {
@@ -236,6 +241,7 @@ public class AgenciaViajes {
     /**
      * Método que registra un administrador (Se registra desde consola,
      * no desde alguna parte de la interfaz
+     *
      * @param cedula      Cedula del administrador
      * @param nombre      Nombre del administrador
      * @param correo      Correo del administrador
@@ -267,6 +273,7 @@ public class AgenciaViajes {
      * validar los datos que se encuentran en los parámetros
      * en el caso de la lista de reservas, esta no se registra
      * solo se instancia
+     *
      * @param cedula      Cedula del cliente
      * @param nombre      Nombre del cliente
      * @param correo      Correo del cliente
@@ -326,7 +333,6 @@ public class AgenciaViajes {
                 .correo(correo)
                 .direccion(direccion)
                 .contrasenia(contrasenia)
-                .paquetesReservados(new ArrayList<>())
                 .build();
 
         listaClientes.add(cliente);
@@ -357,13 +363,14 @@ public class AgenciaViajes {
     /**
      * Método que ctra un paquete, primero se encarga de validar
      * los datos de los parámetros para después construir en paquete
-     * @param listaDestinos      Cedula del paquete
-     * @param nombre             Nombre del paquete
-     * @param descripcion        Correo del paquete
-     * @param diasDuracion       Contraseña del paquete
-     * @param precio             Foto del paquete
-     * @param cupoMaximo         Telefono del paquete
-     * @param fecha              Fecha del paquete
+     *
+     * @param listaDestinos Cedula del paquete
+     * @param nombre        Nombre del paquete
+     * @param descripcion   Correo del paquete
+     * @param diasDuracion  Contraseña del paquete
+     * @param precio        Foto del paquete
+     * @param cupoMaximo    Telefono del paquete
+     * @param fecha         Fecha del paquete
      * @return Paquete que fue creado.
      */
     public Paquete crearPaquete(String nombre, ArrayList<Destino> listaDestinos, String diasDuracion, String descripcion, String precio, String cupoMaximo, LocalDate fecha) throws AtributoVacioException, DatoNoNumericoException, FechaInvalidaException {
@@ -425,6 +432,7 @@ public class AgenciaViajes {
      * los administradores, los clientes no tienen acceso alguno a este
      * método. Primero se validan los datos de los parámetros, luego se
      * construye el guía y por último se agrega a la lista de guías
+     *
      * @param cedula           Cedula del guía
      * @param nombre           Nombre del guía
      * @param telefono         Telefono del guía
@@ -500,11 +508,12 @@ public class AgenciaViajes {
      * los administradores, los clientes no tienen acceso alguno a este
      * método. Primero se validan los datos de los parámetros, luego se
      * construye el destino y por último se agrega a la lista de destinos
-     * @param ciudad           Ciudad donde se encuentra el destino
-     * @param nombre           Nombre del destino
-     * @param clima            Clima del destino (Es un ENUM)
-     * @param descripcion      Descripcion del destino
-     * @param listaFotos       Lista de Fotos referentes al destino
+     *
+     * @param ciudad      Ciudad donde se encuentra el destino
+     * @param nombre      Nombre del destino
+     * @param clima       Clima del destino (Es un ENUM)
+     * @param descripcion Descripcion del destino
+     * @param listaFotos  Lista de Fotos referentes al destino
      * @return destino que fue creado.
      */
     public Destino registrarDestino(String nombre, String ciudad, String descripcion, String clima, List<String> listaFotos) throws AtributoVacioException {
@@ -546,6 +555,7 @@ public class AgenciaViajes {
 
     /**
      * Método que retorna el tipo de clima de un destino
+     *
      * @param cadenaClima un String donde se guarda el tipo de Clima
      *                    para poder saber qué TipoClima retornar
      * @return TipoClima que fue hallado
@@ -577,15 +587,16 @@ public class AgenciaViajes {
      * esta es una acción que unicamente pueden hacer los administradores.
      * Primero se validan los datos de los parámetros y luego se le setean los
      * nuevos o viejos datos del paquete actualizado
-     * @param cupoMaximo       El cupo máximo de personas que pueden formar parte
-     *                         del paquete
-     * @param nombre           Nombre del paquete
-     * @param diasDuracion     Dias que dura el paquete
-     * @param descripcion      Descripcion del paquete
-     * @param listaDestinos    Lista de los Destinos que posee el paquete
-     * @param  paquete         El paquete que se desea actualizar
-     * @param fecha            La fecha en la que inicia el paquete
-     * @param precio           Precio del paquete
+     *
+     * @param cupoMaximo    El cupo máximo de personas que pueden formar parte
+     *                      del paquete
+     * @param nombre        Nombre del paquete
+     * @param diasDuracion  Dias que dura el paquete
+     * @param descripcion   Descripcion del paquete
+     * @param listaDestinos Lista de los Destinos que posee el paquete
+     * @param paquete       El paquete que se desea actualizar
+     * @param fecha         La fecha en la que inicia el paquete
+     * @param precio        Precio del paquete
      * @return Paquete que fue editado
      */
     public Paquete editarPaquete(Paquete paquete, String nombre, ArrayList<Destino> listaDestinos, String diasDuracion, String descripcion, String precio, String cupoMaximo, LocalDate fecha) throws AtributoVacioException, DatoNoNumericoException, FechaInvalidaException {
@@ -649,6 +660,7 @@ public class AgenciaViajes {
      * esta es una acción que unicamente pueden hacer los administradores.
      * Primero se validan los datos de los parámetros y luego se le setean los
      * nuevos o viejos datos del guia actualizado
+     *
      * @param cedula           Cedula del guía
      * @param nombre           Nombre del guía
      * @param telefono         Telefono del guía
@@ -716,9 +728,10 @@ public class AgenciaViajes {
 
     /**
      * Método recursivo  para reemplazar al guia
+     *
      * @param guiaAnterior guia a editar
-     * @param guia guia siendo editado
-     * @param i indice general
+     * @param guia         guia siendo editado
+     * @param i            indice general
      */
     private void reemplazarGuiaParte2(GuiaTuristico guiaAnterior, GuiaTuristico guia, int i) {
         if (i < listaGuias.size()) {
@@ -734,12 +747,13 @@ public class AgenciaViajes {
      * esta es una acción que unicamente pueden hacer los administradores.
      * Primero se validan los datos de los parámetros y luego se le setean los
      * nuevos o viejos datos del destino actualizado
-     * @param destinoAnterior  Destino antes de ser editado
-     * @param ciudad           Ciudad donde se encuentra el destino
-     * @param nombre           Nombre del destino
-     * @param clima            Clima del destino (Es un ENUM)
-     * @param descripcion      Descripcion del destino
-     * @param listaFotos       Lista de Fotos referentes al destino
+     *
+     * @param destinoAnterior Destino antes de ser editado
+     * @param ciudad          Ciudad donde se encuentra el destino
+     * @param nombre          Nombre del destino
+     * @param clima           Clima del destino (Es un ENUM)
+     * @param descripcion     Descripcion del destino
+     * @param listaFotos      Lista de Fotos referentes al destino
      * @return destino que fue editado.
      * @throws AtributoVacioException
      * @throws InformacionRepetidaException
@@ -784,6 +798,7 @@ public class AgenciaViajes {
 
     /**
      * Método recursivo para editar destinos
+     *
      * @param destinoAnterior destino antes de ser editado
      * @param destino         destino editado
      * @param i               indice general
@@ -820,16 +835,17 @@ public class AgenciaViajes {
      * esta es una acción que unicamente pueden hacer los clientes
      * Primero se validan los datos de los parámetros y luego se
      * añade la reserva a la lista de reservas
-     * @param fechaHora         fecha y hora  en la que se hizo
-     *                          la reservación
-     * @param fechaInicial      fecha en la que la reserva inicia
-     * @param fechaFinal        fecha cuando la reserva acaba
-     * @param cliente           cliente que hizo la reserva
-     * @param numPersonas       numero de personas que forma parte de la reserva
-     * @param cedulaGuia        cedula del guía
-     * @param estadoReserva     estado de la reserva
-     * @param paquete           paquete que se reserva
-     * @param valorTotal        valor final de la reserva
+     *
+     * @param fechaHora     fecha y hora  en la que se hizo
+     *                      la reservación
+     * @param fechaInicial  fecha en la que la reserva inicia
+     * @param fechaFinal    fecha cuando la reserva acaba
+     * @param cliente       cliente que hizo la reserva
+     * @param numPersonas   numero de personas que forma parte de la reserva
+     * @param cedulaGuia    cedula del guía
+     * @param estadoReserva estado de la reserva
+     * @param paquete       paquete que se reserva
+     * @param valorTotal    valor final de la reserva
      * @return Reserva que se creó
      * @throws AtributoVacioException
      */
@@ -883,9 +899,10 @@ public class AgenciaViajes {
     /**
      * Método que se encarga de buscar las unidades disponibles
      * de un paquete
-     * @param paquete   Paquete del que se busca disponibilidad
-     * @param estado    Estado de la reserva
-     * @param i         Indice general
+     *
+     * @param paquete Paquete del que se busca disponibilidad
+     * @param estado  Estado de la reserva
+     * @param i       Indice general
      * @return Numero de unidades disponibles
      */
     public int buscarUnidadesDisponibles(Paquete paquete, EstadoReserva estado, int i) {
@@ -908,9 +925,9 @@ public class AgenciaViajes {
      * Itera sobre las reservas existentes para encontrar los guías asociados a esas reservas
      * que están trabajando dentro del rango de fechas proporcionado.
      *
-     * @param fechaInicial   Fecha inicial del rango de búsqueda.
-     * @param fechaFinal     Fecha final del rango de búsqueda.
-     * @param i              Índice de la reserva actual en el proceso de búsqueda.
+     * @param fechaInicial    Fecha inicial del rango de búsqueda.
+     * @param fechaFinal      Fecha final del rango de búsqueda.
+     * @param i               Índice de la reserva actual en el proceso de búsqueda.
      * @param listaTrabajando Lista actual de guías que están trabajando (puede estar vacía).
      * @return ArrayList con los guías turísticos que están trabajando en el rango de fechas.
      */
@@ -939,10 +956,10 @@ public class AgenciaViajes {
      * Itera sobre la lista de guías y verifica si cada guía está trabajando
      * en el rango de fechas proporcionado. Agrega a la lista los guías que están disponibles.
      *
-     * @param fechaInicial       Fecha inicial del rango de búsqueda.
-     * @param fechaFinal         Fecha final del rango de búsqueda.
-     * @param i                  Índice de guía actual en el proceso de búsqueda.
-     * @param guiasDisponibles   Lista actual de guías disponibles (puede estar vacía).
+     * @param fechaInicial     Fecha inicial del rango de búsqueda.
+     * @param fechaFinal       Fecha final del rango de búsqueda.
+     * @param i                Índice de guía actual en el proceso de búsqueda.
+     * @param guiasDisponibles Lista actual de guías disponibles (puede estar vacía).
      * @return ArrayList con los guías turísticos disponibles en el rango de fechas.
      */
     public ArrayList<GuiaTuristico> obtenerGuiasDisponiblesEnFecha(LocalDate fechaInicial, LocalDate fechaFinal,
@@ -967,10 +984,10 @@ public class AgenciaViajes {
      * en un rango de fechas dado. Utiliza la recursión para iterar sobre los guías disponibles
      * y agregar sus nombres y cédulas a la lista.
      *
-     * @param paquete           Paquete turístico para el cual se buscan guías disponibles.
-     * @param fechaFinal        Fecha final del rango de búsqueda.
-     * @param i                 Índice del guía actual en el proceso de búsqueda.
-     * @param guias             Lista actual de nombres y cédulas de guías (puede estar vacía).
+     * @param paquete    Paquete turístico para el cual se buscan guías disponibles.
+     * @param fechaFinal Fecha final del rango de búsqueda.
+     * @param i          Índice del guía actual en el proceso de búsqueda.
+     * @param guias      Lista actual de nombres y cédulas de guías (puede estar vacía).
      * @return ArrayList con los nombres y cédulas de los guías disponibles.
      */
     public ArrayList<String> obtenerNombresGuiasDisponiblesEnFecha(Paquete paquete, LocalDate fechaFinal,
@@ -992,9 +1009,9 @@ public class AgenciaViajes {
      * Método para enviar un correo electrónico.
      * Configura las propiedades del servidor SMTP de Gmail y utiliza una sesión para enviar un correo.
      *
-     * @param asunto         Asunto del correo electrónico.
-     * @param contenido      Contenido del correo electrónico.
-     * @param correoDestino  Dirección de correo electrónico del destinatario.
+     * @param asunto        Asunto del correo electrónico.
+     * @param contenido     Contenido del correo electrónico.
+     * @param correoDestino Dirección de correo electrónico del destinatario.
      */
     public void enviarCorreo(String asunto, String contenido, String correoDestino) {
 
@@ -1022,7 +1039,6 @@ public class AgenciaViajes {
             transport.sendMessage(mensaje, mensaje.getAllRecipients());
             transport.close();
 
-            System.out.println("Correo enviado exitosamente.");
 
         } catch (MessagingException e) {
             System.out.println("Error al enviar el correo: " + e.getMessage());
@@ -1117,14 +1133,15 @@ public class AgenciaViajes {
 
         return codigo;
     }
+
     /**
      * Método para cambiar la contraseña del cliente.
      * Verifica que la contraseña y su confirmación coincidan antes de cambiarla.
      *
-     * @param correo           Correo electrónico del cliente.
-     * @param contrasenia      Nueva contraseña a establecer.
+     * @param correo             Correo electrónico del cliente.
+     * @param contrasenia        Nueva contraseña a establecer.
      * @param contraseniaConfirm Confirmación de la nueva contraseña.
-     * @throws AtributoVacioException        Cuando algún atributo requerido está vacío.
+     * @throws AtributoVacioException         Cuando algún atributo requerido está vacío.
      * @throws InformacionNoRepetidaException Cuando las contraseñas no coinciden.
      */
     public void cambiarContraseniaCliente(String correo, String contrasenia, String contraseniaConfirm)
@@ -1141,6 +1158,7 @@ public class AgenciaViajes {
             throw new InformacionNoRepetidaException("Las contraseñas no coinciden");
         }
     }
+
     /**
      * Método para buscar un cliente por su dirección de correo electrónico.
      * Recorre la lista de clientes y devuelve el cliente correspondiente al correo proporcionado.
@@ -1177,10 +1195,10 @@ public class AgenciaViajes {
      * @param correo          Nuevo correo electrónico del cliente.
      * @param contrasenia     Nueva contraseña del cliente.
      * @return Cliente con los detalles actualizados.
-     * @throws AtributoVacioException        Cuando algún atributo requerido está vacío.
-     * @throws DatoNoNumericoException       Cuando un dato que debería ser numérico no lo es.
-     * @throws DatoInvalidoException         Cuando un dato no cumple con el formato esperado.
-     * @throws CorreoNoDisponibleException  Cuando el nuevo correo ya está registrado a otra cuenta.
+     * @throws AtributoVacioException      Cuando algún atributo requerido está vacío.
+     * @throws DatoNoNumericoException     Cuando un dato que debería ser numérico no lo es.
+     * @throws DatoInvalidoException       Cuando un dato no cumple con el formato esperado.
+     * @throws CorreoNoDisponibleException Cuando el nuevo correo ya está registrado a otra cuenta.
      */
     public Cliente editarCliente(Cliente clienteAnterior, String cedula, String nombre, String telefono, String foto, String direccion, String correo, String contrasenia) throws AtributoVacioException, DatoNoNumericoException, DatoInvalidoException, CorreoNoDisponibleException {
         if (nombre == null || nombre.isBlank() || !nombre.matches("^[a-zA-Z]+$")) {
@@ -1217,7 +1235,6 @@ public class AgenciaViajes {
                 .correo(correo)
                 .direccion(direccion)
                 .contrasenia(contrasenia)
-                .paquetesReservados(new ArrayList<>())
                 .build();
         // Invocar al método auxiliar para editar el cliente en la lista
         editarClienteParte2(clienteAnterior, cliente, 0);
@@ -1248,8 +1265,8 @@ public class AgenciaViajes {
      * @param i      Índice actual para iterar sobre la lista de clientes.
      * @return true si existe un cliente con el correo electrónico dado, false de lo contrario.
      */
-    public boolean verificarExistenciaClienteCorreo(String correo, int i){
-        if (i<listaClientes.size()) {
+    public boolean verificarExistenciaClienteCorreo(String correo, int i) {
+        if (i < listaClientes.size()) {
             if (listaClientes.get(i).getCorreo().equals(correo)) {
                 return true;
             } else {
@@ -1266,8 +1283,8 @@ public class AgenciaViajes {
      * @return true si el correo es válido, false de lo contrario.
      */
     public boolean verificarValidezCorreo(String correo) {
-        if(correo != null && !correo.isBlank()){
-            if (isValidEmail(correo)){
+        if (correo != null && !correo.isBlank()) {
+            if (isValidEmail(correo)) {
                 return true;
             }
             return false;
@@ -1354,12 +1371,13 @@ public class AgenciaViajes {
         // Llamar al método auxiliar que realiza el conteo
         return obtenerDatosReservaCantidadDestinosParte2(reservas, 0, contadorNombresDestinos);
     }
+
     /**
      * Método auxiliar para contar la cantidad de reservas por destino a partir de una lista de reservas.
      * Realiza la actualización del contador de destinos de las reservas.
      *
-     * @param reservas              Lista de reservas a procesar.
-     * @param index                 Índice para iterar sobre la lista de reservas.
+     * @param reservas                Lista de reservas a procesar.
+     * @param index                   Índice para iterar sobre la lista de reservas.
      * @param contadorNombresDestinos Mapa que contiene el contador de reservas por destino.
      * @return El mapa actualizado con la cantidad de reservas por cada destino.
      */
@@ -1376,11 +1394,12 @@ public class AgenciaViajes {
         // Si se ha recorrido toda la lista, retornar el mapa actualizado
         return contadorNombresDestinos;
     }
+
     /**
      * Actualiza el contador de destinos para las reservas de un paquete dado.
      * Llama al método auxiliar para realizar la actualización del contador.
      *
-     * @param paquete               Paquete del que se obtienen los destinos.
+     * @param paquete                 Paquete del que se obtienen los destinos.
      * @param contadorNombresDestinos Mapa que contiene el contador de reservas por destino.
      */
     private void actualizarContadorDestinos(Paquete paquete, Map<String, Integer> contadorNombresDestinos) {
@@ -1392,8 +1411,8 @@ public class AgenciaViajes {
      * Método auxiliar para actualizar el contador de destinos para las reservas de un paquete.
      * Recorre la lista de destinos y actualiza el contador por cada destino encontrado.
      *
-     * @param destinos               Lista de destinos del paquete.
-     * @param index                  Índice para iterar sobre la lista de destinos.
+     * @param destinos                Lista de destinos del paquete.
+     * @param index                   Índice para iterar sobre la lista de destinos.
      * @param contadorNombresDestinos Mapa que contiene el contador de reservas por destino.
      */
     private void actualizarContadorDestinosParte2(List<Destino> destinos, int index, Map<String, Integer> contadorNombresDestinos) {
@@ -1411,7 +1430,7 @@ public class AgenciaViajes {
     /**
      * Obtiene la cantidad de reservas por nombre de paquete.
      *
-     * @param reservas               Lista de reservas de las que se obtendrá la información.
+     * @param reservas Lista de reservas de las que se obtendrá la información.
      * @return Mapa con el contador de reservas por nombre de paquete.
      */
     public Map<String, Integer> obtenerDatosReservaCantidadPaquetes(List<Reserva> reservas) {
@@ -1422,8 +1441,8 @@ public class AgenciaViajes {
     /**
      * Método auxiliar para obtener la cantidad de reservas por nombre de paquete.
      *
-     * @param reservas               Lista de reservas de las que se obtendrá la información.
-     * @param index                  Índice para iterar sobre la lista de reservas.
+     * @param reservas                Lista de reservas de las que se obtendrá la información.
+     * @param index                   Índice para iterar sobre la lista de reservas.
      * @param contadorNombresPaquetes Mapa que contiene el contador de reservas por nombre de paquete.
      * @return Mapa con el contador de reservas por nombre de paquete.
      */
@@ -1442,6 +1461,7 @@ public class AgenciaViajes {
         // Retornar el mapa con el contador de reservas por nombre de paquete
         return contadorNombresPaquetes;
     }
+
     /**
      * Actualiza el contador de paquetes en el mapa.
      *
@@ -1532,6 +1552,7 @@ public class AgenciaViajes {
     /**
      * Obtiene las reservas asociadas a un cliente dado.
      * Verifica el estado de las reservas en la lista antes de realizar la búsqueda.
+     *
      * @param cliente El cliente para el que se buscan las reservas.
      * @return ArrayList con las reservas asociadas al cliente.
      */
@@ -1554,17 +1575,18 @@ public class AgenciaViajes {
 
     /**
      * Califica un destino dado por un cliente con un puntaje y comentario.
-     * @param destino     El destino que se va a calificar.
-     * @param puntaje     El puntaje asignado al destino.
-     * @param cliente     El cliente que realiza la calificación.
-     * @param comentario  El comentario asociado a la calificación.
+     *
+     * @param destino    El destino que se va a calificar.
+     * @param puntaje    El puntaje asignado al destino.
+     * @param cliente    El cliente que realiza la calificación.
+     * @param comentario El comentario asociado a la calificación.
      * @throws AtributoVacioException Si el puntaje o el comentario están vacíos o son nulos.
      */
-    public void calificarDestino(Destino destino, String puntaje, Cliente cliente, String comentario) throws AtributoVacioException {
-        if (puntaje == null || puntaje.isBlank()){
+    public void calificarDestino(Reserva reserva, Destino destino, String puntaje, Cliente cliente, String comentario) throws AtributoVacioException {
+        if (puntaje == null || puntaje.isBlank()) {
             throw new AtributoVacioException("Elegir un puntaje es obligatorio");
         }
-        if (comentario == null || comentario.isBlank()){
+        if (comentario == null || comentario.isBlank()) {
             throw new AtributoVacioException("Escribir un comentario es obligatorio");
         }
 
@@ -1573,8 +1595,8 @@ public class AgenciaViajes {
                 .cliente(cliente)
                 .comentario(comentario)
                 .build();
-
-        agregarValoracionParte2(destino, valoracion);
+        actualizarDatosValoracion(reserva, destino, reserva.getPaquete(), valoracion);
+        //agregarValoracionParte2(destino, valoracion);
     }
 
     private void agregarValoracionParte2(Destino destino, Valoracion valoracion) {
@@ -1593,4 +1615,138 @@ public class AgenciaViajes {
             agregarValoracionParte3(destino, valoracion, index + 1);
         }
     }
+
+    private void actualizarDatosValoracion(Reserva reserva, Destino destino, Paquete paquete, Valoracion valoracion) {
+        // Clonar la valoración antes de realizar cambios
+        ArrayList<Valoracion> valoracionesAnteriores = new ArrayList<>(destino.getValoraciones());
+        valoracionesAnteriores.add(valoracion);
+
+        // Clonar el destino antes de realizar cambios
+        Destino destinoActualizado = Destino.builder()
+                .nombre(destino.getNombre())
+                .ciudad(destino.getCiudad())
+                .descripcion(destino.getDescripcion())
+                .clima(destino.getClima())
+                .fotos(destino.getFotos())
+                .valoraciones(valoracionesAnteriores)
+                .build(); // Asume que tienes un método clonar en la clase Destino
+
+        // Actualizar destino en la lista de destinos de la clase principal
+        actualizarDestinoEnListaDestinos(destinoActualizado, destino);
+
+        // Actualizar destino en la lista de paquetes de la clase principal
+        Paquete paqueteActualizado = actualizarDestinoEnListaPaquetes(paquete, destinoActualizado, destino);
+
+
+        // Actualizar paquete en la reserva de la lista de reservas de la clase principal
+        actualizarPaqueteEnListaReservas(reserva, paquete, paqueteActualizado);
+
+    }
+
+    private void actualizarDatosValoracionGuia(Reserva reserva, GuiaTuristico guia, Valoracion valoracion) {
+        // Clonar la valoración antes de realizar cambios
+        ArrayList<Valoracion> valoracionesAnteriores = new ArrayList<>(guia.getValoraciones());
+        valoracionesAnteriores.add(valoracion);
+
+        // Clonar el guia antes de realizar cambios
+        GuiaTuristico guiaActualizado = guia; // Asume que tienes un método clonar en la clase Destino
+        guiaActualizado.setValoraciones(valoracionesAnteriores);
+
+        // Actualizar destino en la lista de destinos de la clase principal
+        actualizarGuiaEnListaGuias(guiaActualizado, guia);
+    }
+
+     private void actualizarGuiaEnListaGuias(GuiaTuristico guiaActualizado, GuiaTuristico guiaAntiguo) {
+        // Buscar y reemplazar el destino en la lista de destinos de la clase principal
+        for (int i = 0; i < listaGuias.size(); i++) {
+            GuiaTuristico guiaExistente = listaGuias.get(i);
+            if (guiaExistente.equals(guiaAntiguo)) {
+                listaGuias.set(i, guiaActualizado);
+                break;
+            }
+        }
+    }
+
+    private void actualizarDestinoEnListaDestinos(Destino destinoActualizado, Destino destinoAntiguo) {
+        // Buscar y reemplazar el destino en la lista de destinos de la clase principal
+        for (int i = 0; i < listaDestinos.size(); i++) {
+            Destino destinoExistente = listaDestinos.get(i);
+            if (destinoExistente.equals(destinoAntiguo)) {
+                System.out.println("la lista de destinos encontrada es: "+destinoExistente);
+                listaDestinos.set(i, destinoActualizado);
+                break;
+            }
+        }
+    }
+
+    private Paquete actualizarDestinoEnListaPaquetes(Paquete paquete, Destino destinoActualizado, Destino destinoAntiguo) {
+        Paquete paqueteClon = null;
+        ArrayList<Paquete> listaClonPaquetes = new ArrayList<>(listaPaquetes); // Declaración fuera del bucle
+
+        // Buscar y clonar la lista de destinos del paquete en la lista de paquetes de la clase principal
+        for (int i = 0; i < listaClonPaquetes.size(); i++) { // Usar listaClonPaquetes en lugar de listaPaquetes
+            if (listaClonPaquetes.get(i).equals(paquete)) {
+                // Copiar el paquete específico
+                paqueteClon = listaClonPaquetes.get(i);
+
+                // Buscar y clonar la lista de destinos del paquete
+                ArrayList<Destino> destinosClonados = new ArrayList<>(paqueteClon.getDestinos());
+
+                // Buscar y reemplazar el destino en la lista clonada
+                for (int j = 0; j < destinosClonados.size(); j++) {
+                    if (destinosClonados.get(j).equals(destinoAntiguo)) {
+                        destinosClonados.set(j, destinoActualizado);
+                        paqueteClon.setDestinos(destinosClonados);
+                        listaClonPaquetes.set(i, paqueteClon);
+                        break;
+                    }
+                }
+            }
+        }
+
+        // Actualizar la lista principal con la lista clonada
+        if (paqueteClon != null) {
+            listaPaquetes = listaClonPaquetes;
+        }
+
+        return paqueteClon;
+    }
+
+    private void actualizarPaqueteEnListaReservas(Reserva reservaAntigua, Paquete paqueteActualizado, Paquete paqueteAntiguo) {
+        // Buscar y reemplazar el paquete en la reserva en la lista de reservas de la clase principal
+        for (int i = 0; i < listaReservas.size(); i++) {
+            Reserva reservaExistente = listaReservas.get(i);
+            if (reservaExistente.equals(reservaAntigua)) {
+                reservaExistente.setPaquete(paqueteActualizado);
+                listaReservas.set(i, reservaExistente);
+                break;
+            }
+        }
+    }
+
+    public boolean clienteYaComento(Reserva reserva, Cliente cliente){
+        boolean resp=false;
+        int cont=0;
+        for (int i=0; i<listaReservas.size(); i++){
+            if (listaReservas.get(i).equals(reserva)){
+                ArrayList<Destino>listaDestinos=listaReservas.get(i).getPaquete().getDestinos();
+                for (Destino destino: listaDestinos){
+                    ArrayList<Valoracion> valoraciones= destino.getValoraciones();
+                    for (Valoracion valoracion: valoraciones){
+                        if (valoracion.getCliente().equals(cliente)){
+                            cont++;
+                        }
+                    }
+                }
+                break;
+            }
+
+        }
+
+        if (cont==reserva.getPaquete().getDestinos().size()){
+            resp=true;
+        }
+        return resp;
+    }
+
 }

@@ -120,6 +120,8 @@ public class VentanaGestionReservaController implements Initializable {
     public Aplicacion aplicacion;
     public Cliente cliente;
     public Administrador administrador;
+    public Boolean fueCalificadoGuia=false;
+    public Boolean fueCalificadoTodosDestinos=false;
 
     public ArrayList<Destino> listaDestinosActuales;
 
@@ -138,9 +140,6 @@ public class VentanaGestionReservaController implements Initializable {
     }
 
     public void iniciarTablaReservas(){
-
-
-
         tablaReservas.getItems().clear();
         ObservableList<Reserva> listaReservasProperty= FXCollections.observableArrayList();
         ArrayList<Reserva> listaReservas= agenciaViajes.obtenerReservasDeCliente(this.cliente);
@@ -173,8 +172,9 @@ public class VentanaGestionReservaController implements Initializable {
     }
 
     public void iniciarPanelReservaDetalles(Reserva reservaElegida){
-        //foto paquete detallles
+
         Paquete paqueteElegido=reservaElegida.getPaquete();
+
         String foto=paqueteElegido.getDestinos().get(0).getFotos().get(0);
         //se toma la primera foto del primer destino que tiene el paquete
         try {
@@ -197,7 +197,9 @@ public class VentanaGestionReservaController implements Initializable {
 
         if (reservaElegida.obtenerEstadoCadena().equals("Confirmada")){
             btnCancelarReserva.setVisible(false);
-            btnCalificar.setVisible(true);
+            if (!agenciaViajes.clienteYaComento(reservaElegida, this.cliente)){
+                btnCalificar.setVisible(true);
+            }
         }else if (reservaElegida.obtenerEstadoCadena().equals("Cancelada")){
             btnCancelarReserva.setVisible(false);
             btnCalificar.setVisible(false);
@@ -210,24 +212,43 @@ public class VentanaGestionReservaController implements Initializable {
     }
 
     public void iniciarPanelCalificar(){
-        if (listaDestinosActuales.size()>=1){
+        if (listaDestinosActuales.size()>=0){
+            iniciarTablaReservas();
             paneReservaDetalles.setVisible(false);
             panelCalificaciones.setVisible(true);
-            tablaDestinos.getItems().clear();
-            ObservableList<Destino> listaDestinosProperty= FXCollections.observableArrayList();
-            ArrayList<Destino> listaDestinos= chosenReserva.getPaquete().getDestinos();
-            this.listaDestinosActuales=listaDestinos;
-            listaDestinosProperty.addAll(listaDestinos);
+            actualizarTablaDestinos();
+        }
+    }
 
-            tablaDestinos.setItems(listaDestinosProperty);
+    public void actualizarTablaDestinos(){
+        tablaDestinos.getItems().clear();
+        ObservableList<Destino> listaDestinosProperty= FXCollections.observableArrayList();
 
-            columnaNombreDestino.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
-            columnaClimaDestino.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().obtenerClimaCadena()));
+        listaDestinosProperty.addAll(listaDestinosActuales);
+        tablaDestinos.setItems(listaDestinosProperty);
+        columnaNombreDestino.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
+        columnaClimaDestino.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().obtenerClimaCadena()));
+        if (listaDestinosActuales.isEmpty()){
+            fueCalificadoTodosDestinos=true;
+        }
+    }
 
-        }else{
+    public void ocultarCalificaciones(){
+        if (fueCalificadoGuia && fueCalificadoTodosDestinos){
             panelCalificaciones.setVisible(false);
             backgroundReserva.setVisible(true);
+            iniciarTablaReservas();
+            chosenReserva=null;
+            iniciarDatos();
+            fueCalificadoGuia=false;
+            fueCalificadoTodosDestinos=false;
         }
+    }
+
+    public void limpiarTextFields(){
+        txtAreaComentario.setText("");
+        comboCalificarDestino.setValue("");
+        comboCalificarGuia.setValue("");
     }
 
     public void calificarGuia(){
@@ -237,6 +258,10 @@ public class VentanaGestionReservaController implements Initializable {
                     comboCalificarGuia.getSelectionModel().getSelectedItem(),
                     this.cliente,
                     txtAreaComentario.getText());
+            this.fueCalificadoGuia=true;
+            ocultarCalificaciones();
+            iniciarTablaReservas();
+            limpiarTextFields();
         } catch (AtributoVacioException e) {
             ArchivoUtils.mostrarMensaje("ERROR", "Error de Entrada", e.getMessage(), Alert.AlertType.INFORMATION);
         }
@@ -244,15 +269,19 @@ public class VentanaGestionReservaController implements Initializable {
 
     public void calificarDestino() {
         Destino destinoElegido= tablaDestinos.getSelectionModel().getSelectedItem();
+
         if (destinoElegido!=null){
             try{
                 agenciaViajes.calificarDestino(
+                        chosenReserva,
                         destinoElegido,
                         comboCalificarDestino.getSelectionModel().getSelectedItem(),
                         this.cliente,
                         txtAreaComentario.getText());
                 listaDestinosActuales.remove(destinoElegido);
-                iniciarPanelCalificar();
+                actualizarTablaDestinos();
+                ocultarCalificaciones();
+                limpiarTextFields();
             }catch (AtributoVacioException e) {
                 ArchivoUtils.mostrarMensaje("ERROR", "Error de Entrada", e.getMessage(), Alert.AlertType.INFORMATION);
             }
@@ -291,7 +320,8 @@ public class VentanaGestionReservaController implements Initializable {
             backgroundReserva.setVisible(false);
             paneReservaDetalles.setVisible(false);
             panelCalificaciones.setVisible(true);
-            listaDestinosActuales=chosenReserva.getPaquete().getDestinos();
+            listaDestinosActuales= new ArrayList<>(chosenReserva.getPaquete().getDestinos());
+            //listaDestinosActuales=agenciaViajes.getListaDestinos();
             iniciarPanelCalificar();
             iniciarComboBoxes();
         }

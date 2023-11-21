@@ -115,12 +115,12 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Button fx:id="btnCancelarReserva" layoutX="725.0" layoutY="112.0" mnemonicParsing="false" onAction="#cancelarReserva" prefHeight="32.0" prefWidth="180.0" styleClass="eliminarBtn" stylesheets="@../aplicacion.css" text="Cancelar Reserva">
+            <Button fx:id="btnCancelarReserva" layoutX="725.0" layoutY="112.0" mnemonicParsing="false" onAction="#cancelarReserva" prefHeight="32.0" prefWidth="180.0" styleClass="eliminarBtn" stylesheets="@../aplicacion.css" text="Cancelar Reserva" visible="false">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="btnCalificar" layoutX="725.0" layoutY="162.0" mnemonicParsing="false" onAction="#calificar" prefHeight="32.0" prefWidth="180.0" styleClass="eliminarBtn" stylesheets="@../aplicacion.css" text="Calificar">
+            <Button fx:id="btnCalificar" layoutX="725.0" layoutY="162.0" mnemonicParsing="false" onAction="#calificar" prefHeight="32.0" prefWidth="180.0" styleClass="eliminarBtn" stylesheets="@../aplicacion.css" text="Calificar" visible="false">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -175,7 +175,7 @@
             </Text>
          </children>
       </Pane>
-      <ImageView fx:id="backgroundReserva" fitHeight="297.0" fitWidth="994.0" layoutX="17.0" layoutY="304.0" pickOnBounds="true" preserveRatio="true" visible="false">
+      <ImageView fx:id="backgroundReserva" fitHeight="297.0" fitWidth="994.0" layoutX="17.0" layoutY="304.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../imagenes/fondoReservas.jpeg" />
          </image>

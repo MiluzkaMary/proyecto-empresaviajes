@@ -413,7 +413,6 @@ public class VentanaInicioController  implements Initializable {
                 .correo("JaneSmith@gmail.com")
                 .direccion("Calle 456 Oak St")
                 .contrasenia("jane123")
-                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -438,7 +437,6 @@ public class VentanaInicioController  implements Initializable {
                 .correo("JohnDoe@gmail.com")
                 .direccion("NY calle 7 Main St")
                 .contrasenia("john123")
-                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -463,7 +461,6 @@ public class VentanaInicioController  implements Initializable {
                 .correo("AliceJohnson@gmail.com")
                 .direccion("456 Elm St")
                 .contrasenia("alice123")
-                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -486,7 +483,6 @@ public class VentanaInicioController  implements Initializable {
                 .correo("DavidWilson@gmail.com")
                 .direccion("789 Pine St")
                 .contrasenia("david123")
-                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -508,7 +504,6 @@ public class VentanaInicioController  implements Initializable {
                 .correo("MichaelBrown@gmail.com")
                 .direccion("123 Oak Ave")
                 .contrasenia("michael123")
-                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -550,7 +545,6 @@ public class VentanaInicioController  implements Initializable {
                 .correo("EllaAnderson@gmail.com")
                 .direccion("123 Palm St 3N-8")
                 .contrasenia("ella123")
-                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -572,7 +566,6 @@ public class VentanaInicioController  implements Initializable {
                 .correo("JohnSmith@gmail.com")
                 .direccion("456 Beach Blvd")
                 .contrasenia("john123")
-                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -594,7 +587,6 @@ public class VentanaInicioController  implements Initializable {
                 .correo("SophiaMartinez@gmail.com")
                 .direccion("789 Ocean Dr")
                 .contrasenia("sophia123")
-                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -615,7 +607,6 @@ public class VentanaInicioController  implements Initializable {
                 .correo("MichaelBrown@gmail.com")
                 .direccion("987 Forest Ln")
                 .contrasenia("michael123")
-                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -637,7 +628,6 @@ public class VentanaInicioController  implements Initializable {
                 .correo("OliviaTaylor@gmail.com")
                 .direccion("111 Hill Rd")
                 .contrasenia("olivia123")
-                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -680,7 +670,6 @@ public class VentanaInicioController  implements Initializable {
                 .correo("LiamJohnson@gmail.com")
                 .direccion("456 Sunset Blvd")
                 .contrasenia("liam123")
-                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -702,7 +691,6 @@ public class VentanaInicioController  implements Initializable {
                 .correo("SophieDavis@gmail.com")
                 .direccion("789 Sunrise Rd")
                 .contrasenia("sophie123")
-                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -724,7 +712,6 @@ public class VentanaInicioController  implements Initializable {
                 .correo("MiaWilson@gmail.com")
                 .direccion("101 Palm Ave")
                 .contrasenia("mia123")
-                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -746,7 +733,6 @@ public class VentanaInicioController  implements Initializable {
                 .correo("BenjaminLewis@gmail.com")
                 .direccion("222 Ocean View Dr")
                 .contrasenia("benjamin123")
-                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -768,7 +754,6 @@ public class VentanaInicioController  implements Initializable {
                 .correo("EmmaMoore@gmail.com")
                 .direccion("333 Hillside Ave")
                 .contrasenia("emma123")
-                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -825,7 +810,6 @@ public class VentanaInicioController  implements Initializable {
                 .correo("juanperez@gmail.com")
                 .direccion("Av. Principal 123")
                 .contrasenia("juanito123")
-                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -847,7 +831,6 @@ public class VentanaInicioController  implements Initializable {
                 .correo("mariagonzalez@gmail.com")
                 .direccion("Calle 7 Sur #45")
                 .contrasenia("maria123")
-                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -869,7 +852,6 @@ public class VentanaInicioController  implements Initializable {
                 .correo("carloslopez@gmail.com")
                 .direccion("Calle 15 #20-30")
                 .contrasenia("carlos123")
-                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -891,7 +873,6 @@ public class VentanaInicioController  implements Initializable {
                 .correo("lauraramirez@gmail.com")
                 .direccion("Av. Libertador #10-15")
                 .contrasenia("laura123")
-                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -912,7 +893,6 @@ public class VentanaInicioController  implements Initializable {
                 .correo("gabrielafernandez@gmail.com")
                 .direccion("Calle 20 #30-40")
                 .contrasenia("gabriela123")
-                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -950,7 +930,6 @@ public class VentanaInicioController  implements Initializable {
                 .correo("luismartinez@gmail.com")
                 .direccion("Carrera 25 #67")
                 .contrasenia("luisillo123")
-                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente);
 
@@ -970,7 +949,6 @@ public class VentanaInicioController  implements Initializable {
                 .correo("luisagarcia@gmail.com")
                 .direccion("Calle 7 Sur #45")
                 .contrasenia("luisa123")
-                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente1);
         valoracion = Valoracion.builder()
@@ -990,7 +968,6 @@ public class VentanaInicioController  implements Initializable {
                 .correo("pedromartinez@gmail.com")
                 .direccion("Carrera 25 #67")
                 .contrasenia("pedro123")
-                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente2);
 
@@ -1010,7 +987,6 @@ public class VentanaInicioController  implements Initializable {
                 .correo("lauraramirez@gmail.com")
                 .direccion("Av. Principal 123")
                 .contrasenia("laura123")
-                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente3);
 
@@ -1030,7 +1006,6 @@ public class VentanaInicioController  implements Initializable {
                 .correo("jorgerodriguez@gmail.com")
                 .direccion("Calle 15 #20-30")
                 .contrasenia("jorge123")
-                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente4);
 
@@ -1067,7 +1042,6 @@ public class VentanaInicioController  implements Initializable {
                 .correo("anarodriguez@gmail.com")
                 .direccion("Calle 10 #30-15")
                 .contrasenia("ana123")
-                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente1TercerDestino);
 
@@ -1087,7 +1061,6 @@ public class VentanaInicioController  implements Initializable {
                 .correo("javiergomez@gmail.com")
                 .direccion("Av. Libertadores #45")
                 .contrasenia("javier123")
-                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente2TercerDestino);
 
@@ -1107,7 +1080,6 @@ public class VentanaInicioController  implements Initializable {
                 .correo("mariaperez@gmail.com")
                 .direccion("Calle 20 #15-30")
                 .contrasenia("maria123")
-                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente3TercerDestino);
 
@@ -1127,7 +1099,6 @@ public class VentanaInicioController  implements Initializable {
                 .correo("carlosmartinez@gmail.com")
                 .direccion("Av. Bolívar #50")
                 .contrasenia("carlos123")
-                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente4TercerDestino);
 
@@ -1147,7 +1118,6 @@ public class VentanaInicioController  implements Initializable {
                 .correo("sofialopez@gmail.com")
                 .direccion("Carrera 30 #40-50")
                 .contrasenia("sofia123")
-                .paquetesReservados(new ArrayList<>())
                 .build();
         listaClientesQuemados.add(cliente5TercerDestino);
 
@@ -1196,8 +1166,7 @@ public class VentanaInicioController  implements Initializable {
                 .telefono("312313112")
                 .contrasenia("123")
                 .direccion("dsfds")
-                .foto("imagenes/user.png")
-                .paquetesReservados(new ArrayList<>()).build();
+                .foto("imagenes/user.png").build();
         listaClientesQuemados.add(cliente);
         //-------------- GUIAS QUEMADOS ----------------//
 
